@@ -16,3 +16,12 @@
 .progress {
     flex-grow: 1
 }
+
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+a:visited {
+    color: inherit;
+}

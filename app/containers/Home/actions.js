@@ -12,8 +12,6 @@ import {
   CHANGE_ROUTE,
   OPEN_SNACK,
   CLOSE_SNACK,
-  DELETE_CONFIRM,
-  DELETE_ITEM,
 } from './constants';
 
 export function defaultAction() {
@@ -62,12 +60,3 @@ export function closeSnack() {
     type: CLOSE_SNACK,
   };
 }
-
-export const deleteConfirm = payload => ({
-  type: DELETE_CONFIRM,
-  payload,
-});
-
-export const deleteItem = () => ({
-  type: DELETE_ITEM,
-});
