@@ -8,7 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Content from 'components/Content/Loadable';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
+import { Link } from 'react-router-dom';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { withStyles } from '@material-ui/core/styles';
@@ -30,8 +30,9 @@ import {
   deleteHelpline,
 } from './actions';
 import { makeSelectStates } from '../../store/constants/selectors';
+import DeleteDialog from '../../components/DeleteDialog';
 
-const urlRegex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
+const urlRegex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
 
 const styles = theme => ({
   name: {
@@ -71,18 +72,19 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 class HelplineEdit extends React.Component {
+  state = {
+    deleteId: null,
+  };
+
   componentDidMount() {
-    const helplineId = this.props.match.params.helplineId;
+    const { helplineId } = this.props.match.params;
     this.props.fetchHelplineById(helplineId);
   }
 
-  delete() {
-    this.props.deleteHelplineId(this.props.helpline._id);
-  }
-
-  cancel() {
-    this.props.dispatch(push('/helpline/admin'));
-  }
+  delete = () => {
+    this.props.deleteHelpline(this.state.deleteId);
+    this.setState({ deleteId: null });
+  };
 
   onUpdate(values, actions) {
     this.props.updateHelplineById({
@@ -131,7 +133,6 @@ class HelplineEdit extends React.Component {
                 values,
                 touched,
                 errors,
-                isSubmitting,
                 handleChange,
                 handleSubmit,
               } = props;
@@ -258,7 +259,6 @@ class HelplineEdit extends React.Component {
                     color="primary"
                     className={classes.save}
                   >
-                    {' '}
                     save
                   </Button>
 
@@ -267,23 +267,34 @@ class HelplineEdit extends React.Component {
                     color="primary"
                     onClick={() => this.cancel()}
                   >
-                    {' '}
-                    Go back
+                    <Link to="/helpline/admin"> Go back </Link>
                   </Button>
 
                   <Button
                     variant="contained"
                     color="secondary"
-                    onClick={() => this.delete()}
+                    onClick={() =>
+                      this.setState({ deleteId: this.props.helpline._id })
+                    }
                     className={classes.deleteButton}
                   >
-                    {' '}
                     Delete
                   </Button>
                 </form>
               );
             }}
           </Formik>
+        )}
+        {this.state.deleteId && (
+          <DeleteDialog
+            onCancel={() => {
+              this.setState({ deleteId: null });
+            }}
+            onOk={this.delete}
+            title="Delete Helpline"
+          >
+            Are you sure to detete this Helpline?
+          </DeleteDialog>
         )}
       </Content>
     );
@@ -292,7 +303,12 @@ class HelplineEdit extends React.Component {
 
 HelplineEdit.propTypes = {
   helpline: PropTypes.object,
+  match: PropTypes.object,
+  fetchHelplineById: PropTypes.func,
+  updateHelplineById: PropTypes.func,
+  deleteHelpline: PropTypes.func,
   classes: PropTypes.object.isRequired,
+  states: PropTypes.array,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -300,15 +316,11 @@ const mapStateToProps = createStructuredSelector({
   states: makeSelectStates(),
 });
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-    fetchHelplineById: helplineId => dispatch(fetchHelplineById(helplineId)),
-    updateHelplineById: updatedHelpline =>
-      dispatch(updateHelplineById(updatedHelpline)),
-    deleteHelplineId: helplineId => dispatch(deleteHelpline(helplineId)),
-  };
-}
+const mapDispatchToProps = {
+  fetchHelplineById,
+  updateHelplineById,
+  deleteHelpline,
+};
 
 const withConnect = connect(
   mapStateToProps,
