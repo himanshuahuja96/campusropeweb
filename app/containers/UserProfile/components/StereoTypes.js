@@ -2,18 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import Input from '@material-ui/core/Input';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import EditIcon from '@material-ui/icons/Edit';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { createStructuredSelector } from 'reselect';
-import ProfileTabType from './ProfileTabTypeModel';
+import Grid from '@material-ui/core/Grid';
 import { makeSelectLoggedUser } from '../../../store/loggeduser/selectors';
 
 import EditDialog from './EditDialog';
@@ -76,6 +73,10 @@ const styles = theme => ({
   multiInput: {
     flex: 1,
   },
+  infoLabel :{
+    display : 'inline-block',
+    marginLeft : 15
+  },
   deleteBtn: {
     background: '#e63d3d',
     color: 'white',
@@ -90,7 +91,7 @@ const styles = theme => ({
 class AboutUserComponent extends React.Component {
   state = {
     expanded: null,
-    editDialogExpand: null,
+    editDialogExpand: false,
     stereoTypesInfoEditView: null,
   };
 
@@ -113,9 +114,20 @@ class AboutUserComponent extends React.Component {
     })
   }
 
+  renderLabelsAndValues = (label,value) => {
+    const { classes } = this.props;
+    return (<Typography variant="h6" gutterBottom>
+              {label} :
+              <Typography variant="button"
+                gutterBottom className={classes.infoLabel}>
+                {value}
+              </Typography>
+            </Typography>
+            )
+  }
+
   render() {
-    const { classes, values, handleChange,expanded ,handlePanelChange} = this.props;
-    const TAB_TYPE_MAP = ProfileTabType.typeTypeMap;
+    const { classes, expanded ,handlePanelChange} = this.props;
     const {editDialogExpand, stereoTypesInfoEditView } = this.state;
     return (
       <ExpansionPanel
@@ -140,37 +152,14 @@ class AboutUserComponent extends React.Component {
         </ExpansionPanelSummary>
 
         <ExpansionPanelDetails className={classes.panelDetails}>
-          <FormControl
-            margin="normal"
-            required="required"
-            fullWidth="fullWidth"
-          >
-            <InputLabel htmlFor="name">Political View</InputLabel>
-            <Input
-              id="politicalView"
-              name="politicalView"
-              value={values.politicalView}
-              onChange={handleChange}
-              autoFocus="autoFocus"
-              multiline="multiline"
-            />
-          </FormControl>
-
-          <FormControl
-            margin="normal"
-            required="required"
-            fullWidth="fullWidth"
-          >
-            <InputLabel htmlFor="name">Religious View</InputLabel>
-            <Input
-              id="religiousView"
-              name="religiousView"
-              value={values.religiousView}
-              onChange={handleChange}
-              autoFocus="autoFocus"
-              multiline="multiline"
-            />
-          </FormControl>
+        <Grid container spacing={16}>
+              <Grid item xs={12} sm={12} lg={6}>
+                {this.renderLabelsAndValues('PoliticalView','politicalView')}
+              </Grid>
+              <Grid item xs={12} sm={12} lg={6}>
+                {this.renderLabelsAndValues('ReligiousView','religiousView')}
+              </Grid>
+          </Grid>
         </ExpansionPanelDetails>
       </ExpansionPanel>
     );

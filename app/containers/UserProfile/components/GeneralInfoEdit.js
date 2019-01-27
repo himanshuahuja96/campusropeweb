@@ -49,7 +49,6 @@ class GeneralInfoEdit extends React.Component {
               name="college"
               value={values.college}
               onChange={handleChange}
-              autoFocus="autoFocus"
             />
           </FormControl>
 

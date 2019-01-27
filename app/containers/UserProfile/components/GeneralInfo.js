@@ -11,6 +11,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import EditIcon from '@material-ui/icons/Edit';
 import { FieldArray } from 'formik';
 import withStyles from '@material-ui/core/styles/withStyles';
+import Grid from '@material-ui/core/Grid';
 import MultipleChipInput from '../../../components/MultipleChipInput';
 
 import EditDialog from './EditDialog';
@@ -73,6 +74,10 @@ const styles = theme => ({
     fontSize: 20,
     cursor:'pointer'
   },
+  infoLabel :{
+    display : 'inline-block',
+    marginLeft : 15
+  },
   deleteBtn: {
     background: '#e63d3d',
     color: 'white',
@@ -87,7 +92,7 @@ const styles = theme => ({
 class AboutUserComponent extends React.Component {
   state = {
     expanded: null,
-    editDialogExpand: null,
+    editDialogExpand: false,
     generalInfoEditView: null
   };
 
@@ -102,6 +107,18 @@ class AboutUserComponent extends React.Component {
     this.setState({
       editDialogExpand : false
     })
+  }
+
+  renderLabelsAndValues = (label,value) => {
+    const { classes } = this.props;
+    return (<Typography variant="h6" gutterBottom>
+              {label} :
+              <Typography variant="button"
+                gutterBottom className={classes.infoLabel}>
+                {value}
+              </Typography>
+            </Typography>
+            )
   }
 
   handlePanelChange = panel => (event, expanded) => {
@@ -135,81 +152,23 @@ class AboutUserComponent extends React.Component {
         </ExpansionPanelSummary>
 
         <ExpansionPanelDetails className={classes.panelDetails}>
-          <FormControl
-            margin="normal"
-            required="required"
-            fullWidth="fullWidth"
-          >
-            <MultipleChipInput
-              label="Work And Experience"
-              defaultValue={values.workAndExperience}
-              onChange={handleChange}
-            />
-          </FormControl>
-
-          <FormControl
-            margin="normal"
-            required="required"
-            fullWidth="fullWidth"
-          >
-            <MultipleChipInput
-              label="Skills"
-              defaultValue={values.skills}
-              onChange={handleChange}
-            />
-          </FormControl>
-
-          <FormControl
-            margin="normal"
-            required="required"
-            fullWidth="fullWidth"
-          >
-            <InputLabel htmlFor="name">College</InputLabel>
-
-            <Input
-              id="college"
-              name="college"
-              value={values.college}
-              onChange={handleChange}
-              autoFocus="autoFocus"
-            />
-          </FormControl>
-
-          <FormControl
-            margin="normal"
-            required="required"
-            fullWidth="fullWidth"
-          >
-            <FieldArray
-              name="otherDegreeAndCourses"
-              render={arrayHelpers => (
-                <MultipleChipInput
-                  id="otherDegreeAndCourses"
-                  type="string"
-                  name="otherDegreeAndCourses"
-                  label="Other Degree and Courses"
-                  defaultValue={values.otherDegreeAndCourses}
-                  onUpdateInput={handleChange}
-                  onAdd={chipValue => {
-                    arrayHelpers.push('');
-                    return true;
-                  }}
-                />
-              )}
-            />
-          </FormControl>
-
-          <FormControl
-            margin="normal"
-            required="required"
-            fullWidth="fullWidth"
-          >
-            <MultipleChipInput
-              label="Career Objectives"
-              defaultValue={values.careerObjectives}
-              onChange={handleChange}
-            />
-          </FormControl>
+        <Grid container spacing={16}>
+              <Grid item xs={12} sm={12} lg={6}>
+                {this.renderLabelsAndValues('Work And Experience','Work And Experience')}
+              </Grid>
+              <Grid item xs={12} sm={12} lg={6}>
+                {this.renderLabelsAndValues('Skills','Skills')}
+              </Grid>
+              <Grid item xs={12} sm={12} lg={6}>
+                {this.renderLabelsAndValues('College','College')}
+              </Grid>
+              <Grid item xs={12} sm={12} lg={6}>
+                    {this.renderLabelsAndValues('Other Degree and Courses','Other Degree and Courses')}
+              </Grid>
+              <Grid item xs={12} sm={12} lg={6}>
+                      {this.renderLabelsAndValues('Career Objectives','Career Objectives')}
+              </Grid>
+          </Grid>
         </ExpansionPanelDetails>
       </ExpansionPanel>
     );

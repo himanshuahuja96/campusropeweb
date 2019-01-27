@@ -4,25 +4,14 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import * as Yup from 'yup';
-import Input from '@material-ui/core/Input';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Button from '@material-ui/core/Button';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
+import { push } from 'react-router-redux';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Add from '@material-ui/icons/Add';
-import Delete from '@material-ui/icons/Delete';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Formik, FieldArray } from 'formik';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { createStructuredSelector } from 'reselect';
-import Upload from 'components/Upload/Loadable';
 import ProfileTabType from './ProfileTabTypeModel';
 import { makeSelectLoggedUser } from '../../../store/loggeduser/selectors';
 import BasicInfo from './BasicInfo';
@@ -181,13 +170,16 @@ class AboutUserComponent extends React.Component {
     });
   };
 
+  handleBackClick = (userinfo) => {
+    this.props.dispatch(push(`/profile/${userinfo._id}`));
+  }
+
   render() {
     const {
       classes,
       userProfile = {},
-      handleCancel,
       handleProfileSave,
-      isOwner,
+      loggedUserInfo
     } = this.props;
     const { expanded } = this.state;
     const TAB_TYPE_MAP = ProfileTabType.typeTypeMap;
@@ -221,7 +213,7 @@ class AboutUserComponent extends React.Component {
                 errors={errors}
                 touched={touched}
                 values={values}
-                expanded={expanded === 'panel1'}
+                expanded={true}
                 handlePanelChange={this.handleChange('panel1')}
                 handleChange={handleChange}
               />
@@ -245,29 +237,14 @@ class AboutUserComponent extends React.Component {
               />
 
               <div className={classes.aboutUserBtnWrapper}>
-                {isOwner ? (
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                    disabled={isSubmitting}
-                  >
-                    {' '}
-                    Save
-                  </Button>
-                ) : (
-                  ''
-                )}
-
-                <Button
-                  onClick={() => handleCancel(TAB_TYPE_MAP.POST_TAB)}
+              <Button
+                  onClick={() => this.handleBackClick(loggedUserInfo)}
                   variant="contained"
                   className={classes.cancel}
                   disabled={isSubmitting}
                 >
                   {' '}
-                  cancel
+                  Back
                 </Button>
               </div>
             </form>
@@ -279,8 +256,7 @@ class AboutUserComponent extends React.Component {
 }
 
 AboutUserComponent.propTypes = {
-  classes: PropTypes.object,
-  isOwner: PropTypes.bool.isRequired,
+  classes: PropTypes.object
 };
 
 function mapDispatchToProps(dispatch) {

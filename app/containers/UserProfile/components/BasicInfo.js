@@ -2,23 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import Input from '@material-ui/core/Input';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import EditIcon from '@material-ui/icons/Edit';
+import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { createStructuredSelector } from 'reselect';
-import Upload from 'components/Upload/Loadable';
 import { makeSelectLoggedUser } from '../../../store/loggeduser/selectors';
-import { Divider } from '@material-ui/core/Divider';
+
 
 import EditDialog from './EditDialog';
 
@@ -80,6 +74,10 @@ const styles = theme => ({
     fontSize: 20,
     cursor:'pointer'
   },
+  infoLabel :{
+    display : 'inline-block',
+    marginLeft : 15
+  },
   deleteBtn: {
     background: '#e63d3d',
     color: 'white',
@@ -94,7 +92,7 @@ const styles = theme => ({
 class AboutUserComponent extends React.PureComponent {
 
   state = {
-    editDialogExpand: null,
+    editDialogExpand: false,
     basicInfoEditView: null,
   };
 
@@ -111,10 +109,20 @@ class AboutUserComponent extends React.PureComponent {
     })
   }
 
-
+  renderLabelsAndValues = (label,value) => {
+    const { classes } = this.props;
+    return (<Typography variant="h6" gutterBottom>
+              {label} :
+              <Typography variant="button"
+                gutterBottom className={classes.infoLabel}>
+                {value}
+              </Typography>
+            </Typography>
+            )
+  }
 
   render() {
-    const { classes, values, handleChange, touched, errors,expanded,handlePanelChange } = this.props;
+    const { classes,expanded,handlePanelChange } = this.props;
     const {editDialogExpand, basicInfoEditView } = this.state;
     return (
       <ExpansionPanel
@@ -137,120 +145,27 @@ class AboutUserComponent extends React.PureComponent {
             Basic Information
           </Typography>
         </ExpansionPanelSummary>
-
         <ExpansionPanelDetails className={classes.panelDetails}>
-          <FormControl
-            margin="normal"
-            required="required"
-            fullWidth="fullWidth"
-          >
-            <InputLabel htmlFor="name">Name</InputLabel>
-            <Input
-              id="name"
-              name="name"
-              autoComplete="name"
-              value={values.name}
-              onChange={handleChange}
-              autoFocus="autoFocus"
-              fullWidth="fullWidth"
-            />
-          </FormControl>
-
-          <FormControl margin="normal" fullWidth="fullWidth">
-            <InputLabel htmlFor="gender">Gender</InputLabel>
-            <Select
-              value={values.gender}
-              onChange={handleChange}
-              input={<Input id="gender" name="gender" />}
-            >
-              <MenuItem value="male">Male</MenuItem>
-              <MenuItem value="female">Female</MenuItem>
-              <MenuItem value="other">other</MenuItem>
-            </Select>
-            {touched.gender &&
-              errors.gender && (
-                <FormHelperText className={classes.error}>
-                  {errors.gender}
-                </FormHelperText>
-              )}
-          </FormControl>
-
-          <FormControl
-            margin="normal"
-            required="required"
-            fullWidth="fullWidth"
-          >
-            <InputLabel htmlFor="email">Email</InputLabel>
-            <Input
-              id="email"
-              name="email"
-              autoComplete="email"
-              value={values.email}
-              disabled="disabled"
-              onChange={handleChange}
-            />{' '}
-            {touched.email &&
-              errors.email && (
-                <FormHelperText className={classes.error}>
-                  {errors.email}
-                </FormHelperText>
-              )}
-            {errors.exists && (
-              <FormHelperText className={classes.error}>
-                {errors.exists}
-              </FormHelperText>
-            )}
-          </FormControl>
-
-          <FormControl
-            margin="normal"
-            required="required"
-            fullWidth="fullWidth"
-          >
-            <InputLabel htmlFor="name">Country</InputLabel>
-            <Input
-              id="country"
-              name="country"
-              value={values.country}
-              onChange={handleChange}
-              autoFocus="autoFocus"
-            />
-          </FormControl>
-
-          <FormControl
-            margin="normal"
-            required="required"
-            fullWidth="fullWidth"
-          >
-            <InputLabel htmlFor="name">Home Town</InputLabel>
-            <Input
-              id="homeTown"
-              name="homeTown"
-              value={values.homeTown}
-              onChange={handleChange}
-              autoFocus="autoFocus"
-            />
-          </FormControl>
-
-          <FormControl
-            margin="normal"
-            required="required"
-            fullWidth="fullWidth"
-          >
-            <InputLabel htmlFor="name">Current City</InputLabel>
-            <Input
-              id="currentCity"
-              name="currentCity"
-              value={values.currentCity}
-              onChange={handleChange}
-              autoFocus="autoFocus"
-            />
-          </FormControl>
-
-          <Upload
-            text="Upload Your profile picture"
-            onUploaded={res => setFieldValue('picture', res[0].secure_url)}
-          />
+          <Grid container spacing={16}>
+              <Grid item xs={12} sm={12} lg={6}>
+                {this.renderLabelsAndValues('Name','Name')}
+              </Grid>
+              <Grid item xs={12} sm={12} lg={6}>
+                {this.renderLabelsAndValues('Gender','Gender')}
+              </Grid>
+              <Grid item xs={12} sm={12} lg={6}>
+                {this.renderLabelsAndValues('Email','Email')}
+              </Grid>
+              <Grid item xs={12} sm={12} lg={6}>
+                    {this.renderLabelsAndValues('Country','Country')}
+              </Grid>
+              <Grid item xs={12} sm={12} lg={6}>
+                      {this.renderLabelsAndValues('HomeTown','HomeTown')}
+              </Grid>
+              <Grid item xs={12} sm={12} lg={6}>
+                    {this.renderLabelsAndValues('Current City','Current City')}
+            </Grid>
+          </Grid>
         </ExpansionPanelDetails>
       </ExpansionPanel>
     );

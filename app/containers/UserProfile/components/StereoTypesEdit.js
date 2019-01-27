@@ -40,7 +40,6 @@ class StereoTypesEdit extends React.Component {
               name="religiousView"
               value={values.religiousView}
               onChange={handleChange}
-              autoFocus="autoFocus"
               multiline="multiline"
             />
           </FormControl>

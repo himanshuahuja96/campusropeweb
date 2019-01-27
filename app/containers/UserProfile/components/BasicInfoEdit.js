@@ -34,35 +34,6 @@ class BasicInfoEdit extends React.PureComponent {
             />
           </FormControl>
 
-          <FormControl margin="normal" fullWidth="fullWidth">
-            <InputLabel htmlFor="gender">Gender</InputLabel>
-            <Select
-              value={values.gender}
-              onChange={handleChange}
-              input={<Input id="gender" name="gender" />}
-            >
-              <MenuItem value="male">Male</MenuItem>
-              <MenuItem value="female">Female</MenuItem>
-              <MenuItem value="other">other</MenuItem>
-            </Select>
-          </FormControl>
-
-          <FormControl
-            margin="normal"
-            required="required"
-            fullWidth="fullWidth"
-          >
-            <InputLabel htmlFor="email">Email</InputLabel>
-            <Input
-              id="email"
-              name="email"
-              autoComplete="email"
-              value={values.email}
-              disabled="disabled"
-              onChange={handleChange}
-            />{' '}
-          </FormControl>
-
           <FormControl
             margin="normal"
             required="required"
@@ -74,7 +45,6 @@ class BasicInfoEdit extends React.PureComponent {
               name="country"
               value={values.country}
               onChange={handleChange}
-              autoFocus="autoFocus"
             />
           </FormControl>
 
@@ -89,7 +59,6 @@ class BasicInfoEdit extends React.PureComponent {
               name="homeTown"
               value={values.homeTown}
               onChange={handleChange}
-              autoFocus="autoFocus"
             />
           </FormControl>
 
@@ -104,14 +73,8 @@ class BasicInfoEdit extends React.PureComponent {
               name="currentCity"
               value={values.currentCity}
               onChange={handleChange}
-              autoFocus="autoFocus"
             />
           </FormControl>
-
-          <Upload
-            text="Upload Your profile picture"
-            onUploaded={res => setFieldValue('picture', res[0].secure_url)}
-          />
           </React.Fragment>
     );
   }
