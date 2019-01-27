@@ -88,11 +88,13 @@ class AboutUserComponent extends React.Component {
   state = {
     expanded: null,
     editDialogExpand: null,
+    generalInfoEditView: null
   };
 
   handleEditDialogPanel = () => {
     this.setState({
-      editDialogExpand : true
+      editDialogExpand : true,
+      generalInfoEditView : true
     })
   }
 
@@ -110,7 +112,7 @@ class AboutUserComponent extends React.Component {
 
   render() {
     const { classes, values = {}, handleChange ,handlePanelChange,expanded} = this.props;
-    const {editDialogExpand } = this.state;
+    const {editDialogExpand, generalInfoEditView } = this.state;
     return (
       <ExpansionPanel
       expanded={expanded}
@@ -124,6 +126,7 @@ class AboutUserComponent extends React.Component {
       <EditDialog
       editDialogExpand = {editDialogExpand}
       handleClose = {this.handleClose}
+      generalInfoEditView = {generalInfoEditView}
       />
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <Typography variant="body1" className={classes.heading}>

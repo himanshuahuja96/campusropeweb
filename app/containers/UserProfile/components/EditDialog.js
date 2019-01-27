@@ -9,6 +9,10 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 
+import BasicInfoEdit from './BasicInfoEdit'
+import GeneralInfoEdit from './GeneralInfoEdit'
+import StereoTypesEdit from './StereoTypesEdit'
+
 
 const DialogTitle = withStyles(theme => ({
   root: {
@@ -56,7 +60,8 @@ const DialogActions = withStyles(theme => ({
 class EditDialog extends React.Component {
 
   render() {
-    const { editDialogExpand, handleClose } = this.props;
+    const { editDialogExpand, handleClose, basicInfoEditView, generalInfoEditView,
+            stereoTypesInfoEditView } = this.props;
     return (
       <div>
         <Dialog
@@ -65,23 +70,14 @@ class EditDialog extends React.Component {
           open={editDialogExpand}
         >
           <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-            Modal title
+              {basicInfoEditView && 'Basic Info' }
+              {generalInfoEditView && 'General Info' }
+              {stereoTypesInfoEditView && 'StereoTypes Info'}
           </DialogTitle>
           <DialogContent>
-            <Typography gutterBottom>
-              Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-              facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum
-              at eros.
-            </Typography>
-            <Typography gutterBottom>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-              lacus vel augue laoreet rutrum faucibus dolor auctor.
-            </Typography>
-            <Typography gutterBottom>
-              Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-              scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
-              auctor fringilla.
-            </Typography>
+            {basicInfoEditView && <BasicInfoEdit/> }
+            {generalInfoEditView && <GeneralInfoEdit/> }
+            {stereoTypesInfoEditView && <StereoTypesEdit/>}
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary">

@@ -176,7 +176,6 @@ class AboutUserComponent extends React.Component {
   };
 
   handleChange = panel => (event, expanded) => {
-    debugger
     this.setState({
       expanded: expanded ? panel : false,
     });

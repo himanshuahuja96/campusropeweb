@@ -95,11 +95,13 @@ class AboutUserComponent extends React.PureComponent {
 
   state = {
     editDialogExpand: null,
+    basicInfoEditView: null,
   };
 
   handleEditDialogPanel = () => {
     this.setState({
-      editDialogExpand : true
+      editDialogExpand : true,
+      basicInfoEditView : true
     })
   }
 
@@ -113,7 +115,7 @@ class AboutUserComponent extends React.PureComponent {
 
   render() {
     const { classes, values, handleChange, touched, errors,expanded,handlePanelChange } = this.props;
-    const {editDialogExpand } = this.state;
+    const {editDialogExpand, basicInfoEditView } = this.state;
     return (
       <ExpansionPanel
         expanded={expanded}
@@ -128,6 +130,7 @@ class AboutUserComponent extends React.PureComponent {
       <EditDialog
       editDialogExpand = {editDialogExpand}
       handleClose = {this.handleClose}
+      basicInfoEditView = {basicInfoEditView}
       />
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <Typography variant="body1" className={classes.heading}>

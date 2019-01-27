@@ -91,6 +91,7 @@ class AboutUserComponent extends React.Component {
   state = {
     expanded: null,
     editDialogExpand: null,
+    stereoTypesInfoEditView: null,
   };
 
   handlePanelChange = panel => (event, expanded) => {
@@ -101,7 +102,8 @@ class AboutUserComponent extends React.Component {
 
   handleEditDialogPanel = () => {
     this.setState({
-      editDialogExpand : true
+      editDialogExpand : true,
+      stereoTypesInfoEditView : true
     })
   }
 
@@ -114,7 +116,7 @@ class AboutUserComponent extends React.Component {
   render() {
     const { classes, values, handleChange,expanded ,handlePanelChange} = this.props;
     const TAB_TYPE_MAP = ProfileTabType.typeTypeMap;
-    const {editDialogExpand } = this.state;
+    const {editDialogExpand, stereoTypesInfoEditView } = this.state;
     return (
       <ExpansionPanel
       expanded={expanded}
@@ -129,6 +131,7 @@ class AboutUserComponent extends React.Component {
       <EditDialog
       editDialogExpand = {editDialogExpand}
       handleClose = {this.handleClose}
+      stereoTypesInfoEditView = {stereoTypesInfoEditView}
       />
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <Typography variant="body1" className={classes.heading}>
