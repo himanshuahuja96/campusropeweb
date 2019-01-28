@@ -15,8 +15,7 @@ class StereoTypesEdit extends React.Component {
     <React.Fragment>
           <FormControl
             margin="normal"
-            required="required"
-            fullWidth="fullWidth"
+            fullWidth={true}
           >
             <InputLabel htmlFor="name">Political View</InputLabel>
             <Input
@@ -24,15 +23,14 @@ class StereoTypesEdit extends React.Component {
               name="politicalView"
               value={values.politicalView}
               onChange={handleChange}
-              autoFocus="autoFocus"
-              multiline="multiline"
+              autoFocus={true}
+              multiline={true}
             />
           </FormControl>
 
           <FormControl
             margin="normal"
-            required="required"
-            fullWidth="fullWidth"
+            fullWidth={true}
           >
             <InputLabel htmlFor="name">Religious View</InputLabel>
             <Input
@@ -40,7 +38,7 @@ class StereoTypesEdit extends React.Component {
               name="religiousView"
               value={values.religiousView}
               onChange={handleChange}
-              multiline="multiline"
+              multiline={true}
             />
           </FormControl>
         </React.Fragment>

@@ -2,13 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import Input from '@material-ui/core/Input';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import { createStructuredSelector } from 'reselect';
-import Upload from 'components/Upload/Loadable';
 import { makeSelectLoggedUser } from '../../../store/loggeduser/selectors';
 
 /* eslint react/prop-types: 0 */
@@ -19,8 +15,7 @@ class BasicInfoEdit extends React.PureComponent {
       <React.Fragment>
           <FormControl
             margin="normal"
-            required="required"
-            fullWidth="fullWidth"
+            fullWidth={true}
           >
             <InputLabel htmlFor="name">Name</InputLabel>
             <Input
@@ -29,15 +24,14 @@ class BasicInfoEdit extends React.PureComponent {
               autoComplete="name"
               value={values.name}
               onChange={handleChange}
-              autoFocus="autoFocus"
-              fullWidth="fullWidth"
+              autoFocus={true}
+              fullWidth={true}
             />
           </FormControl>
 
           <FormControl
             margin="normal"
-            required="required"
-            fullWidth="fullWidth"
+            fullWidth={true}
           >
             <InputLabel htmlFor="name">Country</InputLabel>
             <Input
@@ -50,8 +44,7 @@ class BasicInfoEdit extends React.PureComponent {
 
           <FormControl
             margin="normal"
-            required="required"
-            fullWidth="fullWidth"
+            fullWidth={true}
           >
             <InputLabel htmlFor="name">Home Town</InputLabel>
             <Input
@@ -64,8 +57,7 @@ class BasicInfoEdit extends React.PureComponent {
 
           <FormControl
             margin="normal"
-            required="required"
-            fullWidth="fullWidth"
+            fullWidth={true}
           >
             <InputLabel htmlFor="name">Current City</InputLabel>
             <Input

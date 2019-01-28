@@ -15,8 +15,7 @@ class GeneralInfoEdit extends React.Component {
    <React.Fragment>
           <FormControl
             margin="normal"
-            required="required"
-            fullWidth="fullWidth"
+            fullWidth={true}
           >
             <MultipleChipInput
               label="Work And Experience"
@@ -27,8 +26,7 @@ class GeneralInfoEdit extends React.Component {
 
           <FormControl
             margin="normal"
-            required="required"
-            fullWidth="fullWidth"
+            fullWidth={true}
           >
             <MultipleChipInput
               label="Skills"
@@ -39,8 +37,7 @@ class GeneralInfoEdit extends React.Component {
 
           <FormControl
             margin="normal"
-            required="required"
-            fullWidth="fullWidth"
+            fullWidth={true}
           >
             <InputLabel htmlFor="name">College</InputLabel>
 
@@ -54,8 +51,7 @@ class GeneralInfoEdit extends React.Component {
 
           <FormControl
             margin="normal"
-            required="required"
-            fullWidth="fullWidth"
+            fullWidth={true}
           >
             <FieldArray
               name="otherDegreeAndCourses"
@@ -78,8 +74,7 @@ class GeneralInfoEdit extends React.Component {
 
           <FormControl
             margin="normal"
-            required="required"
-            fullWidth="fullWidth"
+            fullWidth={true}
           >
             <MultipleChipInput
               label="Career Objectives"

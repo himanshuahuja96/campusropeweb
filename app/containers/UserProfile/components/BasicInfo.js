@@ -173,8 +173,7 @@ class AboutUserComponent extends React.PureComponent {
 }
 
 AboutUserComponent.propTypes = {
-  classes: PropTypes.object,
-  isOwner: PropTypes.bool.isRequired,
+  classes: PropTypes.object
 };
 
 function mapDispatchToProps(dispatch) {

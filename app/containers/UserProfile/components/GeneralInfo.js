@@ -176,8 +176,7 @@ class AboutUserComponent extends React.Component {
 }
 
 AboutUserComponent.propTypes = {
-  classes: PropTypes.object,
-  isOwner: PropTypes.bool.isRequired,
+  classes: PropTypes.object
 };
 
 const componentWithStyles = withStyles(styles)(AboutUserComponent);
