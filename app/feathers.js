@@ -1,11 +1,14 @@
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 import feathers from '@feathersjs/client';
 import findOne from 'feathers-findone';
 
-const socket = io('http://localhost:3030');
+// const socket = io('http://localhost:3030');
 const client = feathers();
+const restClient = feathers.rest('http://localhost:3030');
 
-client.configure(feathers.socketio(socket, { timeout: 2000 }));
+// client.configure(feathers.socketio(socket, { timeout: 2000 }));
+// client.configure(client.rest('http://localhost:3030'));
+client.configure(restClient.fetch(window.fetch));
 client.configure(findOne());
 client.configure(
   feathers.authentication({
