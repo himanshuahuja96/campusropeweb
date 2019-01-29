@@ -82,7 +82,7 @@ export class UserProfile extends React.Component {
   }
 
   render() {
-    const { userprofileInfo} = this.props;
+    const { userprofileInfo,isLoggedUser} = this.props;
 
 
     return (
@@ -92,7 +92,10 @@ export class UserProfile extends React.Component {
 
           <meta name="description" content="Description of UserProfile" />
         </Helmet>
-       <UserProfileBrowserView userinfo={userprofileInfo}/>
+       <UserProfileBrowserView
+       userinfo={userprofileInfo}
+       isLoggedUser={isLoggedUser}
+       />
       </div>
     );
   }
