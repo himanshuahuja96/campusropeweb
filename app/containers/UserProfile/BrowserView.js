@@ -13,7 +13,6 @@ import Typography from '@material-ui/core/Typography';
 import UserBio from './components/UserBio';
 import AboutAchievementTabs from './components/AboutAchievementTabs';
 import Followers from './components/Followers';
-import MoreDialogOther from './components/MoreDialogOther';
 import MoreDialogSelf from './components/MoreDialogSelf';
 import NewPost from './components/NewPost';
 import UserPosts from './components/UserPosts';
@@ -23,6 +22,7 @@ const styles = () => ({
     marginTop: 20,
     width: 150,
     height: 150,
+    left: "30%"
   },
   root: {
     padding: 10,
@@ -35,7 +35,7 @@ const styles = () => ({
 /* eslint-disable  */
 export class BrowserView extends React.PureComponent {
   render() {
-    const { classes, isLoggedUser, userinfo } = this.props;
+    const { classes, userinfo, isOwner } = this.props;
     return (
         <Grid container className={classes.root}>
           <Grid item lg={4} md={4}>
@@ -53,7 +53,7 @@ export class BrowserView extends React.PureComponent {
               {userinfo.name}
             </Typography>
             <Followers />
-            {isLoggedUser ? <MoreDialogSelf /> : <MoreDialogOther />}
+            <MoreDialogSelf/>
             <NewPost />
             <UserPosts />
           </Grid>

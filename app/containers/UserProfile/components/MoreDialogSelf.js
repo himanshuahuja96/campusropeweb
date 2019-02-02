@@ -1,23 +1,21 @@
 import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-const options = [
-  'Copy user profile link'
-];
+const styles = (theme) => ({
+  button: {
+    margin: theme.spacing.unit,
+  }
+});
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
-
-const ITEM_HEIGHT = 48;
 
 class LongMenu extends React.Component {
   state = {
@@ -33,13 +31,14 @@ class LongMenu extends React.Component {
   };
 
   render() {
+    const { classes} = this.props;
     return (
       <div>
         <IconButton
           aria-label="More"
           aria-owns={open ? 'long-menu' : undefined}
           aria-haspopup="true"
-          onClick={this.handleClick}
+          onClick={this.handleClickOpen}
         >
           <MoreVertIcon />
         </IconButton>
@@ -48,30 +47,21 @@ class LongMenu extends React.Component {
           TransitionComponent={Transition}
           keepMounted
           onClose={this.handleClose}
-          aria-labelledby="alert-dialog-slide-title"
-          aria-describedby="alert-dialog-slide-description"
         >
-          <DialogTitle id="alert-dialog-slide-title">
-            {"Use Google's location service?"}
-          </DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              Let Google help apps determine location. This means sending
-              anonymous location data to Google, even when no apps are running.
-            </DialogContentText>
+            <Button variant="contained" color="secondary" className={classes.button}>
+                Copy user profile link
+            </Button>
+            <Button variant="contained"
+                onClick={this.handleClose}
+                color="default" className={classes.button}>
+                Cancel
+            </Button>
           </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Disagree
-            </Button>
-            <Button onClick={this.handleClose} color="primary">
-              Agree
-            </Button>
-          </DialogActions>
         </Dialog>
       </div>
     );
   }
 }
-
-export default LongMenu;
+const LongMenuStylesWrapped = withStyles(styles)(LongMenu);
+export default LongMenuStylesWrapped;

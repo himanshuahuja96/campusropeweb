@@ -1,68 +1,61 @@
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import MoreHoriz from '@material-ui/icons/MoreHoriz';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Dialog from '@material-ui/core/Dialog';
+import Button from '@material-ui/core/Button';
+import MuiDialogContent from '@material-ui/core/DialogContent';
 
-const options = [
-  'Report this user',
-  'Block this user'
-];
+const styles = (theme) => ({
+  button: {
+    margin: theme.spacing.unit,
+  }
+});
 
-const ITEM_HEIGHT = 48;
+const DialogContent = withStyles(theme => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing.unit * 2,
+  },
+}))(MuiDialogContent);
 
-class LongMenu extends React.Component {
-  state = {
-    anchorEl: null,
-  };
-
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
+class MoreDialogOther extends React.Component {
   handleClose = () => {
-    this.setState({ anchorEl: null });
+    this.props.onClose(this.props.selectedValue);
+  };
+
+  handleListItemClick = value => {
+    this.props.onClose(value);
   };
 
   render() {
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
+    const { classes, onClose, selectedValue, ...other } = this.props;
 
     return (
-      <div>
-        <IconButton
-          aria-label="More"
-          aria-owns={open ? 'long-menu' : undefined}
-          aria-haspopup="true"
-          onClick={this.handleClick}
-        >
-          <MoreHoriz />
-        </IconButton>
-        <Menu
-          id="long-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={this.handleClose}
-          PaperProps={{
-            style: {
-              maxHeight: ITEM_HEIGHT * 4.5,
-              width: 200,
-            },
-          }}
-        >
-          {options.map(option => (
-            <MenuItem
-              key={option}
-              selected={option === 'Pyxis'}
-              onClick={this.handleClose}
-            >
-              {option}
-            </MenuItem>
-          ))}
-        </Menu>
-      </div>
+      <Dialog onClose={onClose} {...other}>
+      <DialogContent>
+            <Button variant="contained" color="primary" className={classes.button}>
+              Report this user
+            </Button>
+            <Button variant="contained" color="secondary" className={classes.button}>
+                  Block this user
+            </Button>
+            <Button variant="contained"
+              onClick={onClose}
+              color="default" className={classes.button}>
+              Cancel
+            </Button>
+          </DialogContent>
+      </Dialog>
     );
   }
 }
 
-export default LongMenu;
+MoreDialogOther.propTypes = {
+  classes: PropTypes.object.isRequired,
+  onClose: PropTypes.func,
+  selectedValue: PropTypes.string,
+};
+
+const MoreDialogOtherStylesWrapped = withStyles(styles)(MoreDialogOther);
+
+export default MoreDialogOtherStylesWrapped;
