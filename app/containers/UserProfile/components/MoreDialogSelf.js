@@ -10,20 +10,7 @@ import Slide from '@material-ui/core/Slide';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const options = [
-  'None',
-  'Atria',
-  'Callisto',
-  'Dione',
-  'Ganymede',
-  'Hangouts Call',
-  'Luna',
-  'Oberon',
-  'Phobos',
-  'Pyxis',
-  'Sedna',
-  'Titania',
-  'Triton',
-  'Umbriel',
+  'Copy user profile link'
 ];
 
 function Transition(props) {

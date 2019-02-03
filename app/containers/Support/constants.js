@@ -4,4 +4,6 @@
  *
  */
 
-export const DEFAULT_ACTION = 'app/Support/DEFAULT_ACTION';
+export const SUBMIT_QUESTION = 'app/Support/submitQuestion';
+export const SUBMIT_QUESTION_ERROR = 'app/Support/submitQuestionError';
+export const SUBMIT_QUESTION_DONE = 'app/Support/submitQuestionDone';

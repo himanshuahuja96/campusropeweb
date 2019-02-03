@@ -27,6 +27,9 @@ const styles = () => ({
   root: {
     padding: 10,
   },
+  userNameLabel: {
+    textTransform : 'capitalize'
+  }
 });
 
 /* eslint-disable  */
@@ -46,7 +49,9 @@ export class BrowserView extends React.PureComponent {
             userinfo={userinfo} />
           </Grid>
           <Grid item lg={8} md={8}>
-            <Typography>{userinfo.name}</Typography>
+            <Typography variant="h4" gutterBottom className={classes.userNameLabel}>
+              {userinfo.name}
+            </Typography>
             <Followers />
             {isLoggedUser ? <MoreDialogSelf /> : <MoreDialogOther />}
             <NewPost />
