@@ -81,7 +81,7 @@ class EditDialog extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary">
-              Save changes
+              Save
             </Button>
           </DialogActions>
         </Dialog>

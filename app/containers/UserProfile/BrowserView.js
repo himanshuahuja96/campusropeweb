@@ -10,6 +10,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import Upload from 'components/Upload/Loadable';
 import UserBio from './components/UserBio';
 import AboutAchievementTabs from './components/AboutAchievementTabs';
 import Followers from './components/Followers';
@@ -22,7 +23,11 @@ const styles = () => ({
     marginTop: 20,
     width: 150,
     height: 150,
-    left: "30%"
+    left: "30%",
+    opacity: 1,
+    display: "block",
+    transition: ".5s ease",
+    backfaceVisibility: "hidden"
   },
   root: {
     padding: 10,
@@ -39,11 +44,19 @@ export class BrowserView extends React.PureComponent {
     return (
         <Grid container className={classes.root}>
           <Grid item lg={4} md={4}>
-            <Avatar
-              alt="Remy Sharp"
-              src={userinfo.picture}
-              className={classes.avatar}
-            />
+            <div className="avatarContainer">
+              <Avatar
+                alt="Remy Sharp"
+                src={userinfo.picture}
+                className={classes.avatar}
+              />
+              <div className="middle">
+                  <Upload
+                  text="Change"
+                  onUploaded={res => console.log(res)}
+                  />
+              </div>
+            </div>
             <UserBio />
             <AboutAchievementTabs
             userinfo={userinfo} />
