@@ -17,6 +17,7 @@ const styles = () => ({
     margin: 50,
     display: 'flex',
     justifyContent: 'space-between',
+    marginTop: 20,
   },
   achievementBtn: {
     background: '#ff4c00',

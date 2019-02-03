@@ -74,7 +74,7 @@ export class UserProfile extends React.Component {
     this.props.fetchUserProfile(userId);
   }
 
-  isOwner() {
+  isOwner =() => {
     const { userId } = this.props.match.params;
     const user =
       (this.props.loggedUserInfo && this.props.loggedUserInfo.user) || {};
@@ -95,6 +95,7 @@ export class UserProfile extends React.Component {
        <UserProfileBrowserView
        userinfo={userprofileInfo}
        isLoggedUser={isLoggedUser}
+       isOwner={this.isOwner}
        />
       </div>
     );

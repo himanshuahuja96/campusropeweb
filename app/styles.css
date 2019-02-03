@@ -17,6 +17,7 @@
     flex-grow: 1
 }
 
+<<<<<<< HEAD
 a{
     text-decoration: none;
     color: inherit;
@@ -25,3 +26,34 @@ a{
 a:visited {
     color: inherit;
 }
+=======
+.avatarContainer {
+  position: relative;
+}
+
+.avatarContainer:hover img {
+    opacity: 0.3
+}
+.avatarContainer:hover .middle {
+    opacity: 1
+}
+
+.middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 48%;
+  transform: translate(-50%, -50%);
+  text-align: center
+}
+
+.middle button{
+      box-shadow: none;
+    background-color: none
+}
+.middle button:hover{
+      box-shadow: none;
+    background-color: none
+}
+>>>>>>> 367390c68c052180824063dca5be9662484b23d4

@@ -9,10 +9,9 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 
-import BasicInfoEdit from './BasicInfoEdit'
-import GeneralInfoEdit from './GeneralInfoEdit'
-import StereoTypesEdit from './StereoTypesEdit'
-
+import BasicInfoEdit from './BasicInfoEdit';
+import GeneralInfoEdit from './GeneralInfoEdit';
+import StereoTypesEdit from './StereoTypesEdit';
 
 const DialogTitle = withStyles(theme => ({
   root: {
@@ -32,7 +31,11 @@ const DialogTitle = withStyles(theme => ({
     <MuiDialogTitle disableTypography className={classes.root}>
       <Typography variant="h6">{children}</Typography>
       {onClose ? (
-        <IconButton aria-label="Close" className={classes.closeButton} onClick={onClose}>
+        <IconButton
+          aria-label="Close"
+          className={classes.closeButton}
+          onClick={onClose}
+        >
           <CloseIcon />
         </IconButton>
       ) : null}
@@ -55,13 +58,16 @@ const DialogActions = withStyles(theme => ({
   },
 }))(MuiDialogActions);
 
-
 /* eslint react/prop-types: 0 */
 class EditDialog extends React.Component {
-
   render() {
-    const { editDialogExpand, handleClose, basicInfoEditView, generalInfoEditView,
-            stereoTypesInfoEditView } = this.props;
+    const {
+      editDialogExpand,
+      handleClose,
+      basicInfoEditView,
+      generalInfoEditView,
+      stereoTypesInfoEditView,
+    } = this.props;
     return (
       <div>
         <Dialog
@@ -70,18 +76,18 @@ class EditDialog extends React.Component {
           open={editDialogExpand}
         >
           <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-              {basicInfoEditView && 'Basic Info' }
-              {generalInfoEditView && 'General Info' }
-              {stereoTypesInfoEditView && 'StereoTypes Info'}
+            {basicInfoEditView && 'Basic Info'}
+            {generalInfoEditView && 'General Info'}
+            {stereoTypesInfoEditView && 'StereoTypes Info'}
           </DialogTitle>
           <DialogContent>
-            {basicInfoEditView && <BasicInfoEdit/> }
-            {generalInfoEditView && <GeneralInfoEdit/> }
-            {stereoTypesInfoEditView && <StereoTypesEdit/>}
+            {basicInfoEditView && <BasicInfoEdit />}
+            {generalInfoEditView && <GeneralInfoEdit />}
+            {stereoTypesInfoEditView && <StereoTypesEdit />}
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary">
-              Save changes
+              Save
             </Button>
           </DialogActions>
         </Dialog>

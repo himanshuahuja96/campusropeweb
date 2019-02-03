@@ -8,13 +8,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = () => ({});
+import InlineEdit from '../../../components/InlineEdit/index';
+
+const styles = () => ({
+  bioRoot: {
+    marginTop: 20,
+    marginLeft: 50,
+  },
+});
 
 /* eslint-disable  */
 export class UserBio extends React.PureComponent {
   render() {
     const { classes } = this.props;
-    return <div className={classes.root} >I am full stack develope</div>;
+    return (
+    <div className={classes.bioRoot}>
+      <InlineEdit
+        inputWidth={"85%"}
+        text={"User Bio"}/>
+    </div>
+    );
   }
 }
 
