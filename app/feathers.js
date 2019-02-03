@@ -24,4 +24,6 @@ export const trendingNewsService = client.service('trending-news');
 export const helplineService = client.service('helpline');
 export const newsClientService = client.service('news-client');
 
+export const supportService = client.service('support');
+
 export default client;
