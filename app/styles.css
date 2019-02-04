@@ -17,7 +17,6 @@
     flex-grow: 1
 }
 
-<<<<<<< HEAD
 a{
     text-decoration: none;
     color: inherit;
@@ -26,7 +25,6 @@ a{
 a:visited {
     color: inherit;
 }
-=======
 .avatarContainer {
   position: relative;
 }
@@ -56,4 +54,3 @@ a:visited {
       box-shadow: none;
     background-color: none
 }
->>>>>>> 367390c68c052180824063dca5be9662484b23d4
