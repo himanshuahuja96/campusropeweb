@@ -8,11 +8,14 @@ import {
   SUBMIT_QUESTION,
   SUBMIT_QUESTION_ERROR,
   SUBMIT_QUESTION_DONE,
+  STORE_QUESTIONS,
+  DELETE_QUESTION,
 } from './constants';
 
 export const initialState = {
   callInProgress: false,
   error: null,
+  questions: [],
 };
 
 function supportReducer(state = initialState, action) {
@@ -23,6 +26,14 @@ function supportReducer(state = initialState, action) {
       return { ...state, callInProgress: false, error: action.errorMsg };
     case SUBMIT_QUESTION_DONE:
       return { ...state, callInProgress: false };
+    case STORE_QUESTIONS:
+      return { ...state, questions: action.payload };
+    case DELETE_QUESTION:
+      return {
+        ...state,
+        questions: state.questions.filter(q => q._id !== action.id),
+      };
+
     default:
       return state;
   }
