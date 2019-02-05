@@ -11,13 +11,13 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import MoreDialogOther from './MoreDialogOther';
 
-const styles = (theme) => ({
-  labelStyle : {
+const styles = theme => ({
+  labelStyle: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   button: {
-    margin: theme.spacing.unit *2,
+    margin: theme.spacing.unit * 2,
   },
 });
 

@@ -5,10 +5,10 @@ import Dialog from '@material-ui/core/Dialog';
 import Button from '@material-ui/core/Button';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 
-const styles = (theme) => ({
+const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
-  }
+  },
 });
 
 const DialogContent = withStyles(theme => ({
@@ -32,19 +32,30 @@ class MoreDialogOther extends React.Component {
 
     return (
       <Dialog onClose={onClose} {...other}>
-      <DialogContent>
-            <Button variant="contained" color="primary" className={classes.button}>
-              Report this user
-            </Button>
-            <Button variant="contained" color="secondary" className={classes.button}>
-                  Block this user
-            </Button>
-            <Button variant="contained"
-              onClick={onClose}
-              color="default" className={classes.button}>
-              Cancel
-            </Button>
-          </DialogContent>
+        <DialogContent>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+          >
+            Report this user
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.button}
+          >
+            Block this user
+          </Button>
+          <Button
+            variant="contained"
+            onClick={onClose}
+            color="default"
+            className={classes.button}
+          >
+            Cancel
+          </Button>
+        </DialogContent>
       </Dialog>
     );
   }

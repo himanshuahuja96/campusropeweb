@@ -7,10 +7,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import Slide from '@material-ui/core/Slide';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-const styles = (theme) => ({
+const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
-  }
+  },
 });
 
 function Transition(props) {
@@ -31,7 +31,7 @@ class LongMenu extends React.Component {
   };
 
   render() {
-    const { classes} = this.props;
+    const { classes } = this.props;
     return (
       <div>
         <IconButton
@@ -49,13 +49,20 @@ class LongMenu extends React.Component {
           onClose={this.handleClose}
         >
           <DialogContent>
-            <Button variant="contained" color="secondary" className={classes.button}>
-                Copy user profile link
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.button}
+            >
+              Copy user profile link
             </Button>
-            <Button variant="contained"
-                onClick={this.handleClose}
-                color="default" className={classes.button}>
-                Cancel
+            <Button
+              variant="contained"
+              onClick={this.handleClose}
+              color="default"
+              className={classes.button}
+            >
+              Cancel
             </Button>
           </DialogContent>
         </Dialog>

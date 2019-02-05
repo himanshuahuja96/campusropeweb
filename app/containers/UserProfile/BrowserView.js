@@ -23,18 +23,18 @@ const styles = () => ({
     marginTop: 20,
     width: 150,
     height: 150,
-    left: "30%",
+    left: '30%',
     opacity: 1,
-    display: "block",
-    transition: ".5s ease",
-    backfaceVisibility: "hidden"
+    display: 'block',
+    transition: '.5s ease',
+    backfaceVisibility: 'hidden',
   },
   root: {
     padding: 10,
   },
   userNameLabel: {
-    textTransform : 'capitalize'
-  }
+    textTransform: 'capitalize',
+  },
 });
 
 /* eslint-disable  */

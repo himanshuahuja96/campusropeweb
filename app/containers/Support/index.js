@@ -1,9 +1,3 @@
-/**
- *
- * Support
- *
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -18,9 +12,13 @@ import makeSelectSupport from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
+import { Switch, Route } from 'react-router-dom';
+import FAQ from './FAQ';
+import Admin from './Admin';
+import { submitQuestion, fetchQuestions, deleteQuestion } from './actions';
 
-/* eslint-disable react/prefer-stateless-function */
-export class Support extends React.Component {
+// eslint-disable-next-line
+class Support extends React.Component {
   render() {
     return (
       <div>
@@ -28,25 +26,55 @@ export class Support extends React.Component {
           <title>Support</title>
           <meta name="description" content="Description of Support" />
         </Helmet>
-        <FormattedMessage {...messages.header} />
+        <Switch>
+          <Route
+            path="/support"
+            exact
+            render={() => (
+              <FAQ
+                submitQuestion={this.props.submitQuestion}
+                callInProgress={this.props.callInProgress}
+                error={this.props.error}
+              />
+            )}
+          />
+          <Route
+            path="/support/admin"
+            render={() => (
+              <Admin
+                fetchQuestions={this.props.fetchQuestions}
+                deleteQuestion={this.props.deleteQuestion}
+                questions={this.props.questions}
+              />
+            )}
+          />
+        </Switch>
       </div>
     );
   }
 }
 
 Support.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  submitQuestion: PropTypes.func.isRequired,
+  callInProgress: PropTypes.bool.isRequired,
+  error: PropTypes.string,
 };
 
+/*
 const mapStateToProps = createStructuredSelector({
   support: makeSelectSupport(),
 });
+*/
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
+const mapStateToProps = ({ support }) => ({
+  ...support,
+});
+
+const mapDispatchToProps = dispatch => ({
+  submitQuestion: payload => dispatch(submitQuestion(payload)),
+  fetchQuestions: () => dispatch(fetchQuestions()),
+  deleteQuestion: id => dispatch(deleteQuestion(id)),
+});
 
 const withConnect = connect(
   mapStateToProps,

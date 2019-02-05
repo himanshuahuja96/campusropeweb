@@ -7,13 +7,12 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import { TextField, Typography, Button } from '@material-ui/core/Typography';
 import format from 'date-fns/format';
 import { createStructuredSelector } from 'reselect';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import Button from '@material-ui/core/Button';
 import _isEmpty from 'lodash/isEmpty';
 import IdealImage from 'react-ideal-image';
 import { fetchNgoById, updateNgo } from './actions';
@@ -33,6 +32,11 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 class NgoVerificationView extends React.Component {
+
+  state = {
+    comments: '',
+  }
+
   componentDidMount() {
     const ngoId = this.props.match.params.ngoId;
     this.props.fetchNgoById(ngoId);
@@ -154,6 +158,7 @@ class NgoVerificationView extends React.Component {
             <Typography component="p">
               contact email: {ngo.contactEmail}
             </Typography>
+            <TextField multiline value={this.state.comments} onChange={e => this.setState({comments: e.target.value})} />
             {this.renderActions(ngo)}
           </Fragment>
         )}
