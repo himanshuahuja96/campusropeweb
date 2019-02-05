@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectLoggedUser } from '../../../store/loggeduser/selectors';
+import { makeSelectUserProfileInfo } from '../selectors';
 
 
 import EditDialog from './EditDialog';
@@ -122,7 +123,7 @@ class AboutUserComponent extends React.PureComponent {
   }
 
   render() {
-    const { classes,expanded,handlePanelChange } = this.props;
+    const { classes,expanded,handlePanelChange,userprofileInfo } = this.props;
     const {editDialogExpand, basicInfoEditView } = this.state;
     return (
       <ExpansionPanel
@@ -148,22 +149,22 @@ class AboutUserComponent extends React.PureComponent {
         <ExpansionPanelDetails className={classes.panelDetails}>
           <Grid container spacing={16}>
               <Grid item xs={12} sm={12} lg={6}>
-                {this.renderLabelsAndValues('Name','Name')}
+                {this.renderLabelsAndValues('Name',userprofileInfo.name)}
               </Grid>
               <Grid item xs={12} sm={12} lg={6}>
-                {this.renderLabelsAndValues('Gender','Gender')}
+                {this.renderLabelsAndValues('Gender',userprofileInfo.gender)}
               </Grid>
               <Grid item xs={12} sm={12} lg={6}>
-                {this.renderLabelsAndValues('Email','Email')}
+                {this.renderLabelsAndValues('Email',userprofileInfo.email)}
               </Grid>
               <Grid item xs={12} sm={12} lg={6}>
-                    {this.renderLabelsAndValues('Country','Country')}
+                    {this.renderLabelsAndValues('Country',userprofileInfo.country || "-")}
               </Grid>
               <Grid item xs={12} sm={12} lg={6}>
-                      {this.renderLabelsAndValues('HomeTown','HomeTown')}
+                      {this.renderLabelsAndValues('HomeTown',userprofileInfo.homeTown || "-")}
               </Grid>
               <Grid item xs={12} sm={12} lg={6}>
-                    {this.renderLabelsAndValues('Current City','Current City')}
+                    {this.renderLabelsAndValues('Current City',userprofileInfo.currentCity || "-")}
             </Grid>
           </Grid>
         </ExpansionPanelDetails>
@@ -182,6 +183,7 @@ function mapDispatchToProps(dispatch) {
 
 const mapStateToProps = createStructuredSelector({
   loggedUserInfo: makeSelectLoggedUser(),
+  userprofileInfo: makeSelectUserProfileInfo(),
 });
 
 const withConnect = connect(

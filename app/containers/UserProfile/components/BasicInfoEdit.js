@@ -6,11 +6,12 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectLoggedUser } from '../../../store/loggeduser/selectors';
+import { makeSelectUserProfileInfo } from '../selectors';
 
 /* eslint react/prop-types: 0 */
 class BasicInfoEdit extends React.PureComponent {
   render() {
-    const { values = {}, handleChange} = this.props;
+    const { values = {}, handleChange,userprofileInfo} = this.props;
     return (
       <React.Fragment>
           <FormControl
@@ -78,6 +79,7 @@ function mapDispatchToProps(dispatch) {
 
 const mapStateToProps = createStructuredSelector({
   loggedUserInfo: makeSelectLoggedUser(),
+  userprofileInfo: makeSelectUserProfileInfo(),
 });
 
 const withConnect = connect(
