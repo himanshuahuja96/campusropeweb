@@ -54,7 +54,6 @@ function* submitLogin({ values, actions }) {
         authentication: NON_EXIST_EMAIL_PASSWORD_ERROR_MESSAGE,
       });
     }
-
     yield call(setSubmitting, false);
   }
 }

@@ -1,18 +1,39 @@
 import React from 'react';
+import Recaptcha from 'react-recaptcha';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
-import Button from '@material-ui/core/Button';
+import { Button, CircularProgress } from '@material-ui/core';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 /* eslint react/prop-types: 0 */
 /* eslint prettier/prettier: 0 */
-const SignupForm = ({ classes, handleSignUp }) => (
-  <Formik
+class SignupForm extends React.Component {
+
+  state = {
+    isVerified: false,
+    recapchaErrorMsg: null,
+  };
+
+  onSubmit = (values, actions) => {
+    if (this.state.isVerified) {
+      this.props.handleSignUp(values, actions);
+    } else {
+      this.setState({
+        recapchaErrorMsg: 'Please verify that you are not a robot.',
+      });
+      actions.setSubmitting(false);
+    }
+  }
+
+  render(){
+    const { classes } = this.props;
+    return (
+      <Formik
     initialValues={{
       name: '',
       email: '',
@@ -30,7 +51,7 @@ const SignupForm = ({ classes, handleSignUp }) => (
         .oneOf([Yup.ref('password')], "Passwords don't match")
         .required('Please confirm your password'),
     })}
-    onSubmit={(values, actions) => handleSignUp(values, actions)}
+    onSubmit={(values, actions) => this.onSubmit(values, actions)}
   >
     {props => {
       const {
@@ -139,7 +160,28 @@ const SignupForm = ({ classes, handleSignUp }) => (
                 </FormHelperText>
               )}
           </FormControl>
-
+          {this.state.recapchaErrorMsg && (
+              <div style={{ margin: '15px auto', fontSize: '0.8em', color: 'red' }}>
+                {this.state.recapchaErrorMsg}
+              </div>
+            )}
+            <div style={{ margin: '15px auto', color: 'red' }}>
+              <Recaptcha
+                sitekey="6LemFZIUAAAAAFvB9P1NPikUHVusOtcLbwY-TnHO"
+                render="explicit"
+                onloadCallback={() => {
+                  console.log('recapcha onload');
+                }}
+                verifyCallback={res => {
+                  if (res) {
+                    this.setState({
+                      isVerified: true,
+                      recapchaErrorMsg: '',
+                    });
+                  }
+                }}
+              />
+            </div>
           <Button
             fullWidth
             type="submit"
@@ -148,13 +190,17 @@ const SignupForm = ({ classes, handleSignUp }) => (
             className={classes.submit}
             disabled={isSubmitting}
           >
-            {' '}
             Signup
+            {
+              isSubmitting && <CircularProgress style={{ marginLeft: 10, color: 'green' }} size={20} />
+            }
           </Button>
         </form>
       );
     }}
   </Formik>
-);
+    )
+  }
+}
 
 export default SignupForm;

@@ -5,22 +5,16 @@
  */
 
 import {
-  DEFAULT_ACTION,
   SUBMIT_NEW_NGO,
   SET_NGOS,
   FETCH_NGOS,
   SET_INVIEW_NGO,
   FETCH_NGO_BY_ID,
   UPDATE_NGO_BY_ID,
+  EDIT_NGO,
   CREATE_NGO,
   DELETE_NGO,
 } from './constants';
-
-export function defaultAction() {
-  return {
-    type: DEFAULT_ACTION,
-  };
-}
 
 export function submitNewNgo(values, actions) {
   return {
@@ -44,6 +38,7 @@ export function createNgo() {
 }
 
 export function fetchNgoById(ngoId) {
+  console.log('fetchNgoById', ngoId);
   return {
     type: FETCH_NGO_BY_ID,
     ngoId,
@@ -67,6 +62,13 @@ export function setInViewNgo(ngo) {
 export function updateNgo(ngo) {
   return {
     type: UPDATE_NGO_BY_ID,
+    ngo,
+  };
+}
+
+export function editNgo(ngo) {
+  return {
+    type: EDIT_NGO,
     ngo,
   };
 }

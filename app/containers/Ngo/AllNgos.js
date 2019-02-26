@@ -6,6 +6,7 @@
 
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -17,10 +18,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import NgoList from './NgoList';
-import { fetchNgos, createNgo, deleteNgo } from './actions';
+import { createNgo } from './actions';
 import { makeSelectApprovedNgos } from './selectors';
 import { makeSelectStates } from '../../store/constants/selectors';
-import DeleteDialog from '../../components/DeleteDialog';
 
 /* eslint-disable*/
 
@@ -33,16 +33,10 @@ const styles = theme => ({
 class AllNgos extends React.Component {
   state = {
     selectedState: 'All',
-    deleteID: null
   };
 
   onStateChanged(state) {
     this.setState({ selectedState: state });
-    this.props.fetchNgos(state);
-  }
-
-  componentDidMount() {
-    this.props.fetchNgos();
   }
 
   createNewNgo() {
@@ -50,8 +44,8 @@ class AllNgos extends React.Component {
   }
 
   render() {
-    const { classes, fetchedNgos, states, deleteNgo } = this.props;
-    const { selectedState, deleteID } = this.state;
+    const { classes, fetchedNgos, states } = this.props;
+    const { selectedState } = this.state;
 
     return (
       <Fragment>
@@ -62,6 +56,14 @@ class AllNgos extends React.Component {
           onClick={() => this.createNewNgo()}
         >
           Create NGO
+        </Button>
+        <Button
+          variant="contained"
+          className={classes.createNgoBtn}
+          color="primary"
+          style={{marginRight: 20}}
+        >
+          <Link to="/ngos/my">My NGOs</Link>
         </Button>
         <FormControl margin="normal" fullWidth>
           <InputLabel htmlFor="state">State</InputLabel>
@@ -79,25 +81,11 @@ class AllNgos extends React.Component {
         </FormControl>
         <NgoList 
           ngos={fetchedNgos} 
-          onNgoClick={() => {
-            console.log('On Click Ngo');
+          onNgoClick={id => {
+            console.log('On Click Ngo', id);
+            this.props.history.push(`/ngos/${id}`)
           }}
-          onDelete={id => {
-            console.log('id', id);
-            this.setState({deleteID: id});
-          }} 
         />
-        {
-          deleteID && (
-            <DeleteDialog 
-              onCancel={e => {this.setState({deleteID: null})}} 
-              onOk={e => {deleteNgo(deleteID); this.setState({deleteID: null})}} 
-              title="Delete NGO"
-            >
-              Are you sure to detete this NGO?
-            </DeleteDialog>
-          )
-        }
       </Fragment>
     );
   }
@@ -116,9 +104,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    fetchNgos: state => dispatch(fetchNgos(state)),
     createNgo: () => dispatch(createNgo()),
-    deleteNgo: ngoId => dispatch(deleteNgo(ngoId))
   };
 }
 

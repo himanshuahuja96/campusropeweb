@@ -7,6 +7,7 @@ import {
   FETCH_NGO_BY_ID,
   UPDATE_NGO_BY_ID,
   CREATE_NGO,
+  EDIT_NGO,
   DELETE_NGO,
 } from './constants';
 import { setNgos, setInViewNgo } from './actions';
@@ -57,6 +58,7 @@ export function* createNgoSaga() {
     const { user } = yield select(selectLoggedUserDomain);
     const ngo = yield ngoService.find({ query: { createdBy: user._id } });
     if (
+      true ||
       ngo.data.length === 0 ||
       ngo.data[0].status === 'REJECTED' ||
       user.role === 'admin'
@@ -82,14 +84,34 @@ export function* createNgoSaga() {
 export function* updateNgoSaga({ ngo }) {
   try {
     yield put(startFetchingData());
+    /*
     if (ngo.status === 'REJECTED') {
       yield ngoService.remove(ngo._id);
     } else {
-      yield ngoService.patch(ngo._id, omit(ngo, 'createdBy', '_id'));
+      const data = yield ngoService.patch(
+        ngo._id,
+        omit(ngo, 'createdBy', '_id'),
+      );
     }
+    */
+    const data = yield ngoService.patch(ngo._id, omit(ngo, 'createdBy', '_id'));
     yield put(push('/ngos/verification'));
     yield put(stopFetchingData());
   } catch (e) {
+    console.log('updateNgoSaga', e);
+    yield put(stopFetchingData());
+  }
+}
+
+export function* editNgoSaga({ ngo }) {
+  try {
+    yield put(startFetchingData());
+
+    const data = yield ngoService.patch(ngo._id, ngo);
+    yield put(push('/ngos/my'));
+    yield put(stopFetchingData());
+  } catch (e) {
+    console.log('updateNgoSaga', e);
     yield put(stopFetchingData());
   }
 }
@@ -101,6 +123,7 @@ export function* fetchNgoByIdSaga({ ngoId }) {
     yield put(setInViewNgo(ngo));
     yield put(stopFetchingData());
   } catch (e) {
+    console.error('fetchNgoByIdSaga', e);
     yield put(stopFetchingData());
   }
 }
@@ -118,6 +141,7 @@ export default function* defaultSaga() {
     takeLatest(FETCH_NGO_BY_ID, fetchNgoByIdSaga),
     takeLatest(UPDATE_NGO_BY_ID, updateNgoSaga),
     takeLatest(CREATE_NGO, createNgoSaga),
+    takeLatest(EDIT_NGO, editNgoSaga),
     takeLatest(DELETE_NGO, deleteNgoSaga),
   ];
 }

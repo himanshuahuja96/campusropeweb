@@ -7,7 +7,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { TextField, Typography, Button } from '@material-ui/core/Typography';
+import { TextField, Typography, Button } from '@material-ui/core';
 import format from 'date-fns/format';
 import { createStructuredSelector } from 'reselect';
 import { push } from 'react-router-redux';
@@ -52,6 +52,7 @@ class NgoVerificationView extends React.Component {
       ...ngo,
       createdBy: ngo.createdBy.id,
       status: status.APPROVED,
+      adminComments: this.state.comments,
     };
     this.props.updateNgo(updatedNgo);
   }
@@ -61,6 +62,7 @@ class NgoVerificationView extends React.Component {
     const updatedNgo = {
       ...ngo,
       status: status.REJECTED,
+      adminComments: this.state.comments,
     };
     this.props.updateNgo(updatedNgo);
   }
@@ -131,9 +133,12 @@ class NgoVerificationView extends React.Component {
 
   render() {
     const { classes, ngo } = this.props;
+
+    if(_isEmpty(ngo)){
+      return <Typography variant="label">Loading</Typography>
+    }
     return (
       <div>
-        {!_isEmpty(ngo) && (
           <Fragment>
             <Typography
               className={classes.title}
@@ -158,10 +163,9 @@ class NgoVerificationView extends React.Component {
             <Typography component="p">
               contact email: {ngo.contactEmail}
             </Typography>
-            <TextField multiline value={this.state.comments} onChange={e => this.setState({comments: e.target.value})} />
+            <TextField style={{margin: '20px 0'}} label="Admin Comments" fullWidth multiline value={this.state.comments} onChange={e => this.setState({comments: e.target.value})} />
             {this.renderActions(ngo)}
           </Fragment>
-        )}
       </div>
     );
   }

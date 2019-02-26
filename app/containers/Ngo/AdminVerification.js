@@ -54,7 +54,6 @@ class NgoAdminVerification extends React.Component {
           <NgoList
             ngos={pendingNgos}
             onNgoClick={ngo => this.routeToNgoVerifyView(ngo)}
-            onDelete={() => {}}
           />
         )}
         {value === 1 && (

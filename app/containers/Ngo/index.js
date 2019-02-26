@@ -7,6 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import { Helmet } from 'react-helmet';
 import { Switch } from 'react-router-dom';
 import PrivateRoute from 'components/PrivateRoute';
@@ -21,7 +22,9 @@ import makeSelectNgo from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { DAEMON } from '../../utils/constants';
-
+import EditNgo from './EditNgo';
+import { fetchNgos } from './actions';
+import NgoPage from './NgoPage';
 /* eslint-disable*/
 
 const MyNgos = Loadable({
@@ -49,8 +52,15 @@ const NgoVerificationView = Loadable({
   loading: () => null,
 });
 
+
 /* eslint-disable react/prefer-stateless-function */
 export class Ngo extends React.Component {
+
+  componentDidMount() {
+    console.log('componentDidMount')
+    this.props.fetchNgos();
+  }
+
   render() {
     return (
       <div>
@@ -67,6 +77,8 @@ export class Ngo extends React.Component {
             />
             <PrivateRoute path="/ngos/new" component={NewNgo} />
             <PrivateRoute path="/ngos/my" component={MyNgos} />
+            <PrivateRoute path="/ngos/:id" exact component={NgoPage} />
+            <PrivateRoute path="/ngos/:id/edit" component={EditNgo} />
             <PrivateRoute
               path="/ngos/verification"
               component={NgoVerification}
@@ -90,6 +102,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    fetchNgos: state => dispatch(fetchNgos(state)),
   };
 }
 
