@@ -13,8 +13,6 @@ const makeSelectSelectedTab = () =>
 /**
  * Default selector used by UserProfile
  */
-
-export default makeSelectUserProfileInfo;
 export {
   selectUserProfileDomain,
   makeSelectSelectedTab,

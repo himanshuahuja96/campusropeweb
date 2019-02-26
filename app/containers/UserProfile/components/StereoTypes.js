@@ -12,6 +12,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { createStructuredSelector } from 'reselect';
 import Grid from '@material-ui/core/Grid';
 import { makeSelectLoggedUser } from '../../../store/loggeduser/selectors';
+import { makeSelectUserProfileInfo } from '../selectors';
 
 import EditDialog from './EditDialog';
 
@@ -127,7 +128,7 @@ class AboutUserComponent extends React.Component {
   }
 
   render() {
-    const { classes, expanded ,handlePanelChange} = this.props;
+    const { classes, expanded ,handlePanelChange ,userprofileInfo} = this.props;
     const {editDialogExpand, stereoTypesInfoEditView } = this.state;
     return (
       <ExpansionPanel
@@ -154,10 +155,10 @@ class AboutUserComponent extends React.Component {
         <ExpansionPanelDetails className={classes.panelDetails}>
         <Grid container spacing={16}>
               <Grid item xs={12} sm={12} lg={6}>
-                {this.renderLabelsAndValues('PoliticalView','politicalView')}
+                {this.renderLabelsAndValues('PoliticalView',userprofileInfo.politicalView || "-")}
               </Grid>
               <Grid item xs={12} sm={12} lg={6}>
-                {this.renderLabelsAndValues('ReligiousView','religiousView')}
+                {this.renderLabelsAndValues('ReligiousView',userprofileInfo.religiousView || "-")}
               </Grid>
           </Grid>
         </ExpansionPanelDetails>
@@ -176,6 +177,7 @@ function mapDispatchToProps(dispatch) {
 
 const mapStateToProps = createStructuredSelector({
   loggedUserInfo: makeSelectLoggedUser(),
+  userprofileInfo: makeSelectUserProfileInfo(),
 });
 
 const withConnect = connect(

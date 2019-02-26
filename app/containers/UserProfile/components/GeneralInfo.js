@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 import Input from '@material-ui/core/Input';
+import { createStructuredSelector } from 'reselect';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -13,6 +17,7 @@ import { FieldArray } from 'formik';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import MultipleChipInput from '../../../components/MultipleChipInput';
+import { makeSelectUserProfileInfo } from '../selectors';
 
 import EditDialog from './EditDialog';
 
@@ -128,7 +133,7 @@ class AboutUserComponent extends React.Component {
   };
 
   render() {
-    const { classes, values = {}, handleChange ,handlePanelChange,expanded} = this.props;
+    const { classes, userprofileInfo, handlePanelChange,expanded} = this.props;
     const {editDialogExpand, generalInfoEditView } = this.state;
     return (
       <ExpansionPanel
@@ -179,6 +184,19 @@ AboutUserComponent.propTypes = {
   classes: PropTypes.object
 };
 
+function mapDispatchToProps(dispatch) {
+  return { dispatch };
+}
+
+const mapStateToProps = createStructuredSelector({
+  userprofileInfo: makeSelectUserProfileInfo(),
+});
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
 const componentWithStyles = withStyles(styles)(AboutUserComponent);
 
-export default componentWithStyles;
+export default compose(withConnect)(componentWithStyles);
