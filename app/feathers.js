@@ -5,9 +5,8 @@ import findOne from 'feathers-findone';
 // const socket = io('http://localhost:3030');
 const client = feathers();
 const restClient = feathers.rest('http://localhost:3030');
-//const restClient = feathers.rest('https://campusropeapi-ljrhkpiapm.now.sh');
 
-
+// const restClient = feathers.rest('https://campusropeapi-ljrhkpiapm.now.sh');
 
 // client.configure(feathers.socketio(socket, { timeout: 2000 }));
 // client.configure(client.rest('http://localhost:3030'));

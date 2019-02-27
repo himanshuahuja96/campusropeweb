@@ -6,11 +6,13 @@
 
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import format from 'date-fns/format';
 
 /* eslint-disable*/
@@ -45,15 +47,27 @@ const styles = theme => ({
     position: 'absolute',
     bottom: 15,
     right: 15
+  },
+  editIcon: {
+    color: 'blue',
+    position: 'absolute',
+    bottom: 15,
+    right: 45
+  },
+  statusLabel: {
+    position: 'absolute',
+    top: 15,
+    left: 15,
+    color: 'red'
   }
 });
 
-const NgoBox = ({ ngoData, classes, onNgoClick, onDelete }) => {
+const NgoBox = ({ ngoData, classes, onNgoClick, onDelete, onEdit }) => {
   return (
     <Card
       className={classes.card}
       raised={true}
-      onClick={() => onNgoClick(ngoData)}
+      onClick={() => onNgoClick(ngoData._id)}
     >
       <CardContent>
         <Typography className={classes.pos} color="textSecondary">
@@ -92,7 +106,19 @@ const NgoBox = ({ ngoData, classes, onNgoClick, onDelete }) => {
         <Typography component="p">
           Contact Email : {ngoData.contactEmail}
         </Typography>
-        <DeleteIcon className={classes.deleteIcon} onClick={e => onDelete(e, ngoData._id)}/>
+        {
+          onDelete && <DeleteIcon className={classes.deleteIcon} onClick={e => onDelete(e, ngoData._id)}/>
+        }
+        {
+          onEdit && (
+            <Link to={`/ngos/${ngoData._id}/edit`}>
+              <EditIcon className={classes.editIcon} onClick={e => onEdit(e, ngoData._id)}/>
+            </Link>
+          )
+        }
+        {
+          ngoData.status !== 'APPROVED' && <div className={classes.statusLabel} > {ngoData.status}</div>
+        }
       </CardContent>
     </Card>
   );
@@ -112,7 +138,8 @@ class NgoList extends React.Component {
             key={ngo._id}
             classes={classes}
             onNgoClick={onNgoClick}
-            onDelete={this.onDelete}
+            onDelete={this.props.onDelete ? this.onDelete : null}
+            onEdit={this.props.onEdit}
             ngoData={ngo}
           />
         ))}

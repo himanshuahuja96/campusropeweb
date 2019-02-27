@@ -1,20 +1,20 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Formik } from 'formik';
+import Recaptcha from 'react-recaptcha';
+import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
-import Avatar from '@material-ui/core/Avatar';
 import LockIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import Button from '@material-ui/core/Button';
+
+import {Avatar, Typography, Button, Paper, CircularProgress } from '@material-ui/core';
+
+
+import {FormControl, FormHelperText, Input, InputLabel  } from '@material-ui/core';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Paper from '@material-ui/core/Paper';
 import { GoogleLogin } from 'react-google-login';
+
+import TextField from '../../components/forms/TextField';
 
 const styles = theme => ({
   paper: {
@@ -72,9 +72,27 @@ const styles = theme => ({
 
 /* eslint react/prop-types: 0 */
 /* eslint prettier/prettier: 0 */
+class FormComponent extends React.Component {
+  state = {
+    isVerified: false,
+    recapchaErrorMsg: null,
+  };
 
-const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
-  <Formik
+  onSubmit = (values, actions) => {
+    if (this.state.isVerified) {
+      this.props.onSubmit(values, actions);
+    } else {
+      this.setState({
+        recapchaErrorMsg: 'Please verify that you are not a robot.',
+      });
+      actions.setSubmitting(false);
+    }
+  }
+
+  render(){
+    const { classes, handleClickOpen } = this.props;
+    return (
+      <Formik
     initialValues={{
       email: '',
       password: '',
@@ -84,10 +102,10 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
       email: Yup.string()
         .email('please provide a valid email')
         .required('Please provide email'),
-      password: Yup.string().required('please provide passoword'),
+      password: Yup.string().required('please provide password'),
       remember: Yup.boolean(),
     })}
-    onSubmit={(values, actions) => onSubmit(values, actions)}
+    onSubmit={(values, actions) => this.onSubmit(values, actions)}
   >
     {props => {
       const {
@@ -98,6 +116,7 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
         handleChange,
         handleSubmit,
       } = props;
+      console.log(values, errors);
       return (
         <form
           className={classes.form}
@@ -107,64 +126,54 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
           {errors.authentication && (
             <span className={classes.error}>{errors.authentication}</span>
           )}
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Email</InputLabel>
-            <Input
-              id="email"
-              name="email"
-              autoComplete="email"
-              value={values.email}
-              onChange={handleChange}
-              autoFocus
-            />{' '}
-            {touched.email &&
-              errors.email && (
-                <FormHelperText className={classes.error}>
-                  {errors.email}
-                </FormHelperText>
-              )}
-          </FormControl>
-
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="password">Password</InputLabel>
-            <Input
-              name="password"
-              type="password"
-              id="password"
-              value={values.password}
-              onChange={handleChange}
-              autoComplete="current-password"
-            />{' '}
-            {touched.password &&
-              errors.password && (
-                <FormHelperText className={classes.error}>
-                  {errors.password}
-                </FormHelperText>
-              )}
-          </FormControl>
-          <div className="rememberMeWrapper">
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name="remember"
-                  type="checkbox"
-                  id="remember"
-                  checked={values.remember}
-                  onChange={handleChange}
-                  color="primary"
-                />
-              }
-              label="Remember me"
-            />
-            <Button
-              color="primary"
-              className={classes.button}
-              onClick={handleClickOpen}
-            >
-              Forgot password?
-            </Button>
-          </div>
-
+          
+            <Field component={TextField} name="email" label="Email" fullWidth />
+          
+            <Field component={TextField} name="password" type="password" label="Password"  fullWidth />
+            <div className="rememberMeWrapper">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name="remember"
+                    type="checkbox"
+                    id="remember"
+                    checked={values.remember}
+                    onChange={handleChange}
+                    color="primary"
+                  />
+                }
+                label="Remember me"
+              />
+              <Button
+                color="primary"
+                className={classes.button}
+                onClick={handleClickOpen}
+              >
+                Forgot password?
+              </Button>
+            </div>
+            {this.state.recapchaErrorMsg && (
+              <div style={{ margin: '15px auto', fontSize: '0.8em', color: 'red' }}>
+                {this.state.recapchaErrorMsg}
+              </div>
+            )}
+            <div style={{ margin: '15px auto', color: 'red' }}>
+              <Recaptcha
+                sitekey="6LemFZIUAAAAAFvB9P1NPikUHVusOtcLbwY-TnHO"
+                render="explicit"
+                onloadCallback={() => {
+                  console.log('recapcha onload');
+                }}
+                verifyCallback={res => {
+                  if (res) {
+                    this.setState({
+                      isVerified: true,
+                      recapchaErrorMsg: '',
+                    });
+                  }
+                }}
+              />
+            </div>
           <Button
             fullWidth
             type="submit"
@@ -173,14 +182,18 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
             className={classes.submit}
             disabled={isSubmitting}
           >
-            {' '}
             Login
+            {
+              isSubmitting && <CircularProgress style={{ marginLeft: 10, color: 'green' }} size={20} />
+            }
           </Button>
         </form>
       );
     }}
   </Formik>
-);
+    )
+  }
+}
 
 const FormPaper = ({
   classes,
