@@ -30,7 +30,7 @@ const makeSelectLoggedUserHomeMenus = () =>
     if (loggedUserState.user && loggedUserState.user.role === 'admin') {
       return adminHomeMenus;
     }
-    return [];
+    return userHomeMenus;
   });
 
 const makeSelectIsLoggedUser = userId =>

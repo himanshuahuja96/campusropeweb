@@ -19,11 +19,10 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import indigo from '@material-ui/core/colors/indigo';
 import pink from '@material-ui/core/colors/pink';
 
-import Home from 'containers/Home/Loadable';
+import GuestHome from 'containers/GuestHome/Loadable';
 import Login from 'containers/Login/Loadable';
 import Signup from 'containers/Signup/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import PrivateRoute from 'components/PrivateRoute/Loadable';
 
 const theme = createMuiTheme({
   palette: {
@@ -44,7 +43,7 @@ export default function App() {
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
-            <PrivateRoute path="/" component={Home} />
+            <Route path="/" component={GuestHome} />
 
             <Route component={NotFoundPage} />
           </Switch>

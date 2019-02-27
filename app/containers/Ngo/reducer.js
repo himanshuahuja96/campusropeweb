@@ -4,7 +4,7 @@
  *
  */
 
-import { DEFAULT_ACTION, SET_NGOS, SET_INVIEW_NGO } from './constants';
+import { SET_NGOS, SET_INVIEW_NGO } from './constants';
 
 export const initialState = {
   fetchedNgos: [],
