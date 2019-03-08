@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { replace } from 'connected-react-router';
+import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -22,13 +22,13 @@ function Headertabs({ dispatch }) {
   function handleChange(event, newValue) {
     switch (newValue) {
       case 0:
-        dispatch(replace('/feeds'));
+        dispatch(push('/feeds'));
         break;
       case 1:
-        dispatch(replace('/'));
+        dispatch(push('/'));
         break;
       case 2:
-        dispatch(replace('/login'));
+        dispatch(push('/login'));
         break;
       default:
         setValue(newValue);

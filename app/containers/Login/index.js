@@ -7,6 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
@@ -42,6 +43,7 @@ const styles = theme => ({
 export class Login extends React.Component {
   state = {
     openModal: false,
+    redirectToReferrer:false
   };
 
   handleClickOpen = () => {
@@ -54,6 +56,12 @@ export class Login extends React.Component {
 
   render() {
     const { classes, routeToSignup } = this.props;
+    const { from } = this.props.location.state || { from: { pathname: '/' } }
+    const { redirectToReferrer } = this.state
+
+    if (redirectToReferrer === true) {
+      return <Redirect to={from} />
+    }
     return (
       <React.Fragment>
         <Helmet>
