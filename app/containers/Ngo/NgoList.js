@@ -33,7 +33,7 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 6,
     marginRight: '8px',
     cursor: 'pointer',
-    position: 'relative'
+    position: 'relative',
   },
   title: {
     fontSize: 14,
@@ -46,20 +46,20 @@ const styles = theme => ({
     color: 'red',
     position: 'absolute',
     bottom: 15,
-    right: 15
+    right: 15,
   },
   editIcon: {
     color: 'blue',
     position: 'absolute',
     bottom: 15,
-    right: 45
+    right: 45,
   },
   statusLabel: {
     position: 'absolute',
     top: 15,
     left: 15,
-    color: 'red'
-  }
+    color: 'red',
+  },
 });
 
 const NgoBox = ({ ngoData, classes, onNgoClick, onDelete, onEdit }) => {
@@ -106,19 +106,23 @@ const NgoBox = ({ ngoData, classes, onNgoClick, onDelete, onEdit }) => {
         <Typography component="p">
           Contact Email : {ngoData.contactEmail}
         </Typography>
-        {
-          onDelete && <DeleteIcon className={classes.deleteIcon} onClick={e => onDelete(e, ngoData._id)}/>
-        }
-        {
-          onEdit && (
-            <Link to={`/ngos/${ngoData._id}/edit`}>
-              <EditIcon className={classes.editIcon} onClick={e => onEdit(e, ngoData._id)}/>
-            </Link>
-          )
-        }
-        {
-          ngoData.status !== 'APPROVED' && <div className={classes.statusLabel} > {ngoData.status}</div>
-        }
+        {onDelete && (
+          <DeleteIcon
+            className={classes.deleteIcon}
+            onClick={e => onDelete(e, ngoData._id)}
+          />
+        )}
+        {onEdit && (
+          <Link to={`/ngos/${ngoData._id}/edit`}>
+            <EditIcon
+              className={classes.editIcon}
+              onClick={e => onEdit(e, ngoData._id)}
+            />
+          </Link>
+        )}
+        {ngoData.status !== 'APPROVED' && (
+          <div className={classes.statusLabel}> {ngoData.status}</div>
+        )}
       </CardContent>
     </Card>
   );
@@ -149,13 +153,13 @@ class NgoList extends React.Component {
 
   onDelete = (e, id) => {
     e.stopPropagation();
-    this.props.onDelete(id)
-  }
+    this.props.onDelete(id);
+  };
 
   render() {
     const { classes, ngos } = this.props;
-    if(!ngos){
-      return <div>Loading...</div>
+    if (!ngos) {
+      return <div>Loading...</div>;
     }
     return (
       <div className={classes.container}>
@@ -169,7 +173,7 @@ NgoList.propTypes = {
   classes: PropTypes.object.isRequired,
   ngos: PropTypes.array.isRequired,
   onNgoClick: PropTypes.func,
-  onDelete: PropTypes.func
+  onDelete: PropTypes.func,
 };
 
 export default withStyles(styles)(NgoList);

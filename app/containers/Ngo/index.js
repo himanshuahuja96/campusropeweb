@@ -52,12 +52,10 @@ const NgoVerificationView = Loadable({
   loading: () => null,
 });
 
-
 /* eslint-disable react/prefer-stateless-function */
 export class Ngo extends React.Component {
-
   componentDidMount() {
-    console.log('componentDidMount')
+    console.log('componentDidMount');
     this.props.fetchNgos();
   }
 

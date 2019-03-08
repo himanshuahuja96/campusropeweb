@@ -38,8 +38,6 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 
-
-
 class EditNgo extends React.Component {
   onCancel() {
     this.props.dispatch(push('/ngos'));
@@ -50,7 +48,7 @@ class EditNgo extends React.Component {
         ...values,
         _id: this.props.match.params.id,
         createdBy: this.props.loggedUser._id,
-        status: 'PENDING'
+        status: 'PENDING',
       },
       actions,
     );
@@ -82,17 +80,18 @@ const mapStateToProps = createStructuredSelector({
   states: makeSelectStates(),
   ngo_types: makeSelectNgoTypes(),
   loggedUser: makeSelectLoggedUser(),
-  initialValues: (state, ownProps) => state.ngo.fetchedNgos.find(item => item._id === ownProps.match.params.id && item.createdBy._id === state.loggedUser.user._id)
+  initialValues: (state, ownProps) =>
+    state.ngo.fetchedNgos.find(
+      item =>
+        item._id === ownProps.match.params.id &&
+        item.createdBy._id === state.loggedUser.user._id,
+    ),
 });
-
-
-
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    editNgo: (values, actions) =>
-      dispatch(editNgo(values, actions)),
+    editNgo: (values, actions) => dispatch(editNgo(values, actions)),
   };
 }
 

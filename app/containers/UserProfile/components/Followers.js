@@ -23,16 +23,15 @@ const styles = theme => ({
 
 /* eslint-disable  */
 export class Followers extends React.PureComponent {
-
   state = {
-    open: false
+    open: false,
   };
 
-  handleMoreClick = ()=>{
+  handleMoreClick = () => {
     this.setState({
       open: true,
-    })
-  }
+    });
+  };
 
   handleClose = value => {
     this.setState({ open: false });
@@ -41,40 +40,45 @@ export class Followers extends React.PureComponent {
     const { classes } = this.props;
     return (
       <React.Fragment>
-      <div className={classes.labelStyle}>
-      <Typography variant="button" gutterBottom>
-        135
-      </Typography>
-      <Typography variant="caption" gutterBottom style={{marginLeft:10}}>
-        {'Followers'}
-      </Typography>
-      </div>
-      <div className={classes.labelStyle}>
-      <Typography variant="button" gutterBottom>
-          355
-     </Typography>
-    <Typography variant="caption" gutterBottom style={{marginLeft:10}}>
-      {'Followings'}
-    </Typography>
-    </div>
-    <div>
-    <Button variant="outlined" className={classes.button} style={{marginLeft:0}}>
-    Follow
-  </Button>
-  <Button variant="outlined" color="primary" className={classes.button}>
-    Message
-  </Button>
-  <Button variant="outlined" color="secondary" className={classes.button}
-        onClick={this.handleMoreClick}>
-    More
-  </Button>
-    </div>
-    <MoreDialogOther
-    open={this.state.open}
-    onClose={this.handleClose}
-  />
+        <div className={classes.labelStyle}>
+          <Typography variant="button" gutterBottom>
+            135
+          </Typography>
+          <Typography variant="caption" gutterBottom style={{ marginLeft: 10 }}>
+            {'Followers'}
+          </Typography>
+        </div>
+        <div className={classes.labelStyle}>
+          <Typography variant="button" gutterBottom>
+            355
+          </Typography>
+          <Typography variant="caption" gutterBottom style={{ marginLeft: 10 }}>
+            {'Followings'}
+          </Typography>
+        </div>
+        <div>
+          <Button
+            variant="outlined"
+            className={classes.button}
+            style={{ marginLeft: 0 }}
+          >
+            Follow
+          </Button>
+          <Button variant="outlined" color="primary" className={classes.button}>
+            Message
+          </Button>
+          <Button
+            variant="outlined"
+            color="secondary"
+            className={classes.button}
+            onClick={this.handleMoreClick}
+          >
+            More
+          </Button>
+        </div>
+        <MoreDialogOther open={this.state.open} onClose={this.handleClose} />
       </React.Fragment>
-    )
+    );
   }
 }
 

@@ -42,35 +42,35 @@ export class BrowserView extends React.PureComponent {
   render() {
     const { classes, userinfo, isOwner } = this.props;
     return (
-        <Grid container className={classes.root}>
-          <Grid item lg={4} md={4}>
-            <div className="avatarContainer">
-              <Avatar
-                alt="Remy Sharp"
-                src={userinfo.picture}
-                className={classes.avatar}
-              />
-              <div className="middle">
-                  <Upload
-                  text="Change"
-                  onUploaded={res => console.log(res)}
-                  />
-              </div>
+      <Grid container className={classes.root}>
+        <Grid item lg={4} md={4}>
+          <div className="avatarContainer">
+            <Avatar
+              alt="Remy Sharp"
+              src={userinfo.picture}
+              className={classes.avatar}
+            />
+            <div className="middle">
+              <Upload text="Change" onUploaded={res => console.log(res)} />
             </div>
-            <UserBio />
-            <AboutAchievementTabs
-            userinfo={userinfo} />
-          </Grid>
-          <Grid item lg={8} md={8}>
-            <Typography variant="h4" gutterBottom className={classes.userNameLabel}>
-              {userinfo.name}
-            </Typography>
-            <Followers />
-            <MoreDialogSelf/>
-            <NewPost />
-            <UserPosts />
-          </Grid>
+          </div>
+          <UserBio />
+          <AboutAchievementTabs userinfo={userinfo} />
         </Grid>
+        <Grid item lg={8} md={8}>
+          <Typography
+            variant="h4"
+            gutterBottom
+            className={classes.userNameLabel}
+          >
+            {userinfo.name}
+          </Typography>
+          <Followers />
+          <MoreDialogSelf />
+          <NewPost />
+          <UserPosts />
+        </Grid>
+      </Grid>
     );
   }
 }

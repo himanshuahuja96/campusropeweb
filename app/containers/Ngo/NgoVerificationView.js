@@ -32,10 +32,9 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 class NgoVerificationView extends React.Component {
-
   state = {
     comments: '',
-  }
+  };
 
   componentDidMount() {
     const ngoId = this.props.match.params.ngoId;
@@ -134,38 +133,45 @@ class NgoVerificationView extends React.Component {
   render() {
     const { classes, ngo } = this.props;
 
-    if(_isEmpty(ngo)){
-      return <Typography variant="label">Loading</Typography>
+    if (_isEmpty(ngo)) {
+      return <Typography variant="label">Loading</Typography>;
     }
     return (
       <div>
-          <Fragment>
-            <Typography
-              className={classes.title}
-              color="textSecondary"
-              gutterBottom
-            >
-              admin : {ngo.createdBy.name}
-            </Typography>
-            <Typography variant="h5" component="h2">
-              {ngo.name}
-            </Typography>
-            <Typography className={classes.pos} color="textSecondary">
-              created on : {format(new Date(ngo.createdAt), 'DD-MM-YYYY')}
-            </Typography>
-            <IdealImage
-              placeholder={{ color: 'grey' }}
-              srcSet={[{ src: ngo.documentLink, width: 100, height: 100 }]}
-              alt="cancelled check pic"
-              width={100}
-              height={100}
-            />
-            <Typography component="p">
-              contact email: {ngo.contactEmail}
-            </Typography>
-            <TextField style={{margin: '20px 0'}} label="Admin Comments" fullWidth multiline value={this.state.comments} onChange={e => this.setState({comments: e.target.value})} />
-            {this.renderActions(ngo)}
-          </Fragment>
+        <Fragment>
+          <Typography
+            className={classes.title}
+            color="textSecondary"
+            gutterBottom
+          >
+            admin : {ngo.createdBy.name}
+          </Typography>
+          <Typography variant="h5" component="h2">
+            {ngo.name}
+          </Typography>
+          <Typography className={classes.pos} color="textSecondary">
+            created on : {format(new Date(ngo.createdAt), 'DD-MM-YYYY')}
+          </Typography>
+          <IdealImage
+            placeholder={{ color: 'grey' }}
+            srcSet={[{ src: ngo.documentLink, width: 100, height: 100 }]}
+            alt="cancelled check pic"
+            width={100}
+            height={100}
+          />
+          <Typography component="p">
+            contact email: {ngo.contactEmail}
+          </Typography>
+          <TextField
+            style={{ margin: '20px 0' }}
+            label="Admin Comments"
+            fullWidth
+            multiline
+            value={this.state.comments}
+            onChange={e => this.setState({ comments: e.target.value })}
+          />
+          {this.renderActions(ngo)}
+        </Fragment>
       </div>
     );
   }

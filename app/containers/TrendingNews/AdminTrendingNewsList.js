@@ -223,8 +223,8 @@ export class AdminTrendingNewsList extends React.Component {
 
   onConfirmTrendingNewsDelete = () => {
     let trendingNewsData = this.state.trendingNewsToDelete;
-    let {_id} = trendingNewsData
-    this.props.deleteSelectedTrendingNews(_id)
+    let { _id } = trendingNewsData;
+    this.props.deleteSelectedTrendingNews(_id);
   };
 
   _onReady(event) {
@@ -269,15 +269,14 @@ export class AdminTrendingNewsList extends React.Component {
             lg={12}
             className={classes.createBtnContainer}
           >
-          <Button
-            variant="fab"
-            className={classes.addButton}
-            color="inherit"
-            onClick={() => this.createNewTrendingNews()}
-          >
-            <AddIcon />
-          </Button>
-
+            <Button
+              variant="fab"
+              className={classes.addButton}
+              color="inherit"
+              onClick={() => this.createNewTrendingNews()}
+            >
+              <AddIcon />
+            </Button>
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <FormControl margin="normal" fullWidth>
@@ -320,7 +319,7 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     fetchTrendingNews: () => dispatch(fetchTrendingNews()),
-    deleteSelectedTrendingNews: (trendingNewsId) =>
+    deleteSelectedTrendingNews: trendingNewsId =>
       dispatch(deleteSelectedTrendingNews(trendingNewsId)),
   };
 }

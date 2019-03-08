@@ -135,9 +135,9 @@ export class TrendingNewsEdit extends React.Component {
       (this.height = document
         .querySelector('#content')
         .getBoundingClientRect().height);
-        const trendingNewsId = this.props.match.params.trendingNewsId;
-    this.props.fetchNewsClients();    
-    this.props.fetchTrendingNewsById(trendingNewsId)
+    const trendingNewsId = this.props.match.params.trendingNewsId;
+    this.props.fetchNewsClients();
+    this.props.fetchTrendingNewsById(trendingNewsId);
   }
 
   onYoutubeLinkChange(event, setFieldValue) {
@@ -151,253 +151,259 @@ export class TrendingNewsEdit extends React.Component {
     this.props.dispatch(push('/news/trends/admin/'));
   }
   render() {
-    const {selectedTrendingNews} = this.props;
+    const { selectedTrendingNews } = this.props;
     return (
       <Content>
-       { selectedTrendingNews.headline && <Formik
-          initialValues={{
-            headline: selectedTrendingNews.headline,
-            content: selectedTrendingNews.content,
-            state: selectedTrendingNews.state,
-            newsClient:selectedTrendingNews.newsClient._id,
-            photo_urls: selectedTrendingNews.photo_urls,
-            cover_photo: selectedTrendingNews.cover_photo,
-            youtube_link: selectedTrendingNews.youtube_link,
-          }}
-          validationSchema={Yup.object().shape({
-            headline: Yup.string().required('please provide headline'),
-            content: Yup.string().required('Please provide content'),
-            state: Yup.string().required('Please choose any one of the State'),
-            newsClient: Yup.string().required('Please choose any one of the news Clients'),
-          })}
-          onSubmit={(values, actions) => this.onSubmit(values, actions)}
-        >
-          {props => {
-            const {
-              values,
-              touched,
-              errors,
-              handleChange,
-              setFieldValue,
-              isSubmitting,
-              handleSubmit,
-            } = props;
-            const { classes, states ,newsClients} = this.props;
-            return (
-              <form
-                className={classes.form}
-                noValidate="noValidate"
-                onSubmit={handleSubmit}
-              >
-                <Grid container spacing={16}>
-                  <Grid item xs={12} sm={12} lg={6}>
-                    <FormControl margin="normal" required fullWidth>
-                      <InputLabel htmlFor="headline">Headline</InputLabel>
-                      <Input
-                        id="headline"
-                        name="headline"
-                        multiline
-                        rows="4"
-                        autoComplete="headline"
-                        value={values.headline}
-                        onChange={handleChange}
-                        autoFocus
-                      />{' '}
-                      {touched.headline &&
-                        errors.headline && (
-                          <FormHelperText className={classes.error}>
-                            {errors.headline}
-                          </FormHelperText>
-                        )}
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} sm={12} lg={6}>
-                    <FormControl margin="normal" required fullWidth>
-                      <InputLabel htmlFor="content">Content</InputLabel>
-                      <Input
-                        id="content"
-                        name="content"
-                        multiline
-                        rows="4"
-                        autoComplete="content"
-                        value={values.content}
-                        onChange={handleChange}
-                        
-                      />{' '}
-                      {touched.content &&
-                        errors.content && (
-                          <FormHelperText className={classes.error}>
-                            {errors.content}
-                          </FormHelperText>
-                        )}
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={12} lg={12}>
-                    <FormControl margin="normal" fullWidth required>
-                      <InputLabel htmlFor="state">State</InputLabel>
-                      <Select
-                        value={values.state}
-                        onChange={handleChange}
-                        input={<Input id="state" name="state" />}
-                      >
-                        {states.map(state => (
-                          <MenuItem key={state.label} value={state.value}>
-                            {state.value}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                      {touched.state &&
-                        errors.state && (
-                          <FormHelperText className={classes.error}>
-                            {errors.state}
-                          </FormHelperText>
-                        )}
-                    </FormControl>
-                  </Grid>
+        {selectedTrendingNews.headline && (
+          <Formik
+            initialValues={{
+              headline: selectedTrendingNews.headline,
+              content: selectedTrendingNews.content,
+              state: selectedTrendingNews.state,
+              newsClient: selectedTrendingNews.newsClient._id,
+              photo_urls: selectedTrendingNews.photo_urls,
+              cover_photo: selectedTrendingNews.cover_photo,
+              youtube_link: selectedTrendingNews.youtube_link,
+            }}
+            validationSchema={Yup.object().shape({
+              headline: Yup.string().required('please provide headline'),
+              content: Yup.string().required('Please provide content'),
+              state: Yup.string().required(
+                'Please choose any one of the State',
+              ),
+              newsClient: Yup.string().required(
+                'Please choose any one of the news Clients',
+              ),
+            })}
+            onSubmit={(values, actions) => this.onSubmit(values, actions)}
+          >
+            {props => {
+              const {
+                values,
+                touched,
+                errors,
+                handleChange,
+                setFieldValue,
+                isSubmitting,
+                handleSubmit,
+              } = props;
+              const { classes, states, newsClients } = this.props;
+              return (
+                <form
+                  className={classes.form}
+                  noValidate="noValidate"
+                  onSubmit={handleSubmit}
+                >
+                  <Grid container spacing={16}>
+                    <Grid item xs={12} sm={12} lg={6}>
+                      <FormControl margin="normal" required fullWidth>
+                        <InputLabel htmlFor="headline">Headline</InputLabel>
+                        <Input
+                          id="headline"
+                          name="headline"
+                          multiline
+                          rows="4"
+                          autoComplete="headline"
+                          value={values.headline}
+                          onChange={handleChange}
+                          autoFocus
+                        />{' '}
+                        {touched.headline &&
+                          errors.headline && (
+                            <FormHelperText className={classes.error}>
+                              {errors.headline}
+                            </FormHelperText>
+                          )}
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={12} lg={6}>
+                      <FormControl margin="normal" required fullWidth>
+                        <InputLabel htmlFor="content">Content</InputLabel>
+                        <Input
+                          id="content"
+                          name="content"
+                          multiline
+                          rows="4"
+                          autoComplete="content"
+                          value={values.content}
+                          onChange={handleChange}
+                        />{' '}
+                        {touched.content &&
+                          errors.content && (
+                            <FormHelperText className={classes.error}>
+                              {errors.content}
+                            </FormHelperText>
+                          )}
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                      <FormControl margin="normal" fullWidth required>
+                        <InputLabel htmlFor="state">State</InputLabel>
+                        <Select
+                          value={values.state}
+                          onChange={handleChange}
+                          input={<Input id="state" name="state" />}
+                        >
+                          {states.map(state => (
+                            <MenuItem key={state.label} value={state.value}>
+                              {state.value}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                        {touched.state &&
+                          errors.state && (
+                            <FormHelperText className={classes.error}>
+                              {errors.state}
+                            </FormHelperText>
+                          )}
+                      </FormControl>
+                    </Grid>
 
-                  <Button
+                    <Button
                       variant="contained"
-                      onClick={() => this.props.dispatch(push('/news/trends/admin/client/manage'))}
+                      onClick={() =>
+                        this.props.dispatch(
+                          push('/news/trends/admin/client/manage'),
+                        )
+                      }
                       className={classes.cancel}
                     >
                       {' '}
                       Manage Clients
                     </Button>
 
-
-                  <Grid item xs={12} sm={12} md={12} lg={12}>
-                    <FormControl margin="normal" fullWidth required>
-                      <InputLabel htmlFor="state">Client</InputLabel>
-                      <Select
-                        value={values.newsClient}
-                        onChange={handleChange}
-                        input={<Input id="newsClient" name="newsClient" />}
-                      >
-                        {newsClients.map(client => (
-                          <MenuItem key={client.value} value={client.value}>
-                            <Avatar
-                              alt="Remy Sharp"
-                              src={client.logourl}
-                              className={classes.avatar}
-                            />{client.label}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                      {touched.newsClient &&
-                        errors.newsClient && (
-                          <FormHelperText className={classes.error}>
-                            {errors.newsClient}
-                          </FormHelperText>
-                        )}
-                    </FormControl>
-                  </Grid>
-
-
-                  <Grid item xs={12} sm={12} md={12} lg={12}>
-                    <Upload
-                      className={classes.uploadBtn}
-                      text="Upload Photos"
-                      onUploaded={res =>
-                        setFieldValue(
-                          'photo_urls',
-                          res.map(pic => pic.secure_url),
-                        )
-                      }
-                    />
                     <Grid item xs={12} sm={12} md={12} lg={12}>
-                      {!_isEmpty(values.photo_urls) &&
-                        values.photo_urls.map(pic => (
-                          <Card key={pic} className={classes.card}>
+                      <FormControl margin="normal" fullWidth required>
+                        <InputLabel htmlFor="state">Client</InputLabel>
+                        <Select
+                          value={values.newsClient}
+                          onChange={handleChange}
+                          input={<Input id="newsClient" name="newsClient" />}
+                        >
+                          {newsClients.map(client => (
+                            <MenuItem key={client.value} value={client.value}>
+                              <Avatar
+                                alt="Remy Sharp"
+                                src={client.logourl}
+                                className={classes.avatar}
+                              />
+                              {client.label}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                        {touched.newsClient &&
+                          errors.newsClient && (
+                            <FormHelperText className={classes.error}>
+                              {errors.newsClient}
+                            </FormHelperText>
+                          )}
+                      </FormControl>
+                    </Grid>
+
+                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                      <Upload
+                        className={classes.uploadBtn}
+                        text="Upload Photos"
+                        onUploaded={res =>
+                          setFieldValue(
+                            'photo_urls',
+                            res.map(pic => pic.secure_url),
+                          )
+                        }
+                      />
+                      <Grid item xs={12} sm={12} md={12} lg={12}>
+                        {!_isEmpty(values.photo_urls) &&
+                          values.photo_urls.map(pic => (
+                            <Card key={pic} className={classes.card}>
+                              <CardMedia
+                                component="img"
+                                alt="trending news image"
+                                className={classes.media}
+                                width={this.width}
+                                src={pic}
+                                title="Contemplative Reptile"
+                              />
+                            </Card>
+                          ))}
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                      <Upload
+                        className={classes.uploadBtn}
+                        text="Upload Cover Photo"
+                        onUploaded={res =>
+                          setFieldValue('cover_photo', res[0].secure_url)
+                        }
+                      />
+                      <Grid item xs={12} sm={12} md={12} lg={12}>
+                        {!_isEmpty(values.cover_photo) && (
+                          <Card className={classes.card}>
                             <CardMedia
                               component="img"
                               alt="trending news image"
                               className={classes.media}
                               width={this.width}
-                              src={pic}
+                              src={values.cover_photo}
                               title="Contemplative Reptile"
                             />
-     
                           </Card>
-                        ))}
+                        )}
+                      </Grid>
                     </Grid>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={12} lg={12}>
-                    <Upload
-                      className={classes.uploadBtn}
-                      text="Upload Cover Photo"
-                      onUploaded={res =>
-                        setFieldValue('cover_photo', res[0].secure_url)
-                      }
-                    />
+                    <Grid item xs={12} sm={12} lg={12} md={12}>
+                      <FormControl margin="normal" fullWidth>
+                        <InputLabel htmlFor="youtube_link">
+                          Embed YouTube Link
+                        </InputLabel>
+                        <Input
+                          id="youtube_link"
+                          name="youtube_link"
+                          autoComplete="youtube_link"
+                          value={values.youtube_link}
+                          onChange={e =>
+                            this.onYoutubeLinkChange(e, setFieldValue)
+                          }
+                        />{' '}
+                      </FormControl>
+                    </Grid>
                     <Grid item xs={12} sm={12} md={12} lg={12}>
-                      {!_isEmpty(values.cover_photo) && (
-                        <Card className={classes.card}>
-                          <CardMedia
-                            component="img"
-                            alt="trending news image"
-                            className={classes.media}
-                            width={this.width}
-                            src={values.cover_photo}
-                            title="Contemplative Reptile"
-                          />
-                        </Card>
+                      {!_isEmpty(values.youtube_link) && (
+                        <YouTube
+                          videoId={values.youtube_link}
+                          opts={opts}
+                          onReady={this._onReady}
+                        />
                       )}
                     </Grid>
-                  </Grid>
-                  <Grid item xs={12} sm={12} lg={12} md={12}>
-                    <FormControl margin="normal" fullWidth>
-                      <InputLabel htmlFor="youtube_link">
-                        Embed YouTube Link
-                      </InputLabel>
-                      <Input
-                        id="youtube_link"
-                        name="youtube_link"
-                        autoComplete="youtube_link"
-                        value={values.youtube_link}
-                        onChange={e =>
-                          this.onYoutubeLinkChange(e, setFieldValue)
-                        }
-                        
-                      />{' '}
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={12} lg={12}>
-                    {!_isEmpty(values.youtube_link) && (
-                      <YouTube
-                        videoId={values.youtube_link}
-                        opts={opts}
-                        onReady={this._onReady}
-                      />
-                    )}
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={12} lg={12}>
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      color="primary"
-                      className={classes.submit}
-                      disabled={isSubmitting}
-                    >
-                      {' '}
-                      Update
-                    </Button>
+                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                        disabled={isSubmitting}
+                      >
+                        {' '}
+                        Update
+                      </Button>
 
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => this.onCancel()}
-                      className={classes.cancel}
-                      disabled={isSubmitting}
-                    >
-                      {' '}
-                      Cancel
-                    </Button>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => this.onCancel()}
+                        className={classes.cancel}
+                        disabled={isSubmitting}
+                      >
+                        {' '}
+                        Cancel
+                      </Button>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </form>
-            );
-          }}
-        </Formik>}
+                </form>
+              );
+            }}
+          </Formik>
+        )}
       </Content>
     );
   }
@@ -410,15 +416,16 @@ TrendingNewsEdit.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   states: makeSelectStatesForOptions(),
-  newsClients:makeSelectNewsClientsForOptions(),
-  selectedTrendingNews:makeSelectSelectedTrendingNews()
+  newsClients: makeSelectNewsClientsForOptions(),
+  selectedTrendingNews: makeSelectSelectedTrendingNews(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    fetchTrendingNewsById:(trendingNewsId) => dispatch(fetchTrendingNewsById(trendingNewsId)),
-    fetchNewsClients:() => dispatch(fetchNewsClients()),
+    fetchTrendingNewsById: trendingNewsId =>
+      dispatch(fetchTrendingNewsById(trendingNewsId)),
+    fetchNewsClients: () => dispatch(fetchNewsClients()),
     updateTrendingNewsById: updNews =>
       dispatch(updateTrendingNewsById(updNews)),
   };

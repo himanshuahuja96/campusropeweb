@@ -70,7 +70,7 @@ export class UserTrendingNewsList extends React.Component {
   }
 
   render() {
-    const { trendingNews, states,classes } = this.props;
+    const { trendingNews, states, classes } = this.props;
     const { state } = this.state;
     return (
       <Content withPaper={false}>

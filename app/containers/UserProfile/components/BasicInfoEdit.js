@@ -11,64 +11,52 @@ import { makeSelectUserProfileInfo } from '../selectors';
 /* eslint react/prop-types: 0 */
 class BasicInfoEdit extends React.PureComponent {
   render() {
-    const { values = {}, handleChange,userprofileInfo} = this.props;
+    const { values = {}, handleChange, userprofileInfo } = this.props;
     return (
       <React.Fragment>
-          <FormControl
-            margin="normal"
+        <FormControl margin="normal" fullWidth={true}>
+          <InputLabel htmlFor="name">Name</InputLabel>
+          <Input
+            id="name"
+            name="name"
+            autoComplete="name"
+            value={values.name}
+            onChange={handleChange}
+            autoFocus={true}
             fullWidth={true}
-          >
-            <InputLabel htmlFor="name">Name</InputLabel>
-            <Input
-              id="name"
-              name="name"
-              autoComplete="name"
-              value={values.name}
-              onChange={handleChange}
-              autoFocus={true}
-              fullWidth={true}
-            />
-          </FormControl>
+          />
+        </FormControl>
 
-          <FormControl
-            margin="normal"
-            fullWidth={true}
-          >
-            <InputLabel htmlFor="name">Country</InputLabel>
-            <Input
-              id="country"
-              name="country"
-              value={values.country}
-              onChange={handleChange}
-            />
-          </FormControl>
+        <FormControl margin="normal" fullWidth={true}>
+          <InputLabel htmlFor="name">Country</InputLabel>
+          <Input
+            id="country"
+            name="country"
+            value={values.country}
+            onChange={handleChange}
+          />
+        </FormControl>
 
-          <FormControl
-            margin="normal"
-            fullWidth={true}
-          >
-            <InputLabel htmlFor="name">Home Town</InputLabel>
-            <Input
-              id="homeTown"
-              name="homeTown"
-              value={values.homeTown}
-              onChange={handleChange}
-            />
-          </FormControl>
+        <FormControl margin="normal" fullWidth={true}>
+          <InputLabel htmlFor="name">Home Town</InputLabel>
+          <Input
+            id="homeTown"
+            name="homeTown"
+            value={values.homeTown}
+            onChange={handleChange}
+          />
+        </FormControl>
 
-          <FormControl
-            margin="normal"
-            fullWidth={true}
-          >
-            <InputLabel htmlFor="name">Current City</InputLabel>
-            <Input
-              id="currentCity"
-              name="currentCity"
-              value={values.currentCity}
-              onChange={handleChange}
-            />
-          </FormControl>
-          </React.Fragment>
+        <FormControl margin="normal" fullWidth={true}>
+          <InputLabel htmlFor="name">Current City</InputLabel>
+          <Input
+            id="currentCity"
+            name="currentCity"
+            value={values.currentCity}
+            onChange={handleChange}
+          />
+        </FormControl>
+      </React.Fragment>
     );
   }
 }

@@ -10,41 +10,43 @@ import { deleteNgo } from './actions';
 const styles = theme => ({});
 
 class MyNgos extends React.Component {
-
   state = {
-    deleteID: null
-  }
+    deleteID: null,
+  };
 
   render() {
     const { classes } = this.props;
     const { deleteID } = this.state;
     return (
       <React.Fragment>
-        <NgoList 
-          ngos={this.props.myNgos} 
+        <NgoList
+          ngos={this.props.myNgos}
           onNgoClick={() => {
             console.log('On Click Ngo');
           }}
           onDelete={id => {
             console.log('id', id);
-            this.setState({deleteID: id});
-          }} 
+            this.setState({ deleteID: id });
+          }}
           onEdit={id => {
             console.log(' onEdit id', id);
             //this.setState({deleteID: id});
           }}
         />
-        {
-          deleteID && (
-            <DeleteDialog 
-              onCancel={e => {this.setState({deleteID: null})}} 
-              onOk={e => {this.props.deleteNgo(deleteID); this.setState({deleteID: null})}} 
-              title="Delete NGO"
-            >
-              Are you sure to detete this NGO?
-            </DeleteDialog>
-          )
-        }
+        {deleteID && (
+          <DeleteDialog
+            onCancel={e => {
+              this.setState({ deleteID: null });
+            }}
+            onOk={e => {
+              this.props.deleteNgo(deleteID);
+              this.setState({ deleteID: null });
+            }}
+            title="Delete NGO"
+          >
+            Are you sure to detete this NGO?
+          </DeleteDialog>
+        )}
       </React.Fragment>
     );
   }
@@ -55,8 +57,12 @@ MyNgos.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  myNgos: state.ngo.fetchedNgos && state.ngo.fetchedNgos.filter(ngo => ngo.createdBy._id === state.loggedUser.user._id)
-})
+  myNgos:
+    state.ngo.fetchedNgos &&
+    state.ngo.fetchedNgos.filter(
+      ngo => ngo.createdBy._id === state.loggedUser.user._id,
+    ),
+});
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -65,10 +71,11 @@ function mapDispatchToProps(dispatch) {
     fetchNgos: state => dispatch(fetchNgos(state)),
     createNgo: () => dispatch(createNgo()),
     */
-    deleteNgo: ngoId => dispatch(deleteNgo(ngoId))
-    
+    deleteNgo: ngoId => dispatch(deleteNgo(ngoId)),
   };
 }
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(MyNgos));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withStyles(styles)(MyNgos));

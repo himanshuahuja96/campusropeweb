@@ -170,16 +170,16 @@ class AboutUserComponent extends React.Component {
     });
   };
 
-  handleBackClick = (userinfo) => {
+  handleBackClick = userinfo => {
     this.props.dispatch(push(`/profile/${userinfo._id}`));
-  }
+  };
 
   render() {
     const {
       classes,
       userProfile = {},
       handleProfileSave,
-      loggedUserInfo
+      loggedUserInfo,
     } = this.props;
     const { expanded } = this.state;
     const TAB_TYPE_MAP = ProfileTabType.typeTypeMap;
@@ -222,7 +222,7 @@ class AboutUserComponent extends React.Component {
                 errors={errors}
                 touched={touched}
                 values={values}
-                expanded={expanded  === 'panel2'}
+                expanded={expanded === 'panel2'}
                 handlePanelChange={this.handleChange('panel2')}
                 handleChange={handleChange}
               />
@@ -231,13 +231,13 @@ class AboutUserComponent extends React.Component {
                 errors={errors}
                 touched={touched}
                 values={values}
-                expanded={expanded  === 'panel3'}
+                expanded={expanded === 'panel3'}
                 handlePanelChange={this.handleChange('panel3')}
                 handleChange={handleChange}
               />
 
               <div className={classes.aboutUserBtnWrapper}>
-              <Button
+                <Button
                   onClick={() => this.handleBackClick(loggedUserInfo)}
                   variant="contained"
                   className={classes.cancel}
@@ -256,7 +256,7 @@ class AboutUserComponent extends React.Component {
 }
 
 AboutUserComponent.propTypes = {
-  classes: PropTypes.object
+  classes: PropTypes.object,
 };
 
 function mapDispatchToProps(dispatch) {

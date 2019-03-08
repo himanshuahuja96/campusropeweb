@@ -129,8 +129,8 @@ export class TrendingNewsForm extends React.Component {
       (this.height = document
         .querySelector('#content')
         .getBoundingClientRect().height);
-    
-    this.props.fetchNewsClients()
+
+    this.props.fetchNewsClients();
   }
 
   onYoutubeLinkChange(event, setFieldValue) {
@@ -151,7 +151,7 @@ export class TrendingNewsForm extends React.Component {
             headline: '',
             content: '',
             state: '',
-            newsClient:'',
+            newsClient: '',
             photo_urls: [],
             cover_photo: '',
             youtube_link: '',
@@ -160,7 +160,9 @@ export class TrendingNewsForm extends React.Component {
             headline: Yup.string().required('please provide headline'),
             content: Yup.string().required('Please provide content'),
             state: Yup.string().required('Please choose any one of the State'),
-            newsClient: Yup.string().required('Please choose any one of the news Clients'),
+            newsClient: Yup.string().required(
+              'Please choose any one of the news Clients',
+            ),
           })}
           onSubmit={(values, actions) => this.onSubmit(values, actions)}
         >
@@ -174,7 +176,7 @@ export class TrendingNewsForm extends React.Component {
               isSubmitting,
               handleSubmit,
             } = props;
-            const { classes, states ,newsClients} = this.props;
+            const { classes, states, newsClients } = this.props;
             return (
               <form
                 className={classes.form}
@@ -214,7 +216,6 @@ export class TrendingNewsForm extends React.Component {
                         autoComplete="content"
                         value={values.content}
                         onChange={handleChange}
-                        
                       />{' '}
                       {touched.content &&
                         errors.content && (
@@ -248,14 +249,17 @@ export class TrendingNewsForm extends React.Component {
                   </Grid>
 
                   <Button
-                      variant="contained"
-                      onClick={() => this.props.dispatch(push('/news/trends/admin/client/manage'))}
-                      className={classes.cancel}
-                    >
-                      {' '}
-                      Manage Clients
-                    </Button>
-
+                    variant="contained"
+                    onClick={() =>
+                      this.props.dispatch(
+                        push('/news/trends/admin/client/manage'),
+                      )
+                    }
+                    className={classes.cancel}
+                  >
+                    {' '}
+                    Manage Clients
+                  </Button>
 
                   <Grid item xs={12} sm={12} md={12} lg={12}>
                     <FormControl margin="normal" fullWidth required>
@@ -271,7 +275,8 @@ export class TrendingNewsForm extends React.Component {
                               alt="Remy Sharp"
                               src={client.logourl}
                               className={classes.avatar}
-                            />{client.label}
+                            />
+                            {client.label}
                           </MenuItem>
                         ))}
                       </Select>
@@ -283,7 +288,6 @@ export class TrendingNewsForm extends React.Component {
                         )}
                     </FormControl>
                   </Grid>
-
 
                   <Grid item xs={12} sm={12} md={12} lg={12}>
                     <Upload
@@ -308,7 +312,6 @@ export class TrendingNewsForm extends React.Component {
                               src={pic}
                               title="Contemplative Reptile"
                             />
-     
                           </Card>
                         ))}
                     </Grid>
@@ -349,7 +352,6 @@ export class TrendingNewsForm extends React.Component {
                         onChange={e =>
                           this.onYoutubeLinkChange(e, setFieldValue)
                         }
-                        
                       />{' '}
                     </FormControl>
                   </Grid>
@@ -402,13 +404,13 @@ TrendingNewsForm.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   states: makeSelectStatesForOptions(),
-  newsClients:makeSelectNewsClientsForOptions()
+  newsClients: makeSelectNewsClientsForOptions(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    fetchNewsClients:() => dispatch(fetchNewsClients()),
+    fetchNewsClients: () => dispatch(fetchNewsClients()),
     submitNewTrendingNewsDetails: (values, actions) =>
       dispatch(submitNewTrendingNews(values, actions)),
   };

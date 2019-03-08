@@ -69,14 +69,14 @@ const styles = theme => ({
     top: 15,
     right: 50,
     fontSize: 20,
-    cursor:'pointer'
+    cursor: 'pointer',
   },
   multiInput: {
     flex: 1,
   },
-  infoLabel :{
-    display : 'inline-block',
-    marginLeft : 15
+  infoLabel: {
+    display: 'inline-block',
+    marginLeft: 15,
   },
   deleteBtn: {
     background: '#e63d3d',
@@ -104,48 +104,50 @@ class AboutUserComponent extends React.Component {
 
   handleEditDialogPanel = () => {
     this.setState({
-      editDialogExpand : true,
-      stereoTypesInfoEditView : true
-    })
-  }
+      editDialogExpand: true,
+      stereoTypesInfoEditView: true,
+    });
+  };
 
   handleClose = () => {
     this.setState({
-      editDialogExpand : false
-    })
-  }
+      editDialogExpand: false,
+    });
+  };
 
-  renderLabelsAndValues = (label,value) => {
+  renderLabelsAndValues = (label, value) => {
     const { classes } = this.props;
-    return (<Typography variant="h6" gutterBottom>
-              {label} :
-              <Typography variant="button"
-                gutterBottom className={classes.infoLabel}>
-                {value}
-              </Typography>
-            </Typography>
-            )
-  }
+    return (
+      <Typography variant="h6" gutterBottom>
+        {label} :
+        <Typography variant="button" gutterBottom className={classes.infoLabel}>
+          {value}
+        </Typography>
+      </Typography>
+    );
+  };
 
   render() {
-    const { classes, expanded ,handlePanelChange ,userprofileInfo} = this.props;
-    const {editDialogExpand, stereoTypesInfoEditView } = this.state;
+    const {
+      classes,
+      expanded,
+      handlePanelChange,
+      userprofileInfo,
+    } = this.props;
+    const { editDialogExpand, stereoTypesInfoEditView } = this.state;
     return (
-      <ExpansionPanel
-      expanded={expanded}
-      onChange={handlePanelChange}
-      >
-      {
-        expanded &&    <div className={classes.editBtn}>
-        <EditIcon onClick={this.handleEditDialogPanel}/>
-        </div>
-      }
+      <ExpansionPanel expanded={expanded} onChange={handlePanelChange}>
+        {expanded && (
+          <div className={classes.editBtn}>
+            <EditIcon onClick={this.handleEditDialogPanel} />
+          </div>
+        )}
 
-      <EditDialog
-      editDialogExpand = {editDialogExpand}
-      handleClose = {this.handleClose}
-      stereoTypesInfoEditView = {stereoTypesInfoEditView}
-      />
+        <EditDialog
+          editDialogExpand={editDialogExpand}
+          handleClose={this.handleClose}
+          stereoTypesInfoEditView={stereoTypesInfoEditView}
+        />
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <Typography variant="body1" className={classes.heading}>
             Stereotypes
@@ -153,13 +155,19 @@ class AboutUserComponent extends React.Component {
         </ExpansionPanelSummary>
 
         <ExpansionPanelDetails className={classes.panelDetails}>
-        <Grid container spacing={16}>
-              <Grid item xs={12} sm={12} lg={6}>
-                {this.renderLabelsAndValues('PoliticalView',userprofileInfo.politicalView || "-")}
-              </Grid>
-              <Grid item xs={12} sm={12} lg={6}>
-                {this.renderLabelsAndValues('ReligiousView',userprofileInfo.religiousView || "-")}
-              </Grid>
+          <Grid container spacing={16}>
+            <Grid item xs={12} sm={12} lg={6}>
+              {this.renderLabelsAndValues(
+                'PoliticalView',
+                userprofileInfo.politicalView || '-',
+              )}
+            </Grid>
+            <Grid item xs={12} sm={12} lg={6}>
+              {this.renderLabelsAndValues(
+                'ReligiousView',
+                userprofileInfo.religiousView || '-',
+              )}
+            </Grid>
           </Grid>
         </ExpansionPanelDetails>
       </ExpansionPanel>
@@ -168,7 +176,7 @@ class AboutUserComponent extends React.Component {
 }
 
 AboutUserComponent.propTypes = {
-  classes: PropTypes.object
+  classes: PropTypes.object,
 };
 
 function mapDispatchToProps(dispatch) {

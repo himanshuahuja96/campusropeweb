@@ -38,42 +38,47 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 export class TrendingNewsClientList extends React.Component {
-  
   componentDidMount() {
     this.props.fetchNewsClients();
   }
 
   handleDeleteClient(client) {
-    this.props.deleteNewsClient(client)
+    this.props.deleteNewsClient(client);
   }
-  
 
   render() {
-    const { newsClients,classes } = this.props;
+    const { newsClients, classes } = this.props;
     return (
       <Content withPaper={true}>
-         <Button
-                      variant="contained"
-                      onClick={() => this.props.dispatch(push('/news/trends/admin/client/new'))}
-                      className={classes.addClient}
-                    >
-                      {' '}
-                      Add clients
-                    </Button>
-          {newsClients.map((client) => (
+        <Button
+          variant="contained"
+          onClick={() =>
+            this.props.dispatch(push('/news/trends/admin/client/new'))
+          }
+          className={classes.addClient}
+        >
+          {' '}
+          Add clients
+        </Button>
+        {newsClients.map(client => (
           <Card key={client._id} className={classes.card}>
             <CardHeader
-            avatar={
-                <Avatar aria-label="Recipe" src={client.logourl} className={classes.avatar}/>
-            }
-            action={
-                <IconButton onClick={() => this.handleDeleteClient(client) }>
+              avatar={
+                <Avatar
+                  aria-label="Recipe"
+                  src={client.logourl}
+                  className={classes.avatar}
+                />
+              }
+              action={
+                <IconButton onClick={() => this.handleDeleteClient(client)}>
                   <DeleteIcon />
                 </IconButton>
               }
-            title={client.name}
+              title={client.name}
             />
-        </Card>))}
+          </Card>
+        ))}
       </Content>
     );
   }
@@ -94,7 +99,7 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     fetchNewsClients: () => dispatch(fetchNewsClients()),
-    deleteNewsClient: (client) => dispatch(deleteNewsClient(client)),
+    deleteNewsClient: client => dispatch(deleteNewsClient(client)),
   };
 }
 

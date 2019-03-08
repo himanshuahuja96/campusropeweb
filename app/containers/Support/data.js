@@ -27,7 +27,7 @@ export default [
         ans:
           'You can change your password from the menu on the top right corner of the app screen > Settings > Change Password',
       },
-    ]
+    ],
   },
   {
     title: 'NGO',
@@ -57,7 +57,7 @@ export default [
         ans:
           'You can change your password from the menu on the top right corner of the app screen > Settings > Change Password',
       },
-    ]
+    ],
   },
   {
     title: 'Helpline',
@@ -87,6 +87,6 @@ export default [
         ans:
           'You can change your password from the menu on the top right corner of the app screen > Settings > Change Password',
       },
-    ]
-  }
+    ],
+  },
 ];

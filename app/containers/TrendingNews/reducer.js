@@ -14,7 +14,7 @@ import {
 export const initialState = {
   trendingNewsList: [],
   selectedTrendingNews: {},
-  newsClients:[]
+  newsClients: [],
 };
 
 function trendingNewsReducer(state = initialState, action) {
@@ -29,8 +29,8 @@ function trendingNewsReducer(state = initialState, action) {
     case SET_NEWS_CLIENTS:
       return {
         ...state,
-        newsClients:action.clients
-      }
+        newsClients: action.clients,
+      };
     case SET_SELECTED_TRENDING_NEWS:
       return {
         ...state,

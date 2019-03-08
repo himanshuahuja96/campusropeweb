@@ -61,7 +61,7 @@ class AllNgos extends React.Component {
           variant="contained"
           className={classes.createNgoBtn}
           color="primary"
-          style={{marginRight: 20}}
+          style={{ marginRight: 20 }}
         >
           <Link to="/ngos/my">My NGOs</Link>
         </Button>
@@ -79,11 +79,11 @@ class AllNgos extends React.Component {
             ))}
           </Select>
         </FormControl>
-        <NgoList 
-          ngos={fetchedNgos} 
+        <NgoList
+          ngos={fetchedNgos}
           onNgoClick={id => {
             console.log('On Click Ngo', id);
-            this.props.history.push(`/ngos/${id}`)
+            this.props.history.push(`/ngos/${id}`);
           }}
         />
       </Fragment>

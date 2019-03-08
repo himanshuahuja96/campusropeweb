@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Switch,Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import AdminTask from 'containers/AssignAdminTask/Loadable';
@@ -24,7 +24,7 @@ import AboutUs from 'containers/AboutUs/Loadable';
 import PrivateRoute from 'components/PrivateRoute/Loadable';
 import CenterMenus from 'components/CenterMenus/Loadable';
 import About from '../UserProfile/components/About';
-import AppBar from './AppBar'
+import AppBar from './AppBar';
 
 import { makeSelectLoggedUserHomeMenus } from '../../store/loggeduser/selectors';
 import reducer from './reducer';
@@ -40,7 +40,7 @@ export class GuestHome extends React.PureComponent {
           <meta name="description" content="Description of GuestHome" />
         </Helmet>
         <React.Fragment>
-         <AppBar/>
+          <AppBar />
           <Switch>
             <Route
               exact

@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import MuiInputAdornment from '@material-ui/core/InputAdornment';
-import Icon from '@material-ui/core/Icon'
+import Icon from '@material-ui/core/Icon';
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
@@ -44,7 +44,6 @@ function Header(props) {
 
   return (
     <React.Fragment>
-     
       <AppBar
         component="div"
         className={classes.secondaryBar}
@@ -60,21 +59,21 @@ function Header(props) {
               </Typography>
             </Grid>
             <Hidden smDown>
-          <Grid item lg>
-            <TextField
-              fullWidth
-              placeholder="Search Campusrope"
-              InputProps={{
-                disableUnderline: true,
-                startAdornment: (
-                  <MuiInputAdornment position="start">
-                    <Icon>search</Icon>
-                  </MuiInputAdornment>
-                ),
-              }}
-            />
-          </Grid>
-        </Hidden>
+              <Grid item lg>
+                <TextField
+                  fullWidth
+                  placeholder="Search Campusrope"
+                  InputProps={{
+                    disableUnderline: true,
+                    startAdornment: (
+                      <MuiInputAdornment position="start">
+                        <Icon>search</Icon>
+                      </MuiInputAdornment>
+                    ),
+                  }}
+                />
+              </Grid>
+            </Hidden>
             <Grid item>
               <Tooltip title="Help">
                 <IconButton color="inherit">
@@ -103,7 +102,7 @@ function Header(props) {
 }
 
 Header.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Header);

@@ -14,7 +14,6 @@ import { createStructuredSelector } from 'reselect';
 import { makeSelectLoggedUser } from '../../../store/loggeduser/selectors';
 import { makeSelectUserProfileInfo } from '../selectors';
 
-
 import EditDialog from './EditDialog';
 
 const styles = theme => ({
@@ -73,11 +72,11 @@ const styles = theme => ({
     top: 15,
     right: 50,
     fontSize: 20,
-    cursor:'pointer'
+    cursor: 'pointer',
   },
-  infoLabel :{
-    display : 'inline-block',
-    marginLeft : 15
+  infoLabel: {
+    display: 'inline-block',
+    marginLeft: 15,
   },
   deleteBtn: {
     background: '#e63d3d',
@@ -91,7 +90,6 @@ const styles = theme => ({
 
 /* eslint react/prop-types: 0 */
 class AboutUserComponent extends React.PureComponent {
-
   state = {
     editDialogExpand: false,
     basicInfoEditView: null,
@@ -99,48 +97,50 @@ class AboutUserComponent extends React.PureComponent {
 
   handleEditDialogPanel = () => {
     this.setState({
-      editDialogExpand : true,
-      basicInfoEditView : true
-    })
-  }
+      editDialogExpand: true,
+      basicInfoEditView: true,
+    });
+  };
 
   handleClose = () => {
     this.setState({
-      editDialogExpand : false
-    })
-  }
+      editDialogExpand: false,
+    });
+  };
 
-  renderLabelsAndValues = (label,value) => {
+  renderLabelsAndValues = (label, value) => {
     const { classes } = this.props;
-    return (<Typography variant="h6" gutterBottom>
-              {label} :
-              <Typography variant="button"
-                gutterBottom className={classes.infoLabel}>
-                {value}
-              </Typography>
-            </Typography>
-            )
-  }
+    return (
+      <Typography variant="h6" gutterBottom>
+        {label} :
+        <Typography variant="button" gutterBottom className={classes.infoLabel}>
+          {value}
+        </Typography>
+      </Typography>
+    );
+  };
 
   render() {
-    const { classes,expanded,handlePanelChange,userprofileInfo } = this.props;
-    const {editDialogExpand, basicInfoEditView } = this.state;
+    const {
+      classes,
+      expanded,
+      handlePanelChange,
+      userprofileInfo,
+    } = this.props;
+    const { editDialogExpand, basicInfoEditView } = this.state;
     return (
-      <ExpansionPanel
-        expanded={expanded}
-        onChange={handlePanelChange}
-      >
-      {
-        expanded &&    <div className={classes.editBtn}>
-        <EditIcon onClick={this.handleEditDialogPanel}/>
-        </div>
-      }
+      <ExpansionPanel expanded={expanded} onChange={handlePanelChange}>
+        {expanded && (
+          <div className={classes.editBtn}>
+            <EditIcon onClick={this.handleEditDialogPanel} />
+          </div>
+        )}
 
-      <EditDialog
-      editDialogExpand = {editDialogExpand}
-      handleClose = {this.handleClose}
-      basicInfoEditView = {basicInfoEditView}
-      />
+        <EditDialog
+          editDialogExpand={editDialogExpand}
+          handleClose={this.handleClose}
+          basicInfoEditView={basicInfoEditView}
+        />
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <Typography variant="body1" className={classes.heading}>
             Basic Information
@@ -148,23 +148,32 @@ class AboutUserComponent extends React.PureComponent {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.panelDetails}>
           <Grid container spacing={16}>
-              <Grid item xs={12} sm={12} lg={6}>
-                {this.renderLabelsAndValues('Name',userprofileInfo.name)}
-              </Grid>
-              <Grid item xs={12} sm={12} lg={6}>
-                {this.renderLabelsAndValues('Gender',userprofileInfo.gender)}
-              </Grid>
-              <Grid item xs={12} sm={12} lg={6}>
-                {this.renderLabelsAndValues('Email',userprofileInfo.email)}
-              </Grid>
-              <Grid item xs={12} sm={12} lg={6}>
-                    {this.renderLabelsAndValues('Country',userprofileInfo.country || "-")}
-              </Grid>
-              <Grid item xs={12} sm={12} lg={6}>
-                      {this.renderLabelsAndValues('HomeTown',userprofileInfo.homeTown || "-")}
-              </Grid>
-              <Grid item xs={12} sm={12} lg={6}>
-                    {this.renderLabelsAndValues('Current City',userprofileInfo.currentCity || "-")}
+            <Grid item xs={12} sm={12} lg={6}>
+              {this.renderLabelsAndValues('Name', userprofileInfo.name)}
+            </Grid>
+            <Grid item xs={12} sm={12} lg={6}>
+              {this.renderLabelsAndValues('Gender', userprofileInfo.gender)}
+            </Grid>
+            <Grid item xs={12} sm={12} lg={6}>
+              {this.renderLabelsAndValues('Email', userprofileInfo.email)}
+            </Grid>
+            <Grid item xs={12} sm={12} lg={6}>
+              {this.renderLabelsAndValues(
+                'Country',
+                userprofileInfo.country || '-',
+              )}
+            </Grid>
+            <Grid item xs={12} sm={12} lg={6}>
+              {this.renderLabelsAndValues(
+                'HomeTown',
+                userprofileInfo.homeTown || '-',
+              )}
+            </Grid>
+            <Grid item xs={12} sm={12} lg={6}>
+              {this.renderLabelsAndValues(
+                'Current City',
+                userprofileInfo.currentCity || '-',
+              )}
             </Grid>
           </Grid>
         </ExpansionPanelDetails>
@@ -174,7 +183,7 @@ class AboutUserComponent extends React.PureComponent {
 }
 
 AboutUserComponent.propTypes = {
-  classes: PropTypes.object
+  classes: PropTypes.object,
 };
 
 function mapDispatchToProps(dispatch) {

@@ -77,11 +77,11 @@ const styles = theme => ({
     top: 15,
     right: 50,
     fontSize: 20,
-    cursor:'pointer'
+    cursor: 'pointer',
   },
-  infoLabel :{
-    display : 'inline-block',
-    marginLeft : 15
+  infoLabel: {
+    display: 'inline-block',
+    marginLeft: 15,
   },
   deleteBtn: {
     background: '#e63d3d',
@@ -98,33 +98,33 @@ class AboutUserComponent extends React.Component {
   state = {
     expanded: null,
     editDialogExpand: false,
-    generalInfoEditView: null
+    generalInfoEditView: null,
   };
 
   handleEditDialogPanel = () => {
     this.setState({
-      editDialogExpand : true,
-      generalInfoEditView : true
-    })
-  }
+      editDialogExpand: true,
+      generalInfoEditView: true,
+    });
+  };
 
   handleClose = () => {
     this.setState({
-      editDialogExpand : false
-    })
-  }
+      editDialogExpand: false,
+    });
+  };
 
-  renderLabelsAndValues = (label,value) => {
+  renderLabelsAndValues = (label, value) => {
     const { classes } = this.props;
-    return (<Typography variant="h6" gutterBottom>
-              {label} :
-              <Typography variant="button"
-                gutterBottom className={classes.infoLabel}>
-                {value}
-              </Typography>
-            </Typography>
-            )
-  }
+    return (
+      <Typography variant="h6" gutterBottom>
+        {label} :
+        <Typography variant="button" gutterBottom className={classes.infoLabel}>
+          {value}
+        </Typography>
+      </Typography>
+    );
+  };
 
   handlePanelChange = panel => (event, expanded) => {
     this.setState({
@@ -133,23 +133,25 @@ class AboutUserComponent extends React.Component {
   };
 
   render() {
-    const { classes, userprofileInfo, handlePanelChange,expanded} = this.props;
-    const {editDialogExpand, generalInfoEditView } = this.state;
+    const {
+      classes,
+      userprofileInfo,
+      handlePanelChange,
+      expanded,
+    } = this.props;
+    const { editDialogExpand, generalInfoEditView } = this.state;
     return (
-      <ExpansionPanel
-      expanded={expanded}
-      onChange={handlePanelChange}
-      >
-      {
-        expanded &&    <div className={classes.editBtn}>
-        <EditIcon onClick={this.handleEditDialogPanel}/>
-        </div>
-      }
-      <EditDialog
-      editDialogExpand = {editDialogExpand}
-      handleClose = {this.handleClose}
-      generalInfoEditView = {generalInfoEditView}
-      />
+      <ExpansionPanel expanded={expanded} onChange={handlePanelChange}>
+        {expanded && (
+          <div className={classes.editBtn}>
+            <EditIcon onClick={this.handleEditDialogPanel} />
+          </div>
+        )}
+        <EditDialog
+          editDialogExpand={editDialogExpand}
+          handleClose={this.handleClose}
+          generalInfoEditView={generalInfoEditView}
+        />
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <Typography variant="body1" className={classes.heading}>
             General Information
@@ -157,22 +159,31 @@ class AboutUserComponent extends React.Component {
         </ExpansionPanelSummary>
 
         <ExpansionPanelDetails className={classes.panelDetails}>
-        <Grid container spacing={16}>
-              <Grid item xs={12} sm={12} lg={6}>
-                {this.renderLabelsAndValues('Work And Experience','Work And Experience')}
-              </Grid>
-              <Grid item xs={12} sm={12} lg={6}>
-                {this.renderLabelsAndValues('Skills','Skills')}
-              </Grid>
-              <Grid item xs={12} sm={12} lg={6}>
-                {this.renderLabelsAndValues('College','College')}
-              </Grid>
-              <Grid item xs={12} sm={12} lg={6}>
-                    {this.renderLabelsAndValues('Other Degree and Courses','Other Degree and Courses')}
-              </Grid>
-              <Grid item xs={12} sm={12} lg={6}>
-                      {this.renderLabelsAndValues('Career Objectives','Career Objectives')}
-              </Grid>
+          <Grid container spacing={16}>
+            <Grid item xs={12} sm={12} lg={6}>
+              {this.renderLabelsAndValues(
+                'Work And Experience',
+                'Work And Experience',
+              )}
+            </Grid>
+            <Grid item xs={12} sm={12} lg={6}>
+              {this.renderLabelsAndValues('Skills', 'Skills')}
+            </Grid>
+            <Grid item xs={12} sm={12} lg={6}>
+              {this.renderLabelsAndValues('College', 'College')}
+            </Grid>
+            <Grid item xs={12} sm={12} lg={6}>
+              {this.renderLabelsAndValues(
+                'Other Degree and Courses',
+                'Other Degree and Courses',
+              )}
+            </Grid>
+            <Grid item xs={12} sm={12} lg={6}>
+              {this.renderLabelsAndValues(
+                'Career Objectives',
+                'Career Objectives',
+              )}
+            </Grid>
           </Grid>
         </ExpansionPanelDetails>
       </ExpansionPanel>
@@ -181,7 +192,7 @@ class AboutUserComponent extends React.Component {
 }
 
 AboutUserComponent.propTypes = {
-  classes: PropTypes.object
+  classes: PropTypes.object,
 };
 
 function mapDispatchToProps(dispatch) {

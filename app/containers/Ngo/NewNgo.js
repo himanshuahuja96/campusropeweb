@@ -45,8 +45,6 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 
-
-
 class NewNgo extends React.Component {
   onCancel() {
     this.props.dispatch(push('/ngos'));

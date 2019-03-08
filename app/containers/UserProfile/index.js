@@ -21,7 +21,7 @@ import {
 } from '../../store/loggeduser/selectors';
 import reducer from './reducer';
 import saga from './saga';
-import UserProfileBrowserView from './BrowserView'
+import UserProfileBrowserView from './BrowserView';
 
 import { tabSelectAction, fetchUserProfile, saveUserProfile } from './actions';
 
@@ -74,16 +74,15 @@ export class UserProfile extends React.Component {
     this.props.fetchUserProfile(userId);
   }
 
-  isOwner =() => {
+  isOwner = () => {
     const { userId } = this.props.match.params;
     const user =
       (this.props.loggedUserInfo && this.props.loggedUserInfo.user) || {};
     return user.id === userId;
-  }
+  };
 
   render() {
-    const { userprofileInfo,isLoggedUser} = this.props;
-
+    const { userprofileInfo, isLoggedUser } = this.props;
 
     return (
       <div className="root">
@@ -92,11 +91,11 @@ export class UserProfile extends React.Component {
 
           <meta name="description" content="Description of UserProfile" />
         </Helmet>
-       <UserProfileBrowserView
-       userinfo={userprofileInfo}
-       isLoggedUser={isLoggedUser}
-       isOwner={this.isOwner}
-       />
+        <UserProfileBrowserView
+          userinfo={userprofileInfo}
+          isLoggedUser={isLoggedUser}
+          isOwner={this.isOwner}
+        />
       </div>
     );
   }

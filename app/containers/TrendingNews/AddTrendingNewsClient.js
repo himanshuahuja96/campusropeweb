@@ -96,12 +96,10 @@ const styles = theme => ({
 /* eslint-disable */
 
 export class NewTrendingNewsClient extends React.PureComponent {
-
-
   onSubmit(values, actions) {
     newsClientService.create(values).then(() => {
-        this.props.dispatch(push('/news/trends/admin/'));
-    })
+      this.props.dispatch(push('/news/trends/admin/'));
+    });
   }
 
   onCancel() {
@@ -114,7 +112,7 @@ export class NewTrendingNewsClient extends React.PureComponent {
         <Formik
           initialValues={{
             name: '',
-            logourl: ''
+            logourl: '',
           }}
           validationSchema={Yup.object().shape({
             name: Yup.string().required('please provide name of news Client'),
@@ -182,7 +180,7 @@ export class NewTrendingNewsClient extends React.PureComponent {
                       )}
                     </Grid>
                   </Grid>
-                  
+
                   <Grid item xs={12} sm={12} md={12} lg={12}>
                     <Button
                       type="submit"
@@ -217,12 +215,10 @@ export class NewTrendingNewsClient extends React.PureComponent {
 }
 
 NewTrendingNewsClient.propTypes = {
-  classes: PropTypes.object
+  classes: PropTypes.object,
 };
 
-const mapStateToProps = createStructuredSelector({
- 
-});
+const mapStateToProps = createStructuredSelector({});
 
 function mapDispatchToProps(dispatch) {
   return {

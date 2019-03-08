@@ -43,7 +43,7 @@ const styles = theme => ({
 export class Login extends React.Component {
   state = {
     openModal: false,
-    redirectToReferrer:false
+    redirectToReferrer: false,
   };
 
   handleClickOpen = () => {
@@ -56,11 +56,11 @@ export class Login extends React.Component {
 
   render() {
     const { classes, routeToSignup } = this.props;
-    const { from } = this.props.location.state || { from: { pathname: '/' } }
-    const { redirectToReferrer } = this.state
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
+    const { redirectToReferrer } = this.state;
 
     if (redirectToReferrer === true) {
-      return <Redirect to={from} />
+      return <Redirect to={from} />;
     }
     return (
       <React.Fragment>

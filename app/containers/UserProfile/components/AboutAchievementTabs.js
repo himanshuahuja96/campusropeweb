@@ -30,20 +30,26 @@ const styles = () => ({
 
 /* eslint-disable  */
 export class AboutAchievementTabs extends React.PureComponent {
-
-  handleAboutClick = (userinfo) => {
+  handleAboutClick = userinfo => {
     this.props.dispatch(push(`/profile/${userinfo._id}/about`));
-  }
+  };
 
   render() {
-    const { classes,userinfo } = this.props;
+    const { classes, userinfo } = this.props;
     return (
       <div className={classes.root}>
-        <Button variant="contained" color="primary"
-          onClick={()=> this.handleAboutClick(userinfo)}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => this.handleAboutClick(userinfo)}
+        >
           About
         </Button>
-        <Button variant="contained" color="primary" className={classes.achievementBtn}>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.achievementBtn}
+        >
           Achievement
         </Button>
       </div>
@@ -59,7 +65,7 @@ const mapStateToProps = createStructuredSelector({});
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch: dispatch
+    dispatch: dispatch,
   };
 }
 

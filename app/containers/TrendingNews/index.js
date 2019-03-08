@@ -56,7 +56,6 @@ const TrendingNewsClientList = Loadable({
   loading: () => null,
 });
 
-
 /* eslint-disable react/prefer-stateless-function */
 export class TrendingNews extends React.Component {
   render() {

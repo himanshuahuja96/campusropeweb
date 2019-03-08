@@ -22,11 +22,9 @@ export class UserBio extends React.PureComponent {
   render() {
     const { classes } = this.props;
     return (
-    <div className={classes.bioRoot}>
-      <InlineEdit
-        inputWidth={"85%"}
-        text={"User Bio"}/>
-    </div>
+      <div className={classes.bioRoot}>
+        <InlineEdit inputWidth={'85%'} text={'User Bio'} />
+      </div>
     );
   }
 }

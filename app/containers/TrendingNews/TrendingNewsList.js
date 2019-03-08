@@ -37,18 +37,18 @@ const styles = theme => ({
   },
   actions: {
     display: 'flex',
-    flexDirection:'row',
-    justifyContent:'flex-end'
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   bigAvatar: {
     width: 60,
     height: 60,
   },
-  commentbox:{
-    width:'100%',
-    padding:5,
-    border:'none'
-  }
+  commentbox: {
+    width: '100%',
+    padding: 5,
+    border: 'none',
+  },
 });
 
 /* eslint-disable*/
@@ -66,14 +66,14 @@ const TrendingNewsBox = ({
   getCreatedOnDate,
 }) => {
   return (
-    <Card
-      className={classes.card}
-      
-    >
+    <Card className={classes.card}>
       <CardHeader
         onClick={() => onTrendingNewsClick(trendingNewsData)}
         avatar={
-          <Avatar src= {trendingNewsData.newsClient.logourl} className={classNames(classes.avatar, classes.bigAvatar)}/>
+          <Avatar
+            src={trendingNewsData.newsClient.logourl}
+            className={classNames(classes.avatar, classes.bigAvatar)}
+          />
         }
         title={trendingNewsData.newsClient.name}
         subheader={getCreatedOnDate(trendingNewsData.createdAt)}
@@ -82,7 +82,8 @@ const TrendingNewsBox = ({
         <Typography component="p">{trendingNewsData.headline}</Typography>
       </CardContent>
       {!_isEmpty(trendingNewsData.cover_photo) && (
-        <CardMedia onClick={() => onTrendingNewsClick(trendingNewsData)}
+        <CardMedia
+          onClick={() => onTrendingNewsClick(trendingNewsData)}
           className={classes.media}
           image={trendingNewsData.cover_photo}
         />
@@ -91,12 +92,12 @@ const TrendingNewsBox = ({
         <YouTube videoId={trendingNewsData.youtube_link} controls opts={opts} />
       )}
       <CardActions className={classes.actions} disableActionSpacing>
-            <Avatar
-              alt="Remy Sharp"
-              src= {trendingNewsData.newsClient.logourl}
-              className={classes.avatar}
-            />
-             <Input className={classes.commentbox}  disabled placeholder="comment"/>
+        <Avatar
+          alt="Remy Sharp"
+          src={trendingNewsData.newsClient.logourl}
+          className={classes.avatar}
+        />
+        <Input className={classes.commentbox} disabled placeholder="comment" />
         <IconButton aria-label="Like">
           <ThumbUpSharp />
         </IconButton>

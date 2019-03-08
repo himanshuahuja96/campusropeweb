@@ -22,4 +22,4 @@ export default function createReducer(injectedReducers = {}) {
   // Wrap the root reducer and return a new root reducer with router state
   const mergeWithRouterState = connectRouter(history);
   return mergeWithRouterState(rootReducer);
-};
+}

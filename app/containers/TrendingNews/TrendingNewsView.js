@@ -75,40 +75,40 @@ export class TrendingNewsView extends React.Component {
     const { classes, trendingNewsDetails, states } = this.props;
     return (
       <Content>
-       { trendingNewsDetails.photo_urls && <div >
-          {!_isEmpty(trendingNewsDetails.cover_photo) && (
-            <IdealImage
-              placeholder={{ color: 'grey' }}
-              srcSet={[
-                {
-                  src: trendingNewsDetails.cover_photo,
-                  width: 100,
-                  height: 100,
-                },
-              ]}
-              alt="cover Photo"
-              height={100}
-              width={100}
-            />
-          )}
+        {trendingNewsDetails.photo_urls && (
+          <div>
+            {!_isEmpty(trendingNewsDetails.cover_photo) && (
+              <IdealImage
+                placeholder={{ color: 'grey' }}
+                srcSet={[
+                  {
+                    src: trendingNewsDetails.cover_photo,
+                    width: 100,
+                    height: 100,
+                  },
+                ]}
+                alt="cover Photo"
+                height={100}
+                width={100}
+              />
+            )}
             <div className={classes.name}>
-            <Typography variant="h4" className={classes.graphy}>
-              {trendingNewsDetails.headline}
-            </Typography>
+              <Typography variant="h4" className={classes.graphy}>
+                {trendingNewsDetails.headline}
+              </Typography>
             </div>
             <div className={classes.description}>
-            <Typography component="p" className={classes.graphy}>
-              {trendingNewsDetails.content}
-            </Typography>
+              <Typography component="p" className={classes.graphy}>
+                {trendingNewsDetails.content}
+              </Typography>
             </div>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-            <Typography variant="subtitle1">
-              state : {trendingNewsDetails.state}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-            {
-              trendingNewsDetails.photo_urls.map(pic => (
+            <Grid item xs={12} sm={12} md={12} lg={12}>
+              <Typography variant="subtitle1">
+                state : {trendingNewsDetails.state}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={12}>
+              {trendingNewsDetails.photo_urls.map(pic => (
                 <IdealImage
                   key={pic}
                   placeholder={{ color: 'grey' }}
@@ -118,27 +118,28 @@ export class TrendingNewsView extends React.Component {
                   width={this.width}
                 />
               ))}
-          </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-            {!_isEmpty(trendingNewsDetails.youtube_link) && (
-              <YouTube
-                videoId={trendingNewsDetails.youtube_link}
-                opts={opts}
-                onReady={this._onReady}
-              />
-            )}
-          </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => this.onBack()}
-            >
-              {' '}
-              back
-            </Button>
-          </Grid>
-        </div>}
+            </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={12}>
+              {!_isEmpty(trendingNewsDetails.youtube_link) && (
+                <YouTube
+                  videoId={trendingNewsDetails.youtube_link}
+                  opts={opts}
+                  onReady={this._onReady}
+                />
+              )}
+            </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={12}>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => this.onBack()}
+              >
+                {' '}
+                back
+              </Button>
+            </Grid>
+          </div>
+        )}
       </Content>
     );
   }
