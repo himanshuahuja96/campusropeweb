@@ -21,8 +21,8 @@ import makeSelectLogin from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { onLoginFormSubmit } from './actions';
-import LoginForm from './loginForm';
-import ForgotPasswordModal from './forgotPasswordModel';
+import LoginForm from './LoginForm';
+import ForgotPasswordModal from './ForgotPasswordModal';
 import { DAEMON } from '../../utils/constants';
 
 const styles = theme => ({
