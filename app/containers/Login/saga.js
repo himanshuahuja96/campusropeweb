@@ -6,7 +6,7 @@ import {
   NON_EXIST_EMAIL_PASSWORD_ERROR_MESSAGE,
   LOGOUT,
 } from './constants';
-import {setRedirectToReferrer} from './actions'
+import { setRedirectToReferrer } from './actions';
 import { USER_TOKEN } from '../../constants/local_storage_constants';
 import { setLoggedUser } from '../../store/loggeduser/actions';
 import { fetchConstants } from '../../store/constants/actions';
@@ -46,7 +46,7 @@ function* submitLogin({ values, actions }) {
     yield put(setLoggedUser(loggedUser));
     yield put(fetchConstants());
     yield call(storeToken, response.accessToken);
-    yield put(setRedirectToReferrer(true))
+    yield put(setRedirectToReferrer(true));
   } catch (e) {
     if (e.response.status === 401) {
       // If our API throws an error we will leverage Formik's existing error system to pass it along

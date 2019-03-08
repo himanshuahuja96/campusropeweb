@@ -21,7 +21,7 @@ import injectReducer from 'utils/injectReducer';
 import makeSelectLogin from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { onLoginFormSubmit,setRedirectToReferrer } from './actions';
+import { onLoginFormSubmit, setRedirectToReferrer } from './actions';
 import LoginForm from './LoginForm';
 import ForgotPasswordModal from './ForgotPasswordModal';
 import { DAEMON } from '../../utils/constants';
@@ -53,17 +53,21 @@ export class Login extends React.PureComponent {
     this.setState({ openModal: false });
   };
 
-  componentDidMount(){
-    this.props.setRedirectToReferrer(false)
+  componentDidMount() {
+    this.props.setRedirectToReferrer(false);
   }
 
   render() {
-    const { classes, routeToSignup , login:{redirectToReferrer}} = this.props;
+    const {
+      classes,
+      routeToSignup,
+      login: { redirectToReferrer },
+    } = this.props;
     const { from } = this.props.location.state || { from: { pathname: '/' } };
     if (redirectToReferrer === true) {
       return <Redirect to={from} />;
     }
-    console.log(from)
+    console.log(from);
     return (
       <React.Fragment>
         <Helmet>
@@ -105,7 +109,7 @@ function mapDispatchToProps(dispatch) {
     onLoginFormSubmit: (values, actions) =>
       dispatch(onLoginFormSubmit(values, actions)),
     // onForgotPasswordSubmit: email => {},
-    setRedirectToReferrer:(bool) => dispatch(setRedirectToReferrer(bool)),
+    setRedirectToReferrer: bool => dispatch(setRedirectToReferrer(bool)),
     routeToSignup: () => dispatch(push('/signup')),
   };
 }

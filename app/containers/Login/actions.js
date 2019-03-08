@@ -4,7 +4,12 @@
  *
  */
 
-import { DEFAULT_ACTION, LOGIN_FORM_SUBMIT, LOGOUT,SET_REDIRECT_TO_REFERRER } from './constants';
+import {
+  DEFAULT_ACTION,
+  LOGIN_FORM_SUBMIT,
+  LOGOUT,
+  SET_REDIRECT_TO_REFERRER,
+} from './constants';
 
 export function defaultAction() {
   return {
@@ -29,6 +34,6 @@ export function logOut() {
 export function setRedirectToReferrer(bool) {
   return {
     type: SET_REDIRECT_TO_REFERRER,
-    bool
+    bool,
   };
 }

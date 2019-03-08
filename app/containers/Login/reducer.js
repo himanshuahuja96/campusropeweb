@@ -4,10 +4,10 @@
  *
  */
 
-import { DEFAULT_ACTION,SET_REDIRECT_TO_REFERRER } from './constants';
+import { DEFAULT_ACTION, SET_REDIRECT_TO_REFERRER } from './constants';
 
 export const initialState = {
-  redirectToReferrer:false
+  redirectToReferrer: false,
 };
 
 function loginReducer(state = initialState, action) {
@@ -15,7 +15,7 @@ function loginReducer(state = initialState, action) {
     case DEFAULT_ACTION:
       return state;
     case SET_REDIRECT_TO_REFERRER:
-      return {...state,redirectToReferrer:action.bool}
+      return { ...state, redirectToReferrer: action.bool };
     default:
       return state;
   }
