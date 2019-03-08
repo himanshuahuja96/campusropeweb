@@ -126,7 +126,6 @@ class FormComponent extends React.Component {
             handleChange,
             handleSubmit,
           } = props;
-          console.log(values, errors);
           return (
             <form
               className={classes.form}

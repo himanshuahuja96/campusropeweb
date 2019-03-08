@@ -12,8 +12,17 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
-
-import AppBar from 'components/AppBar/Loadable';
+import {Switch, Route} from 'react-router-dom';
+import AppBar from 'components/AppBar/Loadable';/* 
+import AdminTask from 'containers/AssignAdminTask/Loadable';
+import MyAdminTasks from 'containers/MyAdminTasks/Loadable';
+import TrendingNews from 'containers/TrendingNews/Loadable';
+import Ngo from 'containers/Ngo';
+import Profile from 'containers/UserProfile/Loadable';
+import Support from 'containers/Support/Loadable';
+import Helpline from 'containers/Helpline/Loadable';*/
+import AboutUs from 'containers/AboutUs/Loadable';
+import PrivateRoute from 'components/PrivateRoute/Loadable';
 import HeaderTabs from '../../components/HeaderTabs/Loadable';
 
 import { GuestHomeMenus } from './menus';
@@ -41,7 +50,19 @@ export default class HomePage extends React.PureComponent {
         <HeaderTabs />
         <CenterPanel>
           <CenterMenuWrapper>
-            <HomeButtons menus={GuestHomeMenus} />
+            <Switch>
+              <Route exact path="/" component={(routeProps) => <HomeButtons menus={GuestHomeMenus}{...routeProps} /> } />
+             {/*  <PrivateRoute path="/ngos" component={() => <h2>Ngos</h2>}/>
+              <PrivateRoute path="/helpline" component={Helpline} />
+              <PrivateRoute path="/admintaskassignment" component={AdminTask} />
+              <PrivateRoute path="/my/admintasks" component={MyAdminTasks} />
+              <PrivateRoute path="/news/trends" component={TrendingNews} />
+              <PrivateRoute path="/ngos" component={Ngo} />
+              <PrivateRoute path="/profile/:userId/about" component={About} />
+              <PrivateRoute path="/profile/:userId" component={Profile} />
+              <PrivateRoute path="/support" component={Support} /> */}
+              <PrivateRoute path="/about" component={AboutUs} />
+            </Switch>
           </CenterMenuWrapper>
         </CenterPanel>
       </React.Fragment>

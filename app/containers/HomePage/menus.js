@@ -17,7 +17,7 @@ export const GuestHomeMenus = [
     title: 'Trending News',
     iconBgColor: '#D81B60',
     icon: <Title />,
-    linkTo: '/helpline',
+    linkTo: '/trending',
   },
   {
     title: 'Helpline',

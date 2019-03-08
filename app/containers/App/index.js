@@ -21,8 +21,8 @@ export default function App() {
   return (
     <Suspense fallback={<CircularProgress />}>
       <Switch>
-        <Route exact path="/" component={HomePage} />
         <Route exact path="/login" component={Login} />
+        <Route path="/" component={HomePage} />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />

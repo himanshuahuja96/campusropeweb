@@ -21,7 +21,7 @@ import injectReducer from 'utils/injectReducer';
 import makeSelectLogin from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { onLoginFormSubmit } from './actions';
+import { onLoginFormSubmit,setRedirectToReferrer } from './actions';
 import LoginForm from './LoginForm';
 import ForgotPasswordModal from './ForgotPasswordModal';
 import { DAEMON } from '../../utils/constants';
@@ -40,10 +40,9 @@ const styles = theme => ({
 });
 
 /* eslint-disable react/prefer-stateless-function */
-export class Login extends React.Component {
+export class Login extends React.PureComponent {
   state = {
     openModal: false,
-    redirectToReferrer: false,
   };
 
   handleClickOpen = () => {
@@ -54,14 +53,17 @@ export class Login extends React.Component {
     this.setState({ openModal: false });
   };
 
-  render() {
-    const { classes, routeToSignup } = this.props;
-    const { from } = this.props.location.state || { from: { pathname: '/' } };
-    const { redirectToReferrer } = this.state;
+  componentDidMount(){
+    this.props.setRedirectToReferrer(false)
+  }
 
+  render() {
+    const { classes, routeToSignup , login:{redirectToReferrer}} = this.props;
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
     if (redirectToReferrer === true) {
       return <Redirect to={from} />;
     }
+    console.log(from)
     return (
       <React.Fragment>
         <Helmet>
@@ -91,6 +93,7 @@ Login.propTypes = {
   classes: PropTypes.object,
   onLoginFormSubmit: PropTypes.func.isRequired,
   routeToSignup: PropTypes.func.isRequired,
+  setRedirectToReferrer: PropTypes.func.isRequired,
   // onForgotPasswordSubmit: PropTypes.func,
 };
 
@@ -102,6 +105,7 @@ function mapDispatchToProps(dispatch) {
     onLoginFormSubmit: (values, actions) =>
       dispatch(onLoginFormSubmit(values, actions)),
     // onForgotPasswordSubmit: email => {},
+    setRedirectToReferrer:(bool) => dispatch(setRedirectToReferrer(bool)),
     routeToSignup: () => dispatch(push('/signup')),
   };
 }
