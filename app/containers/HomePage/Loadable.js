@@ -1,9 +1,6 @@
 /**
- *
- * Asynchronously loads the component for {{ properCase name }}
- *
+ * Asynchronously loads the component for HomePage
  */
-
 import loadable from 'loadable-components';
 
 export default loadable(() => import('./index'));
