@@ -38,7 +38,7 @@ function Headertabs({ dispatch }) {
 
   return (
     <CenterPanel>
-      <AppBar position="static" color="inherit">
+      <AppBar position="static" color="inherit" style={{ boxShadow: 'none' }}>
         <Tabs
           value={value}
           onChange={handleChange}

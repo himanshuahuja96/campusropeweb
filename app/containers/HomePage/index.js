@@ -10,22 +10,24 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import AppBar from 'components/AppBar/Loadable';
-import AdminTask from 'containers/AssignAdminTask/Loadable';
-import MyAdminTasks from 'containers/MyAdminTasks/Loadable';
-import TrendingNews from 'containers/TrendingNews/Loadable';
-import Ngo from 'containers/Ngo';
 import Profile from 'containers/UserProfile/Loadable';
-import Support from 'containers/Support/Loadable';
-import Helpline from 'containers/Helpline/Loadable';
-import AboutUs from 'containers/AboutUs/Loadable';
 import AboutUser from 'containers/AboutUser/Loadable';
-import PrivateRoute from 'components/PrivateRoute/Loadable';
-import HeaderTabs from '../../components/HeaderTabs/Loadable';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+import makeSelectHome from './selectors';
+import reducer from './reducer';
+import saga from './saga';
 
+import PrivateRoute from '../../components/PrivateRoute/Loadable';
+import HeaderTabs from '../../components/HeaderTabs/Loadable';
 import { GuestHomeMenus } from './menus';
 import HomeButtons from './HomeButtons';
 
@@ -39,7 +41,7 @@ const CenterPanel = styled.div`
 `;
 const CenterMenuWrapper = styled.div``;
 /* eslint-disable react/prefer-stateless-function */
-export default class HomePage extends React.PureComponent {
+export class HomePage extends React.PureComponent {
   render() {
     return (
       <React.Fragment>
@@ -59,19 +61,11 @@ export default class HomePage extends React.PureComponent {
                   <HomeButtons menus={GuestHomeMenus} {...routeProps} />
                 )}
               />
-              <PrivateRoute path="/ngos" component={() => <h2>Ngos</h2>} />
-              <PrivateRoute path="/helpline" component={Helpline} />
-              <PrivateRoute path="/admintaskassignment" component={AdminTask} />
-              <PrivateRoute path="/my/admintasks" component={MyAdminTasks} />
-              <PrivateRoute path="/news/trends" component={TrendingNews} />
-              <PrivateRoute path="/ngos" component={Ngo} />
               <PrivateRoute
                 path="/profile/:userId/about"
                 component={AboutUser}
               />
               <PrivateRoute path="/profile/:userId" component={Profile} />
-              <PrivateRoute path="/support" component={Support} />
-              <PrivateRoute path="/about" component={AboutUs} />
             </Switch>
           </CenterMenuWrapper>
         </CenterPanel>
@@ -79,3 +73,31 @@ export default class HomePage extends React.PureComponent {
     );
   }
 }
+
+HomePage.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = createStructuredSelector({
+  home: makeSelectHome(),
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+const withReducer = injectReducer({ key: 'home', reducer });
+const withSaga = injectSaga({ key: 'home', saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(HomePage);

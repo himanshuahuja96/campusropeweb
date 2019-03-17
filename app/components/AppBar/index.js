@@ -4,13 +4,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import {
   MenuIcon,
-  SearchIcon,
   AccountCircle,
   MailIcon,
   NotificationsIcon,
@@ -186,17 +184,6 @@ class PrimarySearchAppBar extends React.Component {
             </Typography>
             <div className={classes.backIcon}>
               <ArrowBackIcon />
-            </div>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-              />
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
