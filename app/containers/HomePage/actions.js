@@ -12,6 +12,8 @@ import {
   CHANGE_ROUTE,
   OPEN_SNACK,
   CLOSE_SNACK,
+  SET_REDIRECT_ACTION,
+  ROUTE_TO_USER_PROFILE,
 } from './constants';
 
 export function defaultAction() {
@@ -38,12 +40,23 @@ export function stopFetchingData() {
   };
 }
 
-export function changeRoute(route, actionToFetchDataForRoute, param = null) {
+export function changeRoute(routingAction) {
   return {
     type: CHANGE_ROUTE,
-    actionToFetchDataForRoute,
-    route,
-    param,
+    routingAction,
+  };
+}
+export function setRedirectAction(redirectAction) {
+  return {
+    type: SET_REDIRECT_ACTION,
+    redirectAction,
+  };
+}
+
+export function routeToUserProfile(userId = null) {
+  return {
+    type: ROUTE_TO_USER_PROFILE,
+    userId,
   };
 }
 

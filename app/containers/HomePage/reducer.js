@@ -10,6 +10,7 @@ import {
   STOP_FETCHING_DATA,
   OPEN_SNACK,
   CLOSE_SNACK,
+  SET_REDIRECT_ACTION,
 } from './constants';
 
 export const initialState = {
@@ -19,6 +20,7 @@ export const initialState = {
     message: 'success',
     variant: 'success',
   },
+  redirectAction: null,
 };
 
 function homeReducer(state = initialState, action) {
@@ -29,6 +31,8 @@ function homeReducer(state = initialState, action) {
       return { ...state, isFetchingData: true };
     case STOP_FETCHING_DATA:
       return { ...state, isFetchingData: false };
+    case SET_REDIRECT_ACTION:
+      return { ...state, redirectAction: action.redirectAction };
     case OPEN_SNACK:
       return {
         ...state,

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /**
  *
  * Login
@@ -67,7 +68,6 @@ export class Login extends React.PureComponent {
     if (redirectToReferrer === true) {
       return <Redirect to={from} />;
     }
-    console.log(from);
     return (
       <React.Fragment>
         <Helmet>

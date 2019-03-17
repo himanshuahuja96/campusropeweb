@@ -1,10 +1,18 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { replace, push } from 'react-router-redux';
-import { HOME_MOUNTED, CHANGE_ROUTE } from './constants';
+/* eslint-disable no-underscore-dangle */
+import { call, put, takeLatest, select } from 'redux-saga/effects';
+import { push } from 'react-router-redux';
+import ls from 'local-storage';
+import { HOME_MOUNTED, CHANGE_ROUTE, ROUTE_TO_USER_PROFILE } from './constants';
 import { fetchConstantsSaga } from '../../store/constants/saga';
 import { setLoggedUser } from '../../store/loggeduser/actions';
 import feathersClient, { userService } from '../../feathers';
-import { startFetchingData, stopFetchingData } from './actions';
+import {
+  startFetchingData,
+  stopFetchingData,
+  setRedirectAction,
+} from './actions';
+import { USER_TOKEN } from '../../constants/local_storage_constants';
+import makeSelectLoggedUser from '../../store/loggeduser/selectors';
 
 export function* homeMountedSaga() {
   yield put(startFetchingData());
@@ -23,15 +31,27 @@ export function* homeMountedSaga() {
   }
 }
 
-export function* changeRouteSaga({ route, actionToFetchDataForRoute, param }) {
-  yield put(startFetchingData());
-  yield put(actionToFetchDataForRoute(param));
-  yield put(stopFetchingData());
-  yield put(replace(route));
+export function* changeRouteSaga({ routingAction }) {
+  if (ls.get(USER_TOKEN)) {
+    yield put(routingAction());
+  } else {
+    yield put(setRedirectAction(routingAction));
+    yield put(push('/login'));
+  }
+}
+
+export function* routeToUserProfileSaga({ userId }) {
+  const loggedUser = yield select(makeSelectLoggedUser());
+  if (userId) {
+    yield put(push(`/profile/${userId}`));
+  } else {
+    yield put(push(`/profile/${loggedUser._id}`));
+  }
 }
 
 // Individual exports for testing
 export default function* defaultSaga() {
   yield [takeLatest(HOME_MOUNTED, homeMountedSaga)];
   yield [takeLatest(CHANGE_ROUTE, changeRouteSaga)];
+  yield [takeLatest(ROUTE_TO_USER_PROFILE, routeToUserProfileSaga)];
 }

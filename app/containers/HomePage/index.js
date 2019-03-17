@@ -30,6 +30,7 @@ import PrivateRoute from '../../components/PrivateRoute/Loadable';
 import HeaderTabs from '../../components/HeaderTabs/Loadable';
 import { GuestHomeMenus } from './menus';
 import HomeButtons from './HomeButtons';
+import { changeRoute, routeToUserProfile } from './actions';
 
 const CenterPanel = styled.div`
   background: #fff;
@@ -42,6 +43,10 @@ const CenterPanel = styled.div`
 const CenterMenuWrapper = styled.div``;
 /* eslint-disable react/prefer-stateless-function */
 export class HomePage extends React.PureComponent {
+  gotoUserProfile = () => {
+    this.props.dispatch(changeRoute(routeToUserProfile));
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -49,7 +54,7 @@ export class HomePage extends React.PureComponent {
           <title>Home</title>
           <meta name="description" content="Homepage of Campusrope" />
         </Helmet>
-        <AppBar />
+        <AppBar gotoUserProfile={this.gotoUserProfile} />
         <HeaderTabs />
         <CenterPanel>
           <CenterMenuWrapper>
@@ -57,8 +62,8 @@ export class HomePage extends React.PureComponent {
               <Route
                 exact
                 path="/"
-                component={routeProps => (
-                  <HomeButtons menus={GuestHomeMenus} {...routeProps} />
+                component={routerProps => (
+                  <HomeButtons menus={GuestHomeMenus} {...routerProps} />
                 )}
               />
               <PrivateRoute

@@ -23,5 +23,13 @@ const makeSelectIsFetchingData = () =>
 const makeSelectSnackData = () =>
   createSelector(selectHomeDomain, substate => substate.snackData);
 
+const makeSelectRedirectAction = () =>
+  createSelector(selectHomeDomain, substate => substate.redirectAction);
+
 export default makeSelectHome;
-export { selectHomeDomain, makeSelectIsFetchingData, makeSelectSnackData };
+export {
+  selectHomeDomain,
+  makeSelectIsFetchingData,
+  makeSelectSnackData,
+  makeSelectRedirectAction,
+};

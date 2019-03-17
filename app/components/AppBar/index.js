@@ -102,6 +102,7 @@ class PrimarySearchAppBar extends React.Component {
   };
 
   handleProfileMenuOpen = event => {
+    this.props.gotoUserProfile();
     this.setState({ anchorEl: event.currentTarget });
   };
 
@@ -233,6 +234,7 @@ class PrimarySearchAppBar extends React.Component {
 
 PrimarySearchAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
+  gotoUserProfile: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(PrimarySearchAppBar);

@@ -1,4 +1,4 @@
-import { takeLatest, call, put } from 'redux-saga/effects';
+import { takeLatest, call, put, select } from 'redux-saga/effects';
 import { replace } from 'react-router-redux';
 import ls from 'local-storage';
 import {
@@ -11,6 +11,8 @@ import { USER_TOKEN } from '../../constants/local_storage_constants';
 import { setLoggedUser } from '../../store/loggeduser/actions';
 import { fetchConstants } from '../../store/constants/actions';
 import feathersClient, { userService } from '../../feathers';
+import { makeSelectRedirectAction } from '../HomePage/selectors';
+import { setRedirectAction } from '../HomePage/actions';
 
 // Function for storing our API token, perhaps in localStorage or Redux state.
 export function* storeToken(token) {
@@ -46,7 +48,14 @@ function* submitLogin({ values, actions }) {
     yield put(setLoggedUser(loggedUser));
     yield put(fetchConstants());
     yield call(storeToken, response.accessToken);
-    yield put(setRedirectToReferrer(true));
+    const redirectAction = yield select(makeSelectRedirectAction());
+    if (redirectAction) {
+      const redirectActionOld = redirectAction;
+      yield put(setRedirectAction(null));
+      yield put(redirectActionOld());
+    } else {
+      yield put(setRedirectToReferrer(true));
+    }
   } catch (e) {
     if (e.response.status === 401) {
       // If our API throws an error we will leverage Formik's existing error system to pass it along
