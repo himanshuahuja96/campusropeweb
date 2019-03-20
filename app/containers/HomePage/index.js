@@ -20,6 +20,7 @@ import { Switch, Route } from 'react-router-dom';
 import AppBar from 'components/AppBar/Loadable';
 import Profile from 'containers/UserProfile/Loadable';
 import AboutUser from 'containers/AboutUser/Loadable';
+import HelplineUserList from 'containers/HelplineUserList/Loadable';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import makeSelectHome from './selectors';
@@ -66,6 +67,7 @@ export class HomePage extends React.PureComponent {
                   <HomeButtons menus={GuestHomeMenus} {...routerProps} />
                 )}
               />
+              <Route path="/helpline" component={HelplineUserList} />
               <PrivateRoute
                 path="/profile/:userId/about"
                 component={AboutUser}
