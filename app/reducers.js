@@ -8,6 +8,7 @@ import history from 'utils/history';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
 import loggedUserReducer from './store/loggeduser/reducer';
 import constantsReducer from './store/constants/reducer';
+import helplineReducer from './store/helpline/reducer';
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
  */
@@ -16,6 +17,7 @@ export default function createReducer(injectedReducers = {}) {
     language: languageProviderReducer,
     loggedUser: loggedUserReducer,
     constants: constantsReducer,
+    helpline: helplineReducer,
     ...injectedReducers,
   });
 

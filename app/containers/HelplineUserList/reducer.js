@@ -1,26 +1,21 @@
 /*
  *
- * HelplineUserList reducer
+ * HelplineAdd reducer
  *
  */
-import { DEFAULT_ACTION, SET_HELPLINES } from './constants';
 
-export const initialState = {
-  helplineList: [],
-};
+import { fromJS } from 'immutable';
+import { DEFAULT_ACTION } from './constants';
 
-function helplineUserListReducer(state = initialState, action) {
+export const initialState = fromJS({});
+
+function helplineAddReducer(state = initialState, action) {
   switch (action.type) {
     case DEFAULT_ACTION:
       return state;
-    case SET_HELPLINES:
-      return {
-        ...state,
-        helplineList: action.helplines,
-      };
     default:
       return state;
   }
 }
 
-export default helplineUserListReducer;
+export default helplineAddReducer;

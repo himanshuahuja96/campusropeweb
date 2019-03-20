@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /**
  *
  * HelplineUserList
@@ -5,40 +6,24 @@
  */
 
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
 import { compose } from 'redux';
-
+import { push } from 'react-router-redux';
+import { createStructuredSelector } from 'reselect';
+import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
-import makeSelectHelplineUserList from './selectors';
-import reducer from './reducer';
-import saga from './saga';
-import { fetchHelplines } from './actions';
+import { fetchHelplines } from '../../store/helpline/actions';
+import HelplineList from '../../components/HelplineList';
 import { makeSelectStates } from '../../store/constants/selectors';
+import { makeSelectHelplines } from '../../store/helpline/selectors';
 
-const HelplineBox = ({ helplineData }) => (
-  <Card raised>
-    <CardActionArea>
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="h2">
-          {helplineData.name}
-        </Typography>
-      </CardContent>
-    </CardActionArea>
-  </Card>
-);
+const styles = () => ({});
 
 /* eslint-disable react/prefer-stateless-function */
 class HelplineUserList extends React.Component {
@@ -48,19 +33,23 @@ class HelplineUserList extends React.Component {
 
   onStateChanged(state) {
     this.setState({ selectedOperatingState: state });
-    fetchHelplines(state);
+    this.props.fetchHelplines(state);
   }
 
   componentDidMount() {
-    fetchHelplines();
+    this.props.fetchHelplines();
+  }
+
+  routeToHelplineView(clickedHelpline) {
+    this.props.dispatch(push(`/helpline/${clickedHelpline._id}/details`));
   }
 
   render() {
+    const { helplines, states } = this.props;
     const { selectedOperatingState } = this.state;
-    const { helplineUserList, states } = this.props;
     const allStates = states.concat(['All India']);
     return (
-      <div>
+      <React.Fragment>
         <FormControl margin="normal" fullWidth>
           <InputLabel htmlFor="state">State</InputLabel>
           <Select
@@ -75,27 +64,33 @@ class HelplineUserList extends React.Component {
             ))}
           </Select>
         </FormControl>
-        {helplineUserList.map((helpline, index) => (
-          <HelplineBox key={index} helplineData={helpline} />
-        ))}
-      </div>
+        <HelplineList
+          helplines={helplines}
+          onHelplineClick={clickedHelpline =>
+            this.routeToHelplineView(clickedHelpline)
+          }
+        />
+      </React.Fragment>
     );
   }
 }
 
 HelplineUserList.propTypes = {
-  helplineUserList: PropTypes.array.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  fetchHelplines: PropTypes.object.isRequired,
+  helplines: PropTypes.array.isRequired,
   states: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  helplineUserList: makeSelectHelplineUserList(),
+  helplines: makeSelectHelplines(),
   states: makeSelectStates(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    fetchHelplines: state => dispatch(fetchHelplines(state)),
   };
 }
 
@@ -104,11 +99,6 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'helplineUserList', reducer });
-const withSaga = injectSaga({ key: 'helplineUserList', saga });
+const componentWithStyles = withStyles(styles)(HelplineUserList);
 
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(HelplineUserList);
+export default compose(withConnect)(componentWithStyles);
