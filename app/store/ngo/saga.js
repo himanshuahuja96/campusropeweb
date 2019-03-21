@@ -39,7 +39,6 @@ export function* submitNewNgoDetails({ values, actions }) {
 export function* fetchNgosSaga({ selectedState }) {
   try {
     yield put(startFetchingData());
-    yield featherClient.authenticate();
     let query = {};
     if (selectedState !== 'All') {
       query = {

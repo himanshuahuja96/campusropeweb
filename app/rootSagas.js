@@ -1,6 +1,7 @@
 import getInjectors from './utils/sagaInjectors';
 import constantsSaga from './store/constants/saga';
 import helplineSaga from './store/helpline/saga';
+import ngoSaga from './store/ngo/saga';
 import LoginSaga from './containers/Login/saga';
 import { DAEMON } from './utils/constants';
 
@@ -18,6 +19,10 @@ export default function injectRootSagas(store) {
   });
   injectSaga('helpline', {
     saga: helplineSaga,
+    mode: DAEMON,
+  });
+  injectSaga('ngo', {
+    saga: ngoSaga,
     mode: DAEMON,
   });
 }

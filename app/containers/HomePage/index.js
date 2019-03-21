@@ -25,6 +25,15 @@ import HelplineAdminList from 'containers/HelplineAdminList/Loadable';
 import HelplineAdd from 'containers/HelplineAdd/Loadable';
 import HelplineEdit from 'containers/HelplineEdit/Loadable';
 import HelplineView from 'containers/HelplineView/Loadable';
+
+import NgoVerificationView from 'containers/NgoVerificationView/Loadable';
+import NgoAdd from 'containers/NgoAdd/Loadable';
+import MyNgos from 'containers/MyNgos/Loadable';
+import NgoView from 'containers/NgoView/Loadable';
+import NgoEdit from 'containers/NgoEdit/Loadable';
+import NgoVerificationList from 'containers/NgoVerificationList/Loadable';
+import NgoUserList from 'containers/NgoUserList/Loadable';
+
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import makeSelectHome from './selectors';
@@ -97,6 +106,20 @@ export class HomePage extends React.PureComponent {
                 path="/helpline/new"
                 component={HelplineAdd}
               />
+              <PrivateRoute
+                exact
+                path="/ngos/:ngoId/verify/details"
+                component={NgoVerificationView}
+              />
+              <PrivateRoute path="/ngos/new" component={NgoAdd} />
+              <PrivateRoute path="/ngos/my" component={MyNgos} />
+              <PrivateRoute path="/ngos/:id" exact component={NgoView} />
+              <PrivateRoute path="/ngos/:id/edit" component={NgoEdit} />
+              <PrivateRoute
+                path="/ngos/verification"
+                component={NgoVerificationList}
+              />
+              <Route exact path="/ngos" component={NgoUserList} />
             </Switch>
           </CenterMenuWrapper>
         </CenterPanel>
