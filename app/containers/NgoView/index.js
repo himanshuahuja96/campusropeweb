@@ -1,50 +1,75 @@
-/**
- *
- * NgoView
- *
- */
-
+/* eslint-disable react/prop-types */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Typography from '@material-ui/core/Typography';
+import { fetchNgoById } from '../../store/ngo/actions';
+import { makeSelectInViewNgo } from '../../store/ngo/selectors';
 
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
-import makeSelectNgoView from './selectors';
-import reducer from './reducer';
-import saga from './saga';
-import messages from './messages';
+const styles = () => ({
+  container: {
+    textAlign: 'center',
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  coverImage: {
+    border: '1px solid blue',
+    height: 300,
+    position: 'relative',
+  },
+  infoGroup: {
+    position: 'absolute',
+    right: 20,
+    bottom: 40,
+  },
+  logoImage: {
+    border: '1px solid blue',
+    height: 200,
+    width: 200,
+    margin: '-100px auto 0 auto',
+    borderRadius: '50%',
+  },
+});
 
-/* eslint-disable react/prefer-stateless-function */
-export class NgoView extends React.PureComponent {
+class NgoView extends React.Component {
+  componentDidMount() {
+    const ngoId = this.props.match.params.id;
+    this.props.fetchNgoById(ngoId);
+  }
+
   render() {
+    const { classes, ngo } = this.props;
+    if (!ngo) {
+      return <div>Loading...</div>;
+    }
     return (
       <div>
-        <Helmet>
-          <title>NgoView</title>
-          <meta name="description" content="Description of NgoView" />
-        </Helmet>
-        <FormattedMessage {...messages.header} />
+        <Typography variant="h4">{ngo.name}</Typography>
+        <div className={classes.coverImage}>
+          <div className={classes.infoGroup}>
+            <Typography variant="body1">{ngo.ngoSiteLink}</Typography>
+            <Typography variant="body1">{ngo.contactEmail}</Typography>
+          </div>
+        </div>
+        <div className={classes.logoImage} />
+        <div>
+          <div>One</div>
+        </div>
       </div>
     );
   }
 }
 
-NgoView.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-};
-
 const mapStateToProps = createStructuredSelector({
-  ngoView: makeSelectNgoView(),
+  ngo: makeSelectInViewNgo(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    fetchNgoById: ngoId => dispatch(fetchNgoById(ngoId)),
   };
 }
 
@@ -53,11 +78,7 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'ngoView', reducer });
-const withSaga = injectSaga({ key: 'ngoView', saga });
-
 export default compose(
-  withReducer,
-  withSaga,
+  withStyles(styles),
   withConnect,
 )(NgoView);

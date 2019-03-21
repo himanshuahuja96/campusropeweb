@@ -1,3 +1,5 @@
+/* eslint-disable no-constant-condition */
+/* eslint-disable no-underscore-dangle */
 import { takeLatest, call, put, select } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 import omit from 'lodash/omit';
@@ -11,13 +13,13 @@ import {
   DELETE_NGO,
 } from './constants';
 import { setNgos, setInViewNgo } from './actions';
-import featherClient, { ngoService } from './../../feathers';
+import featherClient, { ngoService } from '../../feathers';
 import {
   startFetchingData,
   stopFetchingData,
   openSnack,
-} from '../Home/actions';
-import { selectLoggedUserDomain } from '../../store/loggeduser/selectors';
+} from '../../containers/HomePage/actions';
+import { selectLoggedUserDomain } from '../loggeduser/selectors';
 
 export function* submitNewNgoDetails({ values, actions }) {
   const { resetForm, setSubmitting } = actions;
@@ -94,7 +96,7 @@ export function* updateNgoSaga({ ngo }) {
       );
     }
     */
-    const data = yield ngoService.patch(ngo._id, omit(ngo, 'createdBy', '_id'));
+    yield ngoService.patch(ngo._id, omit(ngo, 'createdBy', '_id'));
     yield put(push('/ngos/verification'));
     yield put(stopFetchingData());
   } catch (e) {
@@ -107,7 +109,7 @@ export function* editNgoSaga({ ngo }) {
   try {
     yield put(startFetchingData());
 
-    const data = yield ngoService.patch(ngo._id, ngo);
+    yield ngoService.patch(ngo._id, ngo);
     yield put(push('/ngos/my'));
     yield put(stopFetchingData());
   } catch (e) {

@@ -1,6 +1,6 @@
 /*
  *
- * NgoList reducer
+ * NgoUserList reducer
  *
  */
 
@@ -9,7 +9,7 @@ import { DEFAULT_ACTION } from './constants';
 
 export const initialState = fromJS({});
 
-function ngoListReducer(state = initialState, action) {
+function ngoUserListReducer(state = initialState, action) {
   switch (action.type) {
     case DEFAULT_ACTION:
       return state;
@@ -18,4 +18,4 @@ function ngoListReducer(state = initialState, action) {
   }
 }
 
-export default ngoListReducer;
+export default ngoUserListReducer;

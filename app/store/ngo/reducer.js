@@ -13,8 +13,6 @@ export const initialState = {
 
 function ngoReducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
     case SET_NGOS:
       return {
         ...state,

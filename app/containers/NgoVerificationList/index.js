@@ -1,53 +1,93 @@
-/**
- *
- * NgoVerificationList
- *
- */
-
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
+import { withStyles } from '@material-ui/core/styles';
 import { createStructuredSelector } from 'reselect';
+import { push } from 'react-router-redux';
+import { connect } from 'react-redux';
 import { compose } from 'redux';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import { fetchNgos } from '../../store/ngo/actions';
+import NgoList from '../../components/NgoList';
+import {
+  makeSelectApprovedNgos,
+  makeSelectPendingNgos,
+} from '../../store/ngo/selectors';
 
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
-import makeSelectNgoVerificationList from './selectors';
-import reducer from './reducer';
-import saga from './saga';
-import messages from './messages';
+const styles = theme => ({
+  createNgoBtn: {
+    float: 'right',
+    marginBottom: theme.spacing.unit,
+  },
+  container: {
+    display: 'block',
+  },
+});
 
-/* eslint-disable react/prefer-stateless-function */
-export class NgoVerificationList extends React.PureComponent {
+class NgoVerificationList extends React.Component {
+  state = {
+    value: 0,
+  };
+
+  handleChange = (event, value) => {
+    this.setState({ value });
+  };
+
+  componentDidMount() {
+    this.props.fetchNgos();
+  }
+
+  routeToNgoVerifyView(ngo) {
+    this.props.dispatch(push(`/ngos/${ngo._id}/verify/details`));
+  }
+
   render() {
+    const { classes, pendingNgos, approvedNgos } = this.props;
+    const { value } = this.state;
     return (
-      <div>
-        <Helmet>
-          <title>NgoVerificationList</title>
-          <meta
-            name="description"
-            content="Description of NgoVerificationList"
+      <div className={classes.container}>
+        <AppBar position="static">
+          <Tabs value={value} onChange={this.handleChange}>
+            <Tab label="PENDING" />
+            <Tab label="APPROVED" />
+          </Tabs>
+        </AppBar>
+        {value === 0 && (
+          <NgoList
+            ngos={pendingNgos}
+            onNgoClick={ngo => this.routeToNgoVerifyView(ngo)}
           />
-        </Helmet>
-        <FormattedMessage {...messages.header} />
+        )}
+        {value === 1 && (
+          <NgoList
+            ngos={approvedNgos}
+            onNgoClick={ngo => this.routeToNgoVerifyView(ngo)}
+          />
+        )}
       </div>
     );
   }
 }
 
 NgoVerificationList.propTypes = {
+  classes: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
+  fetchNgos: PropTypes.func.isRequired,
+  pendingNgos: PropTypes.array.isRequired,
+  approvedNgos: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  ngoVerificationList: makeSelectNgoVerificationList(),
+  approvedNgos: makeSelectApprovedNgos(),
+  pendingNgos: makeSelectPendingNgos(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    fetchNgos: () => dispatch(fetchNgos()),
   };
 }
 
@@ -56,11 +96,7 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'ngoVerificationList', reducer });
-const withSaga = injectSaga({ key: 'ngoVerificationList', saga });
-
 export default compose(
-  withReducer,
-  withSaga,
+  withStyles(styles),
   withConnect,
 )(NgoVerificationList);

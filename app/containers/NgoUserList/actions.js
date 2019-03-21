@@ -1,6 +1,6 @@
 /*
  *
- * NgoList actions
+ * NgoUserList actions
  *
  */
 

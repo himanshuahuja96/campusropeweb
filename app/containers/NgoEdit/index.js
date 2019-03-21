@@ -1,50 +1,95 @@
-/**
- *
- * NgoEdit
- *
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
+import { withStyles } from '@material-ui/core/styles';
 import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { push } from 'react-router-redux';
+import { Typography } from '@material-ui/core';
+import {
+  makeSelectStates,
+  makeSelectNgoTypes,
+} from '../../store/constants/selectors';
+import makeSelectLoggedUser from '../../store/loggeduser/selectors';
+import { editNgo } from '../../store/ngo/actions';
+import NgoForm from '../../components/NgoForm';
 
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
-import makeSelectNgoEdit from './selectors';
-import reducer from './reducer';
-import saga from './saga';
-import messages from './messages';
+/* eslint-disable*/
+
+const styles = theme => ({
+  form: {},
+  submit: {
+    marginTop: theme.spacing.unit * 2,
+  },
+  cancel: {
+    marginLeft: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 2,
+  },
+  error: {
+    color: 'red',
+  },
+  uploadBtn: {
+    marginLeft: 0,
+    margin: theme.spacing.unit,
+  },
+});
 
 /* eslint-disable react/prefer-stateless-function */
-export class NgoEdit extends React.PureComponent {
+
+class NgoEdit extends React.Component {
+  onCancel() {
+    this.props.dispatch(push('/ngos'));
+  }
+  onSubmit(values, actions) {
+    this.props.editNgo(
+      {
+        ...values,
+        _id: this.props.match.params.id,
+        createdBy: this.props.loggedUser._id,
+        status: 'PENDING',
+      },
+      actions,
+    );
+  }
   render() {
+    const { classes, ngo_types, states, initialValues } = this.props;
+    console.log('initialValues', this.props.initialValues);
     return (
       <div>
-        <Helmet>
-          <title>NgoEdit</title>
-          <meta name="description" content="Description of NgoEdit" />
-        </Helmet>
-        <FormattedMessage {...messages.header} />
+        <Typography variant="h3">Edit NGO</Typography>
+        <NgoForm
+          classes={classes}
+          onCancel={() => this.onCancel()}
+          onSubmit={(values, actions) => this.onSubmit(values, actions)}
+          states={states}
+          ngo_types={ngo_types}
+          initialValues={initialValues}
+        />
       </div>
     );
   }
 }
 
 NgoEdit.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  ngoEdit: makeSelectNgoEdit(),
+  states: makeSelectStates(),
+  ngo_types: makeSelectNgoTypes(),
+  loggedUser: makeSelectLoggedUser(),
+  initialValues: (state, ownProps) =>
+    state.ngo.fetchedNgos.find(
+      item =>
+        item._id === ownProps.match.params.id &&
+        item.createdBy._id === state.loggedUser.user._id,
+    ),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    editNgo: (values, actions) => dispatch(editNgo(values, actions)),
   };
 }
 
@@ -53,11 +98,7 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'ngoEdit', reducer });
-const withSaga = injectSaga({ key: 'ngoEdit', saga });
-
 export default compose(
-  withReducer,
-  withSaga,
+  withStyles(styles),
   withConnect,
 )(NgoEdit);

@@ -1,53 +1,196 @@
 /**
  *
- * NgoVerificationView
+ * NgoList
  *
  */
 
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
+import { withStyles } from '@material-ui/core/styles';
+import { TextField, Typography, Button } from '@material-ui/core';
+import format from 'date-fns/format';
 import { createStructuredSelector } from 'reselect';
+import { push } from 'react-router-redux';
+import { connect } from 'react-redux';
 import { compose } from 'redux';
+import _isEmpty from 'lodash/isEmpty';
+import IdealImage from 'react-ideal-image';
+import { fetchNgoById, updateNgo } from '../../store/ngo/actions';
+import { makeSelectInViewNgo } from '../../store/ngo/selectors';
+import { makeSelectStatuses } from '../../store/constants/selectors';
 
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
-import makeSelectNgoVerificationView from './selectors';
-import reducer from './reducer';
-import saga from './saga';
-import messages from './messages';
+/* eslint-disable*/
+
+const styles = theme => ({
+  container: {
+    textAlign: 'center',
+  },
+  button: {
+    margin: 10,
+  },
+});
 
 /* eslint-disable react/prefer-stateless-function */
-export class NgoVerificationView extends React.PureComponent {
-  render() {
+class NgoVerificationView extends React.Component {
+  state = {
+    comments: '',
+  };
+
+  componentDidMount() {
+    const ngoId = this.props.match.params.ngoId;
+    this.props.fetchNgoById(ngoId);
+  }
+
+  onCancelClick() {
+    this.props.dispatch(push('/ngos/verification'));
+  }
+
+  onApproveNgo() {
+    const { ngo, status } = this.props;
+    const updatedNgo = {
+      ...ngo,
+      createdBy: ngo.createdBy.id,
+      status: status.APPROVED,
+      adminComments: this.state.comments,
+    };
+    this.props.updateNgo(updatedNgo);
+  }
+
+  onRejectNgo() {
+    const { ngo, status } = this.props;
+    const updatedNgo = {
+      ...ngo,
+      status: status.REJECTED,
+      adminComments: this.state.comments,
+    };
+    this.props.updateNgo(updatedNgo);
+  }
+
+  approvedNgoButtons() {
+    const { classes } = this.props;
     return (
       <div>
-        <Helmet>
-          <title>NgoVerificationView</title>
-          <meta
-            name="description"
-            content="Description of NgoVerificationView"
+        <Button
+          variant="contained"
+          className={classes.button}
+          onClick={() => this.onRejectNgo()}
+        >
+          Reject
+        </Button>
+        <Button
+          variant="contained"
+          className={classes.button}
+          onClick={() => this.onCancelClick()}
+        >
+          Cancel
+        </Button>
+      </div>
+    );
+  }
+
+  pendingNgoButtons() {
+    const { classes } = this.props;
+    return (
+      <div>
+        <Button
+          variant="contained"
+          className={classes.button}
+          onClick={() => this.onApproveNgo()}
+        >
+          Approve
+        </Button>
+        <Button
+          variant="contained"
+          className={classes.button}
+          onClick={() => this.onRejectNgo()}
+        >
+          Reject
+        </Button>
+        <Button
+          variant="contained"
+          className={classes.button}
+          onClick={() => this.onCancelClick()}
+        >
+          Cancel
+        </Button>
+      </div>
+    );
+  }
+
+  renderActions(ngo) {
+    const { status } = this.props;
+
+    switch (ngo.status) {
+      case status.APPROVED: {
+        return this.approvedNgoButtons();
+      }
+      case status.PENDING: {
+        return this.pendingNgoButtons();
+      }
+    }
+  }
+
+  render() {
+    const { classes, ngo } = this.props;
+
+    if (_isEmpty(ngo)) {
+      return <Typography variant="label">Loading</Typography>;
+    }
+    return (
+      <div>
+        <Fragment>
+          <Typography
+            className={classes.title}
+            color="textSecondary"
+            gutterBottom
+          >
+            admin : {ngo.createdBy.name}
+          </Typography>
+          <Typography variant="h5" component="h2">
+            {ngo.name}
+          </Typography>
+          <Typography className={classes.pos} color="textSecondary">
+            created on : {format(new Date(ngo.createdAt), 'DD-MM-YYYY')}
+          </Typography>
+          <IdealImage
+            placeholder={{ color: 'grey' }}
+            srcSet={[{ src: ngo.documentLink, width: 100, height: 100 }]}
+            alt="cancelled check pic"
+            width={100}
+            height={100}
           />
-        </Helmet>
-        <FormattedMessage {...messages.header} />
+          <Typography component="p">
+            contact email: {ngo.contactEmail}
+          </Typography>
+          <TextField
+            style={{ margin: '20px 0' }}
+            label="Admin Comments"
+            fullWidth
+            multiline
+            value={this.state.comments}
+            onChange={e => this.setState({ comments: e.target.value })}
+          />
+          {this.renderActions(ngo)}
+        </Fragment>
       </div>
     );
   }
 }
 
 NgoVerificationView.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired,
+  ngo: PropTypes.object.isRequired,
 };
-
 const mapStateToProps = createStructuredSelector({
-  ngoVerificationView: makeSelectNgoVerificationView(),
+  ngo: makeSelectInViewNgo(),
+  status: makeSelectStatuses(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    fetchNgoById: ngoId => dispatch(fetchNgoById(ngoId)),
+    updateNgo: ngo => dispatch(updateNgo(ngo)),
   };
 }
 
@@ -56,11 +199,7 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'ngoVerificationView', reducer });
-const withSaga = injectSaga({ key: 'ngoVerificationView', saga });
-
 export default compose(
-  withReducer,
-  withSaga,
+  withStyles(styles),
   withConnect,
 )(NgoVerificationView);

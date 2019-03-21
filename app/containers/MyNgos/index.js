@@ -1,63 +1,81 @@
-/**
- *
- * MyNgos
- *
- */
-
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import NgoList from '../../components/NgoList';
+import DeleteDialog from '../../components/DeleteDialog';
+import { deleteNgo } from '../../store/ngo/actions';
+/* eslint-disable*/
 
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
-import makeSelectMyNgos from './selectors';
-import reducer from './reducer';
-import saga from './saga';
-import messages from './messages';
+const styles = theme => ({});
 
-/* eslint-disable react/prefer-stateless-function */
-export class MyNgos extends React.PureComponent {
+class MyNgos extends React.Component {
+  state = {
+    deleteID: null,
+  };
+
   render() {
+    const { classes } = this.props;
+    const { deleteID } = this.state;
     return (
-      <div>
-        <Helmet>
-          <title>MyNgos</title>
-          <meta name="description" content="Description of MyNgos" />
-        </Helmet>
-        <FormattedMessage {...messages.header} />
-      </div>
+      <React.Fragment>
+        <NgoList
+          ngos={this.props.myNgos}
+          onNgoClick={() => {
+            console.log('On Click Ngo');
+          }}
+          onDelete={id => {
+            console.log('id', id);
+            this.setState({ deleteID: id });
+          }}
+          onEdit={id => {
+            console.log(' onEdit id', id);
+            //this.setState({deleteID: id});
+          }}
+        />
+        {deleteID && (
+          <DeleteDialog
+            onCancel={e => {
+              this.setState({ deleteID: null });
+            }}
+            onOk={e => {
+              this.props.deleteNgo(deleteID);
+              this.setState({ deleteID: null });
+            }}
+            title="Delete NGO"
+          >
+            Are you sure to detete this NGO?
+          </DeleteDialog>
+        )}
+      </React.Fragment>
     );
   }
 }
 
 MyNgos.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector({
-  myNgos: makeSelectMyNgos(),
+const mapStateToProps = state => ({
+  myNgos:
+    state.ngo.fetchedNgos &&
+    state.ngo.fetchedNgos.filter(
+      ngo => ngo.createdBy._id === state.loggedUser.user._id,
+    ),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    /*
+    fetchNgos: state => dispatch(fetchNgos(state)),
+    createNgo: () => dispatch(createNgo()),
+    */
+    deleteNgo: ngoId => dispatch(deleteNgo(ngoId)),
   };
 }
 
-const withConnect = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-);
-
-const withReducer = injectReducer({ key: 'myNgos', reducer });
-const withSaga = injectSaga({ key: 'myNgos', saga });
-
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(MyNgos);
+)(withStyles(styles)(MyNgos));

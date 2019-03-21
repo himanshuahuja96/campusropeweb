@@ -2,9 +2,9 @@
 // import { mount } from 'enzyme';
 // import { enzymeFind } from 'styled-components/test-utils';
 
-// import { NgoList } from '../index';
+// import NgoForm from '../index';
 
-describe('<NgoList />', () => {
+describe('<NgoForm />', () => {
   it('Expect to have unit tests specified', () => {
     expect(true).toEqual(false);
   });
