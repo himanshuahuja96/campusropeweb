@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   AccountBalance,
-  Title,
   SettingsPhone,
   InfoOutlined,
 } from 'components/MaterialIcons';
@@ -12,12 +11,6 @@ export const GuestHomeMenus = [
     iconBgColor: '#FF6D00',
     icon: <AccountBalance />,
     linkTo: '/ngos',
-  },
-  {
-    title: 'Trending News',
-    iconBgColor: '#D81B60',
-    icon: <Title />,
-    linkTo: '/trending',
   },
   {
     title: 'Helpline',

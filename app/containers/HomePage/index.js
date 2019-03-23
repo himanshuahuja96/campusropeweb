@@ -44,7 +44,7 @@ import PrivateRoute from '../../components/PrivateRoute/Loadable';
 import HeaderTabs from '../../components/HeaderTabs/Loadable';
 import { GuestHomeMenus } from './menus';
 import HomeButtons from './HomeButtons';
-import { changeRoute, routeToUserProfile } from './actions';
+import { changeRoute, routeToUserProfile, homeMounted } from './actions';
 
 const CenterPanel = styled.div`
   background: #fff;
@@ -60,6 +60,10 @@ export class HomePage extends React.PureComponent {
   gotoUserProfile = () => {
     this.props.dispatch(changeRoute(routeToUserProfile));
   };
+
+  componentDidMount() {
+    this.props.homeMounted();
+  }
 
   render() {
     return (
@@ -130,6 +134,7 @@ export class HomePage extends React.PureComponent {
 
 HomePage.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  homeMounted: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -139,6 +144,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    homeMounted: () => dispatch(homeMounted()),
   };
 }
 
