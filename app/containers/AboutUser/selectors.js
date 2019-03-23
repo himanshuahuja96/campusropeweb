@@ -1,15 +1,21 @@
 import { createSelector } from 'reselect';
-import { initialState } from './reducer';
 
 /**
  * Direct selector to the aboutUser state domain
  */
 
-const selectAboutUserDomain = state => state.get('aboutUser', initialState);
+const selectAboutUserDomain = state => state.aboutUser;
+const selectUserProfileDomain = state => state.userProfile;
 
 /**
  * Other specific selectors
  */
+
+const makeSelectUserProfileInfo = () =>
+  createSelector(
+    selectUserProfileDomain,
+    profile => profile.userProfileInfo && profile.userProfileInfo,
+  );
 
 /**
  * Default selector used by AboutUser
@@ -19,4 +25,4 @@ const makeSelectAboutUser = () =>
   createSelector(selectAboutUserDomain, substate => substate.toJS());
 
 export default makeSelectAboutUser;
-export { selectAboutUserDomain };
+export { selectAboutUserDomain, makeSelectUserProfileInfo };

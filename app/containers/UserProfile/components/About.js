@@ -9,7 +9,7 @@ import { push } from 'react-router-redux';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Add from '@material-ui/icons/Add';
-import { Formik, FieldArray } from 'formik';
+import { Formik } from 'formik';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { createStructuredSelector } from 'reselect';
 import ProfileTabType from './ProfileTabTypeModel';
