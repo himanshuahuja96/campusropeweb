@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectLoggedUser } from '../../store/loggeduser/selectors';
+import { makeSelectUserProfileInfo } from './selectors';
 
 import EditDialog from './EditDialog';
 
