@@ -12,23 +12,47 @@ class GeneralInfoEdit extends React.Component {
 
     return (
       <React.Fragment>
-        <FormControl margin="normal" fullWidth={true}>
-          <MultipleChipInput
-            label="Work And Experience"
-            defaultValue={values.workAndExperience}
-            onChange={handleChange}
+        <FormControl margin="normal" fullWidth>
+          <FieldArray
+            name="workAndExperience"
+            render={arrayHelpers => (
+              <MultipleChipInput
+                id="workAndExperience"
+                type="string"
+                name="workAndExperience"
+                label="Work And Experience"
+                defaultValue={values.workAndExperience}
+                onUpdateInput={handleChange}
+                onAdd={() => {
+                  arrayHelpers.push('');
+                  return true;
+                }}
+              />
+            )}
           />
         </FormControl>
 
-        <FormControl margin="normal" fullWidth={true}>
-          <MultipleChipInput
-            label="Skills"
-            defaultValue={values.skills}
-            onChange={handleChange}
+        <FormControl margin="normal" fullWidth>
+          <FieldArray
+            name="skills"
+            render={arrayHelpers => (
+              <MultipleChipInput
+                id="skills"
+                type="string"
+                name="skills"
+                label="Skills"
+                defaultValue={values.skills}
+                onUpdateInput={handleChange}
+                onAdd={() => {
+                  arrayHelpers.push('');
+                  return true;
+                }}
+              />
+            )}
           />
         </FormControl>
 
-        <FormControl margin="normal" fullWidth={true}>
+        <FormControl margin="normal" fullWidth>
           <InputLabel htmlFor="name">College</InputLabel>
 
           <Input
@@ -39,7 +63,7 @@ class GeneralInfoEdit extends React.Component {
           />
         </FormControl>
 
-        <FormControl margin="normal" fullWidth={true}>
+        <FormControl margin="normal" fullWidth>
           <FieldArray
             name="otherDegreeAndCourses"
             render={arrayHelpers => (
@@ -50,7 +74,7 @@ class GeneralInfoEdit extends React.Component {
                 label="Other Degree and Courses"
                 defaultValue={values.otherDegreeAndCourses}
                 onUpdateInput={handleChange}
-                onAdd={chipValue => {
+                onAdd={() => {
                   arrayHelpers.push('');
                   return true;
                 }}
@@ -59,11 +83,23 @@ class GeneralInfoEdit extends React.Component {
           />
         </FormControl>
 
-        <FormControl margin="normal" fullWidth={true}>
-          <MultipleChipInput
-            label="Career Objectives"
-            defaultValue={values.careerObjectives}
-            onChange={handleChange}
+        <FormControl margin="normal" fullWidth>
+          <FieldArray
+            name="careerObjectives"
+            render={arrayHelpers => (
+              <MultipleChipInput
+                id="careerObjectives"
+                type="string"
+                name="careerObjectives"
+                label="Career Objectives"
+                defaultValue={values.careerObjectives}
+                onUpdateInput={handleChange}
+                onAdd={() => {
+                  arrayHelpers.push('');
+                  return true;
+                }}
+              />
+            )}
           />
         </FormControl>
       </React.Fragment>

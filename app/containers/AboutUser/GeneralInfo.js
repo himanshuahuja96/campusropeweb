@@ -105,7 +105,7 @@ class GeneralInfo extends React.PureComponent {
   };
 
   render() {
-    const { classes, handlePanelChange, expanded } = this.props;
+    const { classes, handlePanelChange, expanded, userprofileInfo } = this.props;
     return (
       <ExpansionPanel expanded={expanded} onChange={handlePanelChange}>
         {expanded && (
@@ -124,25 +124,31 @@ class GeneralInfo extends React.PureComponent {
             <Grid item xs={12} sm={12} lg={6}>
               {this.renderLabelsAndValues(
                 'Work And Experience',
-                'Work And Experience',
+                userprofileInfo.workAndExperience[0] || '-',
               )}
             </Grid>
             <Grid item xs={12} sm={12} lg={6}>
-              {this.renderLabelsAndValues('Skills', 'Skills')}
+              {this.renderLabelsAndValues(
+                'Skills',
+                userprofileInfo.skills[0] || '-',
+              )}
             </Grid>
             <Grid item xs={12} sm={12} lg={6}>
-              {this.renderLabelsAndValues('College', 'College')}
+              {this.renderLabelsAndValues(
+                'College',
+                userprofileInfo.college || '-',
+              )}
             </Grid>
             <Grid item xs={12} sm={12} lg={6}>
               {this.renderLabelsAndValues(
                 'Other Degree and Courses',
-                'Other Degree and Courses',
+                userprofileInfo.otherDegreeAndCourses[0] || '-',
               )}
             </Grid>
             <Grid item xs={12} sm={12} lg={6}>
               {this.renderLabelsAndValues(
                 'Career Objectives',
-                'Career Objectives',
+                userprofileInfo.careerObjectives[0] || '-',
               )}
             </Grid>
           </Grid>
