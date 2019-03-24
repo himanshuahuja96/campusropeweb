@@ -14,8 +14,6 @@ import { createStructuredSelector } from 'reselect';
 import { makeSelectLoggedUser } from '../../store/loggeduser/selectors';
 import { makeSelectUserProfileInfo } from './selectors';
 
-import EditDialog from './EditDialog';
-
 const styles = theme => ({
   aboutPaper: {
     padding: '10px 15px',
@@ -90,22 +88,8 @@ const styles = theme => ({
 
 /* eslint react/prop-types: 0 */
 class AboutUserComponent extends React.PureComponent {
-  state = {
-    editDialogExpand: false,
-    basicInfoEditView: null,
-  };
-
   handleEditDialogPanel = () => {
-    this.setState({
-      editDialogExpand: true,
-      basicInfoEditView: true,
-    });
-  };
-
-  handleClose = () => {
-    this.setState({
-      editDialogExpand: false,
-    });
+    this.props.openDialog('basic');
   };
 
   renderLabelsAndValues = (label, value) => {
@@ -127,7 +111,6 @@ class AboutUserComponent extends React.PureComponent {
       handlePanelChange,
       userprofileInfo,
     } = this.props;
-    const { editDialogExpand, basicInfoEditView } = this.state;
     return (
       <ExpansionPanel expanded={expanded} onChange={handlePanelChange}>
         {expanded && (
@@ -135,12 +118,6 @@ class AboutUserComponent extends React.PureComponent {
             <EditIcon onClick={this.handleEditDialogPanel} />
           </div>
         )}
-
-        <EditDialog
-          editDialogExpand={editDialogExpand}
-          handleClose={this.handleClose}
-          basicInfoEditView={basicInfoEditView}
-        />
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <Typography variant="body1" className={classes.heading}>
             Basic Information
@@ -153,9 +130,6 @@ class AboutUserComponent extends React.PureComponent {
             </Grid>
             <Grid item xs={12} sm={12} lg={6}>
               {this.renderLabelsAndValues('Gender', userprofileInfo.gender)}
-            </Grid>
-            <Grid item xs={12} sm={12} lg={6}>
-              {this.renderLabelsAndValues('Email', userprofileInfo.email)}
             </Grid>
             <Grid item xs={12} sm={12} lg={6}>
               {this.renderLabelsAndValues(

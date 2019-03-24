@@ -14,7 +14,7 @@ class BasicInfoEdit extends React.PureComponent {
     const { values = {}, handleChange } = this.props;
     return (
       <React.Fragment>
-        <FormControl margin="normal" fullWidth={true}>
+        <FormControl margin="normal" fullWidth>
           <InputLabel htmlFor="name">Name</InputLabel>
           <Input
             id="name"
@@ -22,12 +22,12 @@ class BasicInfoEdit extends React.PureComponent {
             autoComplete="name"
             value={values.name}
             onChange={handleChange}
-            autoFocus={true}
-            fullWidth={true}
+            autoFocus
+            fullWidth
           />
         </FormControl>
 
-        <FormControl margin="normal" fullWidth={true}>
+        <FormControl margin="normal" fullWidth>
           <InputLabel htmlFor="name">Country</InputLabel>
           <Input
             id="country"
@@ -37,7 +37,7 @@ class BasicInfoEdit extends React.PureComponent {
           />
         </FormControl>
 
-        <FormControl margin="normal" fullWidth={true}>
+        <FormControl margin="normal" fullWidth>
           <InputLabel htmlFor="name">Home Town</InputLabel>
           <Input
             id="homeTown"
@@ -47,7 +47,7 @@ class BasicInfoEdit extends React.PureComponent {
           />
         </FormControl>
 
-        <FormControl margin="normal" fullWidth={true}>
+        <FormControl margin="normal" fullWidth>
           <InputLabel htmlFor="name">Current City</InputLabel>
           <Input
             id="currentCity"

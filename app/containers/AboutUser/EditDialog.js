@@ -1,4 +1,7 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
+import * as Yup from 'yup';
+import { Formik } from 'formik';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -12,6 +15,14 @@ import Typography from '@material-ui/core/Typography';
 import BasicInfoEdit from './BasicInfoEdit';
 import GeneralInfoEdit from './GeneralInfoEdit';
 import StereoTypesEdit from './StereoTypesEdit';
+
+
+const styles = theme => ({
+  form: {
+    width: '100%', // Fix IE11 issue.
+    marginTop: theme.spacing.unit,
+  },
+});
 
 const DialogTitle = withStyles(theme => ({
   root: {
@@ -58,42 +69,116 @@ const DialogActions = withStyles(theme => ({
   },
 }))(MuiDialogActions);
 
+const initalValue = {
+  name: '',
+  gender: '',
+  email: '',
+  homeTown: '',
+  country: '',
+  currentCity: '',
+  religiousView: '',
+  politicalView: '',
+  workAndExperience: [],
+  skills: [],
+  college: '',
+  picture: '',
+  otherDegreeAndCourses: [],
+  careerObjectives: [],
+};
+
+const getInitialValues = userProfile => {
+  const updatedInitalValue = Object.assign({}, initalValue, {
+    ...userProfile,
+    profileId: userProfile.id,
+    ...userProfile.profileOf,
+  });
+  return updatedInitalValue;
+};
+
 /* eslint react/prop-types: 0 */
-class EditDialog extends React.Component {
+class EditDialog extends React.PureComponent {
+
+  renderTitle = () => {
+    switch(this.props.editDialogType){
+      case 'basic':
+        return 'Basic Info';
+      case 'general':
+        return 'General Info';
+      case 'stereo':
+        return 'StereoTypes Info';
+      default:
+        return ''
+    }
+  }
+
+  renderContent = (values,handleChange) => {
+    switch(this.props.editDialogType){
+      case 'basic':
+        return <BasicInfoEdit values={values} handleChange={handleChange} />
+      case 'general':
+        return <GeneralInfoEdit values={values} handleChange={handleChange}/>;
+      case 'stereo':
+        return <StereoTypesEdit values={values} handleChange={handleChange}/>;
+      default:
+        return ''
+    }
+  }
+
+  saveProfileInfo = (values, actions) => {
+    this.props.handleClose();
+    this.props.saveUserProfile(values, actions)
+  }
+
   render() {
     const {
       editDialogExpand,
       handleClose,
-      basicInfoEditView,
-      generalInfoEditView,
-      stereoTypesInfoEditView,
+      classes,
+      userprofileInfo,
     } = this.props;
     return (
       <div>
-        <Dialog
-          onClose={handleClose}
-          aria-labelledby="customized-dialog-title"
-          open={editDialogExpand}
+        <Formik
+          initialValues={getInitialValues(userprofileInfo)}
+          validationSchema={Yup.object().shape({})}
+          onSubmit={(values, actions) => this.saveProfileInfo(values,actions)}
         >
-          <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-            {basicInfoEditView && 'Basic Info'}
-            {generalInfoEditView && 'General Info'}
-            {stereoTypesInfoEditView && 'StereoTypes Info'}
-          </DialogTitle>
-          <DialogContent>
-            {basicInfoEditView && <BasicInfoEdit />}
-            {generalInfoEditView && <GeneralInfoEdit />}
-            {stereoTypesInfoEditView && <StereoTypesEdit />}
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Save
-            </Button>
-          </DialogActions>
-        </Dialog>
+          {props => {
+            const {
+              values,
+              handleChange,
+              handleSubmit,
+            } = props;
+            return (
+              <form
+                className={classes.form}
+                noValidate="noValidate"
+                onSubmit={handleSubmit}
+              >
+                <Dialog
+                  onClose={handleClose}
+                  aria-labelledby="customized-dialog-title"
+                  open={editDialogExpand}
+                >
+                  <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+                    {this.renderTitle()}
+                  </DialogTitle>
+                  <DialogContent>
+                    {this.renderContent(values,handleChange)}
+                  </DialogContent>
+                  <DialogActions>
+                    <Button type="submit" onClick={handleSubmit} color="primary" >
+                      Save
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </form>
+            );
+          }}
+        </Formik>
       </div>
     );
   }
 }
 
-export default EditDialog;
+export default withStyles(styles)(EditDialog);

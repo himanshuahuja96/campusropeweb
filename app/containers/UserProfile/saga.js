@@ -24,6 +24,7 @@ export function* fetchUserProfile({ payload }) {
 /*eslint-disable*/
 export function* saveUserProfileSaga(action) {
   const { payload, actions } = action;
+  console.log(action)
   try {
     yield featherClient.authenticate();
     const userProfile = yield userService.patch(payload._id, payload);

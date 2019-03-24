@@ -27,7 +27,7 @@ export function* homeMountedSaga() {
     yield put(setLoggedUser(loggedUser));
     yield put(stopFetchingData());
   } catch (e) {
-    yield put(push('/login'));
+    yield put(push('/'));
   }
 }
 

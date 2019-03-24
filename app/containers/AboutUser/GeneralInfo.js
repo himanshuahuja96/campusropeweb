@@ -14,8 +14,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import { makeSelectUserProfileInfo } from './selectors';
 
-import EditDialog from './EditDialog';
-
 const styles = theme => ({
   aboutPaper: {
     padding: '10px 15px',
@@ -89,24 +87,9 @@ const styles = theme => ({
 });
 
 /* eslint react/prop-types: 0 */
-class AboutUserComponent extends React.Component {
-  state = {
-    expanded: null,
-    editDialogExpand: false,
-    generalInfoEditView: null,
-  };
-
+class GeneralInfo extends React.PureComponent {
   handleEditDialogPanel = () => {
-    this.setState({
-      editDialogExpand: true,
-      generalInfoEditView: true,
-    });
-  };
-
-  handleClose = () => {
-    this.setState({
-      editDialogExpand: false,
-    });
+    this.props.openDialog('general');
   };
 
   renderLabelsAndValues = (label, value) => {
@@ -121,20 +104,8 @@ class AboutUserComponent extends React.Component {
     );
   };
 
-  handlePanelChange = panel => (event, expanded) => {
-    this.setState({
-      expanded: expanded ? panel : false,
-    });
-  };
-
   render() {
-    const {
-      classes,
-      userprofileInfo,
-      handlePanelChange,
-      expanded,
-    } = this.props;
-    const { editDialogExpand, generalInfoEditView } = this.state;
+    const { classes, handlePanelChange, expanded } = this.props;
     return (
       <ExpansionPanel expanded={expanded} onChange={handlePanelChange}>
         {expanded && (
@@ -142,11 +113,6 @@ class AboutUserComponent extends React.Component {
             <EditIcon onClick={this.handleEditDialogPanel} />
           </div>
         )}
-        <EditDialog
-          editDialogExpand={editDialogExpand}
-          handleClose={this.handleClose}
-          generalInfoEditView={generalInfoEditView}
-        />
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <Typography variant="body1" className={classes.heading}>
             General Information
@@ -186,7 +152,7 @@ class AboutUserComponent extends React.Component {
   }
 }
 
-AboutUserComponent.propTypes = {
+GeneralInfo.propTypes = {
   classes: PropTypes.object,
 };
 
@@ -203,6 +169,6 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const componentWithStyles = withStyles(styles)(AboutUserComponent);
+const componentWithStyles = withStyles(styles)(GeneralInfo);
 
 export default compose(withConnect)(componentWithStyles);

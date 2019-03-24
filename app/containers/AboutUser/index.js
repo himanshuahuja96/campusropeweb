@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /**
  *
  * AboutUser
@@ -8,17 +9,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import * as Yup from 'yup';
 import Button from '@material-ui/core/Button';
 import { push } from 'react-router-redux';
 import Typography from '@material-ui/core/Typography';
-import { Formik } from 'formik';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectLoggedUser } from '../../store/loggeduser/selectors';
 import BasicInfo from './BasicInfo';
 import StereoTypes from './StereoTypes';
 import GeneralInfo from './GeneralInfo';
+import EditDialog from './EditDialog';
+import { saveUserProfile } from '../UserProfile/actions';
 
 const styles = theme => ({
   aboutPaper: {
@@ -81,36 +82,12 @@ const styles = theme => ({
   },
 });
 
-const initalValue = {
-  name: '',
-  gender: '',
-  email: '',
-  homeTown: '',
-  country: '',
-  currentCity: '',
-  religiousView: '',
-  politicalView: '',
-  workAndExperience: [],
-  skills: [],
-  college: '',
-  picture: '',
-  otherDegreeAndCourses: [],
-  careerObjectives: [],
-};
-
-const getInitialValues = userProfile => {
-  const updatedInitalValue = Object.assign({}, initalValue, {
-    ...userProfile,
-    profileId: userProfile.id,
-    ...userProfile.profileOf,
-  });
-  return updatedInitalValue;
-};
-
 /* eslint-disable react/prefer-stateless-function */
 export class AboutUser extends React.Component {
   state = {
-    expanded: null,
+    expanded: 'panel1',
+    editDialogExpand: false,
+    editDialogType: 'basic',
   };
 
   handleChange = panel => (event, expanded) => {
@@ -123,90 +100,74 @@ export class AboutUser extends React.Component {
     this.props.dispatch(push(`/profile/${userinfo._id}`));
   };
 
+  handleClose = () => {
+    this.setState({
+      editDialogExpand: false,
+    });
+  };
+
+  openDialog = type => {
+    this.setState({
+      editDialogExpand: true,
+      editDialogType: type,
+    });
+  };
+
   render() {
-    const {
-      classes,
-      userProfile = {},
-      handleProfileSave,
-      aboutUser,
-    } = this.props;
-    const { expanded } = this.state;
+    const { classes, aboutUser } = this.props;
+    const { expanded, editDialogExpand, editDialogType } = this.state;
     return (
-      <Formik
-        initialValues={getInitialValues(userProfile)}
-        validationSchema={Yup.object().shape({})}
-        onSubmit={(values, actions) => handleProfileSave(values, actions)}>
-        {props => {
-          const {
-            values,
-            touched,
-            errors,
-            isSubmitting,
-            handleChange,
-            handleSubmit,
-          } = props;
-          return (
-            <form
-              className={classes.form}
-              noValidate="noValidate"
-              onSubmit={handleSubmit}
-            >
-              <Typography variant="h5" className="text-center">
-                About
-              </Typography>
+      <React.Fragment>
+        <Typography variant="h5" className="text-center">
+          About
+        </Typography>
 
-              <BasicInfo
-                errors={errors}
-                touched={touched}
-                values={values}
-                expanded={true}
-                handlePanelChange={this.handleChange('panel1')}
-                handleChange={handleChange}
-              />
+        <BasicInfo
+          openDialog={this.openDialog}
+          expanded={expanded === 'panel1'}
+          handlePanelChange={this.handleChange('panel1')}
+        />
 
-              <StereoTypes
-                errors={errors}
-                touched={touched}
-                values={values}
-                expanded={expanded === 'panel2'}
-                handlePanelChange={this.handleChange('panel2')}
-                handleChange={handleChange}
-              />
+        <StereoTypes
+          openDialog={this.openDialog}
+          expanded={expanded === 'panel2'}
+          handlePanelChange={this.handleChange('panel2')}
+        />
 
-              <GeneralInfo
-                errors={errors}
-                touched={touched}
-                values={values}
-                expanded={expanded === 'panel3'}
-                handlePanelChange={this.handleChange('panel3')}
-                handleChange={handleChange}
-              />
+        <GeneralInfo
+          openDialog={this.openDialog}
+          expanded={expanded === 'panel3'}
+          handlePanelChange={this.handleChange('panel3')}
+        />
 
-              <div className={classes.aboutUserBtnWrapper}>
-                <Button
-                  onClick={() => this.handleBackClick(aboutUser)}
-                  variant="contained"
-                  className={classes.cancel}
-                  disabled={isSubmitting}
-                >
-                  {' '}
-                  Back
-                </Button>
-              </div>
-            </form>
-          );
-        }}
-      </Formik>
+        <div className={classes.aboutUserBtnWrapper}>
+          <Button
+            onClick={() => this.handleBackClick(aboutUser)}
+            variant="contained"
+            className={classes.cancel}
+          >
+            {' '}
+            Back
+          </Button>
+        </div>
+
+        <EditDialog
+          editDialogExpand={editDialogExpand}
+          handleClose={this.handleClose}
+          saveUserProfile={this.props.saveUserProfile}
+          userprofileInfo={aboutUser}
+          editDialogType={editDialogType}
+        />
+      </React.Fragment>
     );
   }
 }
 
 AboutUser.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  saveUserProfile: PropTypes.func.isRequired,
   aboutUser: PropTypes.object,
   classes: PropTypes.object,
-  userProfile: PropTypes.object,
-  handleProfileSave: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -216,6 +177,8 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    saveUserProfile: (payload, actions) =>
+      dispatch(saveUserProfile(payload, actions)),
   };
 }
 
