@@ -18,6 +18,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import AppBar from 'components/AppBar/Loadable';
+import Drawer from 'components/Drawer';
 import Profile from 'containers/UserProfile/Loadable';
 import AboutUser from 'containers/AboutUser/Loadable';
 import HelplineUserList from 'containers/HelplineUserList/Loadable';
@@ -45,6 +46,7 @@ import HeaderTabs from '../../components/HeaderTabs/Loadable';
 import { GuestHomeMenus } from './menus';
 import HomeButtons from './HomeButtons';
 import { changeRoute, routeToUserProfile, homeMounted } from './actions';
+import { makeSelectLoggedUserMenus, isLoggedIn } from '../../store/loggeduser/selectors';
 
 const CenterPanel = styled.div`
   background: #fff;
@@ -57,13 +59,23 @@ const CenterPanel = styled.div`
 const CenterMenuWrapper = styled.div``;
 /* eslint-disable react/prefer-stateless-function */
 export class HomePage extends React.PureComponent {
-  gotoUserProfile = () => {
-    this.props.dispatch(changeRoute(routeToUserProfile));
+  state = {
+    drawerOpen: false,
   };
 
   componentDidMount() {
     this.props.homeMounted();
   }
+
+  toggleDrawer = opened => {
+    this.setState({
+      drawerOpen: opened || !this.state.drawerOpen,
+    });
+  };
+
+  gotoUserProfile = () => {
+    this.props.dispatch(changeRoute(routeToUserProfile));
+  };
 
   render() {
     return (
@@ -72,7 +84,16 @@ export class HomePage extends React.PureComponent {
           <title>Home</title>
           <meta name="description" content="Homepage of Campusrope" />
         </Helmet>
-        <AppBar gotoUserProfile={this.gotoUserProfile} />
+        <AppBar
+          gotoUserProfile={this.gotoUserProfile}
+          toggleDrawer={this.toggleDrawer}
+        />
+        <Drawer
+          open={this.state.drawerOpen && isLoggedIn()}
+          toggleDrawer={this.toggleDrawer}
+          dispatch={this.props.dispatch}
+          menuItems={this.props.drawerMenus}
+        />
         <HeaderTabs />
         <CenterPanel>
           <CenterMenuWrapper>
@@ -139,6 +160,7 @@ HomePage.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   home: makeSelectHome(),
+  drawerMenus: makeSelectLoggedUserMenus()
 });
 
 function mapDispatchToProps(dispatch) {

@@ -5,14 +5,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import {
   MenuIcon,
   AccountCircle,
   MailIcon,
   NotificationsIcon,
-  MoreIcon,
   ArrowBackIcon,
 } from 'components/MaterialIcons';
 
@@ -82,7 +79,7 @@ const styles = theme => ({
     },
   },
   sectionDesktop: {
-    display: 'none',
+    display: 'flex',
     [theme.breakpoints.up('md')]: {
       display: 'flex',
     },
@@ -98,7 +95,6 @@ const styles = theme => ({
 class PrimarySearchAppBar extends React.Component {
   state = {
     anchorEl: null,
-    mobileMoreAnchorEl: null,
   };
 
   handleProfileMenuOpen = event => {
@@ -111,66 +107,10 @@ class PrimarySearchAppBar extends React.Component {
     this.handleMobileMenuClose();
   };
 
-  handleMobileMenuOpen = event => {
-    this.setState({ mobileMoreAnchorEl: event.currentTarget });
-  };
-
-  handleMobileMenuClose = () => {
-    this.setState({ mobileMoreAnchorEl: null });
-  };
-
   render() {
-    const { anchorEl, mobileMoreAnchorEl } = this.state;
-    const { classes } = this.props;
+    const { anchorEl } = this.state;
+    const { classes, toggleDrawer } = this.props;
     const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-    const renderMenu = (
-      <Menu
-        anchorEl={anchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMenuOpen}
-        onClose={this.handleMenuClose}
-      >
-        <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
-      </Menu>
-    );
-
-    const renderMobileMenu = (
-      <Menu
-        anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-        open={isMobileMenuOpen}
-        onClose={this.handleMenuClose}
-      >
-        <MenuItem onClick={this.handleMobileMenuClose}>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <MailIcon />
-            </Badge>
-          </IconButton>
-          <p>Messages</p>
-        </MenuItem>
-        <MenuItem onClick={this.handleMobileMenuClose}>
-          <IconButton color="inherit">
-            <Badge badgeContent={11} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <p>Notifications</p>
-        </MenuItem>
-        <MenuItem onClick={this.handleProfileMenuOpen}>
-          <IconButton color="inherit">
-            <AccountCircle />
-          </IconButton>
-          <p>Profile</p>
-        </MenuItem>
-      </Menu>
-    );
-
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -207,6 +147,7 @@ class PrimarySearchAppBar extends React.Component {
                 <AccountCircle />
               </IconButton>
               <IconButton
+                onClick={toggleDrawer}
                 className={classes.menuButton}
                 color="inherit"
                 aria-label="Open drawer"
@@ -214,19 +155,8 @@ class PrimarySearchAppBar extends React.Component {
                 <MenuIcon />
               </IconButton>
             </div>
-            <div className={classes.sectionMobile}>
-              <IconButton
-                aria-haspopup="true"
-                onClick={this.handleMobileMenuOpen}
-                color="inherit"
-              >
-                <MoreIcon />
-              </IconButton>
-            </div>
           </Toolbar>
         </AppBar>
-        {renderMenu}
-        {renderMobileMenu}
       </div>
     );
   }
@@ -235,6 +165,7 @@ class PrimarySearchAppBar extends React.Component {
 PrimarySearchAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
   gotoUserProfile: PropTypes.func.isRequired,
+  toggleDrawer: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(PrimarySearchAppBar);

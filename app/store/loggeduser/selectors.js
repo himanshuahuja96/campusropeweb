@@ -1,10 +1,13 @@
+/* eslint-disable no-underscore-dangle */
 import { createSelector } from 'reselect';
+import ls from 'local-storage';
 import {
   userDrawerMenus,
   adminDrawerMenus,
   adminHomeMenus,
   userHomeMenus,
 } from './menus';
+import { USER_TOKEN } from '../../constants/local_storage_constants';
 
 const selectLoggedUserDomain = state => state.loggedUser;
 
@@ -39,6 +42,8 @@ const makeSelectIsLoggedUser = userId =>
     loggedUser => loggedUser.user._id === userId,
   );
 
+const isLoggedIn = () => ls.get(USER_TOKEN);
+
 export default makeSelectLoggedUser;
 export {
   selectLoggedUserDomain,
@@ -46,4 +51,5 @@ export {
   makeSelectLoggedUserMenus,
   makeSelectLoggedUserHomeMenus,
   makeSelectIsLoggedUser,
+  isLoggedIn,
 };
