@@ -20,9 +20,9 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-const MenuItems = (menus, dispatch) =>
+const MenuItems = (menus) =>
   menus.map(menu => (
-    <ListItem button key={menu.id} onClick={() => menu.trigger(dispatch)}>
+    <ListItem button key={menu.id}>
       <ListItemIcon>
         <Icon>{menu.iconName}</Icon>
       </ListItemIcon>
@@ -67,7 +67,7 @@ class TemporaryDrawer extends React.PureComponent {
       >
         <div style={styles.list}>
           <List>
-            {MenuItems(menuItems, dispatch)}
+            {MenuItems(menuItems)}
             <ListItem button onClick={this.handleClick}>
               <ListItemIcon>
                 <InboxIcon />

@@ -9,6 +9,9 @@ import {
 } from './menus';
 import { USER_TOKEN } from '../../constants/local_storage_constants';
 
+const ADMIN_TASK_MENU_ID = 3;
+let USER_DRAWER_MENU = userDrawerMenus;
+
 const selectLoggedUserDomain = state => state.loggedUser;
 
 const makeSelectLoggedUser = () =>
@@ -17,6 +20,7 @@ const makeSelectLoggedUser = () =>
 const makeSelectLoggedUserMenus = () =>
   createSelector(selectLoggedUserDomain, loggedUserState => {
     if (loggedUserState.user && loggedUserState.user.role === 'user') {
+      setSubMenusForUserMenus(loggedUserState);
       return userDrawerMenus;
     }
     if (loggedUserState.user && loggedUserState.user.role === 'admin') {
@@ -43,6 +47,16 @@ const makeSelectIsLoggedUser = userId =>
   );
 
 const isLoggedIn = () => ls.get(USER_TOKEN);
+
+const setSubMenusForUserMenus = (loggedUserState) => {
+  USER_DRAWER_MENU = USER_DRAWER_MENU.map((menu)=> {
+    if(menu.id == ADMIN_TASK_MENU_ID){
+      menu.subMenus = loggedUserState.user.admintasks.tasks
+    }
+    return menu;
+  });
+  return USER_DRAWER_MENU;
+}
 
 export default makeSelectLoggedUser;
 export {
