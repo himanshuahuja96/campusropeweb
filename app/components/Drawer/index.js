@@ -20,14 +20,31 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-const MenuItems = (menus) =>
+import {ADMIN_TASK_MENU_ID} from '../../store/loggeduser/selectors'
+
+const MenuItems = (menus,handleClick,open,classes) =>
   menus.map(menu => (
-    <ListItem button key={menu.id}>
+    <React.Fragment>
+    <ListItem button key={menu.id} onClick={ () => menu.id == ADMIN_TASK_MENU_ID && handleClick()}>
       <ListItemIcon>
         <Icon>{menu.iconName}</Icon>
       </ListItemIcon>
       <ListItemText primary={menu.menuLabel} />
+      {menu.subMenus.length && open ? <ExpandLess /> : <ExpandMore />}
     </ListItem>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+      { menu.subMenus.map(subMenu => (
+         <List component="div" disablePadding>
+         <ListItem button className={classes.nested}>
+           <ListItemIcon>
+             <StarBorder />
+           </ListItemIcon>
+           <ListItemText inset primary={subMenu.taskName}/>
+         </ListItem>
+       </List>
+      ))}
+     </Collapse>
+     </React.Fragment>
   ));
 
 const styles = theme => ({
@@ -67,24 +84,7 @@ class TemporaryDrawer extends React.PureComponent {
       >
         <div style={styles.list}>
           <List>
-            {MenuItems(menuItems)}
-            <ListItem button onClick={this.handleClick}>
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText inset primary="Inbox" />
-              {this.state.open ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={this.state.open} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItem button className={classes.nested}>
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText inset primary="Starred" />
-                </ListItem>
-              </List>
-            </Collapse>
+            {MenuItems(menuItems,this.handleClick,this.state.open,classes)}
           </List>
         </div>
       </SwipeableDrawer>
