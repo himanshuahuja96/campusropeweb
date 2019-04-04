@@ -6,6 +6,7 @@ import {
   adminDrawerMenus,
   adminHomeMenus,
   userHomeMenus,
+  adminTaskIcons
 } from './menus';
 import { USER_TOKEN } from '../../constants/local_storage_constants';
 
@@ -20,6 +21,7 @@ const makeSelectLoggedUser = () =>
 const makeSelectLoggedUserMenus = () =>
   createSelector(selectLoggedUserDomain, loggedUserState => {
     if (loggedUserState.user && loggedUserState.user.role === 'user') {
+      setAdminTaskMenuIcons (loggedUserState)
       setSubMenusForUserMenus(loggedUserState);
       return userDrawerMenus;
     }
@@ -49,13 +51,17 @@ const makeSelectIsLoggedUser = userId =>
 const isLoggedIn = () => ls.get(USER_TOKEN);
 
 const setSubMenusForUserMenus = (loggedUserState) => {
-  USER_DRAWER_MENU = USER_DRAWER_MENU.map((menu)=> {
+  USER_DRAWER_MENU.forEach((menu)=> {
     if(menu.id == ADMIN_TASK_MENU_ID){
       menu.subMenus = loggedUserState.user.admintasks.tasks
     }
-    return menu;
   });
-  return USER_DRAWER_MENU;
+}
+
+const setAdminTaskMenuIcons = (loggedUserState) => {
+  loggedUserState.user.admintasks.tasks.forEach((task,index)=>{
+    task.iconName = adminTaskIcons[index];
+  })
 }
 
 export default makeSelectLoggedUser;

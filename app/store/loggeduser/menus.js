@@ -188,3 +188,19 @@ export const adminHomeMenus = [
     linkTo: '/helpline/admin',
   },
 ];
+
+export const adminTaskIcons = [
+  'help', 
+  'trending_up', 
+  'filter_list' , 
+  'new_releases',
+   'trending_flat', 
+   'verified_user',
+   'notifications',
+   'perm_identity',
+   'local_post_office',
+   'star_rate',
+   'feedback',
+   'report_problem',
+   'contact_support'
+];
