@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /**
  *
  * Drawer
@@ -16,36 +17,52 @@ import Icon from '@material-ui/core/Icon';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import {ADMIN_TASK_MENU_ID} from '../../store/loggeduser/selectors'
+import { ADMIN_TASK_MENU_ID } from '../../store/loggeduser/selectors';
 
-const MenuItems = ({menus,handleClick,open,classes}) => 
+const MenuItems = ({ menus, handleClick, open, classes }) =>
   menus.map(menu => (
     <React.Fragment>
-    <ListItem button key={menu.id} onClick={ () => menu.id == ADMIN_TASK_MENU_ID && handleClick()}>
-      <ListItemIcon>
-        <Icon>{menu.iconName}</Icon>
-      </ListItemIcon>
-      <ListItemText primary={menu.menuLabel} />
-      {menu.subMenus.length ? 
-       menu.subMenus.length && open ? <ExpandLess /> : <ExpandMore /> : <div></div>}
-    </ListItem> 
+      <ListItem
+        button
+        key={menu.id}
+        onClick={e => {
+          if (menu.id === ADMIN_TASK_MENU_ID) {
+            e.stopPropagation();
+            e.preventDefault();
+            handleClick();
+          }
+        }}
+      >
+        <ListItemIcon>
+          <Icon>{menu.iconName}</Icon>
+        </ListItemIcon>
+        <ListItemText primary={menu.menuLabel} />
+        {menu.subMenus.length ? (
+          menu.subMenus.length && open ? (
+            <ExpandLess />
+          ) : (
+            <ExpandMore />
+          )
+        ) : (
+          <div />
+        )}
+      </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
-      { menu.subMenus.map(subMenu => (
-         <List component="div" disablePadding key={subMenu.id}>
-         <ListItem button className={classes.nested}>
-           <ListItemIcon>
-           <Icon>{subMenu.iconName}</Icon>
-           </ListItemIcon>
-           <ListItemText inset primary={subMenu.taskName}/>
-         </ListItem>
-       </List>
-      ))}
-     </Collapse>
-     </React.Fragment>
-));
+        {menu.subMenus.map(subMenu => (
+          <List component="div" disablePadding key={subMenu.id}>
+            <ListItem button className={classes.nested}>
+              <ListItemIcon>
+                <Icon>{subMenu.iconName}</Icon>
+              </ListItemIcon>
+              <ListItemText inset primary={subMenu.taskName} />
+            </ListItem>
+          </List>
+        ))}
+      </Collapse>
+    </React.Fragment>
+  ));
 
 const styles = theme => ({
   list: {
@@ -62,7 +79,7 @@ const styles = theme => ({
 /* eslint-disable react/prefer-stateless-function */
 class TemporaryDrawer extends React.PureComponent {
   state = {
-    open: true,
+    open: false,
   };
 
   handleClick = () => {
@@ -70,7 +87,7 @@ class TemporaryDrawer extends React.PureComponent {
   };
 
   render() {
-    const { dispatch, menuItems, classes } = this.props;
+    const { menuItems, classes } = this.props;
     return (
       <SwipeableDrawer
         anchor="right"
@@ -79,16 +96,16 @@ class TemporaryDrawer extends React.PureComponent {
         onClose={() => this.props.toggleDrawer(false)}
         tabIndex={0}
         role="button"
-        onClick={() => this.props.toggleDrawer(false)}
         onKeyDown={() => this.props.toggleDrawer(false)}
+        onClick={() => this.props.toggleDrawer(false)}
       >
         <div style={styles.list}>
           <List>
             <MenuItems
-              menus = {menuItems}
-              handleClick = {this.handleClick}
-              open = {this.state.open}
-              classes = {classes}
+              menus={menuItems}
+              handleClick={this.handleClick}
+              open={this.state.open}
+              classes={classes}
             />
           </List>
         </div>
@@ -100,7 +117,6 @@ class TemporaryDrawer extends React.PureComponent {
 TemporaryDrawer.propTypes = {
   open: PropTypes.bool,
   toggleDrawer: PropTypes.func,
-  dispatch: PropTypes.func,
   menuItems: PropTypes.array,
   classes: PropTypes.object,
 };

@@ -6,12 +6,11 @@ import {
   adminDrawerMenus,
   adminHomeMenus,
   userHomeMenus,
-  adminTaskIcons
 } from './menus';
 import { USER_TOKEN } from '../../constants/local_storage_constants';
 
 const ADMIN_TASK_MENU_ID = 3;
-let USER_DRAWER_MENU = userDrawerMenus;
+const USER_DRAWER_MENU = userDrawerMenus;
 
 const selectLoggedUserDomain = state => state.loggedUser;
 
@@ -21,7 +20,6 @@ const makeSelectLoggedUser = () =>
 const makeSelectLoggedUserMenus = () =>
   createSelector(selectLoggedUserDomain, loggedUserState => {
     if (loggedUserState.user && loggedUserState.user.role === 'user') {
-      setAdminTaskMenuIcons (loggedUserState)
       setSubMenusForUserMenus(loggedUserState);
       return userDrawerMenus;
     }
@@ -50,19 +48,15 @@ const makeSelectIsLoggedUser = userId =>
 
 const isLoggedIn = () => ls.get(USER_TOKEN);
 
-const setSubMenusForUserMenus = (loggedUserState) => {
-  USER_DRAWER_MENU.forEach((menu)=> {
-    if(menu.id == ADMIN_TASK_MENU_ID){
-      menu.subMenus = loggedUserState.user.admintasks.tasks
+const setSubMenusForUserMenus = loggedUserState => {
+  USER_DRAWER_MENU.forEach(menu => {
+    if (menu.id === ADMIN_TASK_MENU_ID) {
+      menu.subMenus = loggedUserState.user.admintasks.tasks.filter(
+        s => s.selected,
+      );
     }
   });
-}
-
-const setAdminTaskMenuIcons = (loggedUserState) => {
-  loggedUserState.user.admintasks.tasks.forEach((task,index)=>{
-    task.iconName = adminTaskIcons[index];
-  })
-}
+};
 
 export default makeSelectLoggedUser;
 export {
@@ -72,5 +66,5 @@ export {
   makeSelectLoggedUserHomeMenus,
   makeSelectIsLoggedUser,
   isLoggedIn,
-  ADMIN_TASK_MENU_ID
+  ADMIN_TASK_MENU_ID,
 };
