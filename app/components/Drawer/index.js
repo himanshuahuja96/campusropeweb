@@ -64,6 +64,23 @@ const MenuItems = ({ menus, handleClick, open, classes }) =>
     </React.Fragment>
   ));
 
+
+  const MenuAdminItems = ({ menus, dispatch }) =>
+  menus.map(menu => (
+      <ListItem
+        button
+        key={menu.id}
+        onClick={() => {
+          menu.trigger(dispatch)
+        }}
+      >
+        <ListItemIcon>
+          <Icon>{menu.iconName}</Icon>
+        </ListItemIcon>
+        <ListItemText primary={menu.menuLabel} />
+      </ListItem>
+  ));  
+
 const styles = theme => ({
   list: {
     width: 350,
@@ -87,7 +104,7 @@ class TemporaryDrawer extends React.PureComponent {
   };
 
   render() {
-    const { menuItems, classes } = this.props;
+    const { menuItems, classes, loggedUserInfo, dispatch } = this.props;
     return (
       <SwipeableDrawer
         anchor="right"
@@ -101,12 +118,17 @@ class TemporaryDrawer extends React.PureComponent {
       >
         <div style={styles.list}>
           <List>
+            {loggedUserInfo.role == "user" ? 
             <MenuItems
               menus={menuItems}
               handleClick={this.handleClick}
               open={this.state.open}
               classes={classes}
-            />
+            /> :
+            <MenuAdminItems
+            menus={menuItems}
+            dispatch={dispatch}
+            />}
           </List>
         </div>
       </SwipeableDrawer>

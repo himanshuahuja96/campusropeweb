@@ -12,57 +12,57 @@ export const userDrawerMenus = [
     id: 1,
     iconName: 'home',
     menuLabel: 'Home',
-    subMenus: [],
+    subMenus : []
   },
   {
     id: 2,
     iconName: 'message',
     menuLabel: 'Messages',
-    subMenus: [],
+    subMenus : []
   },
   {
     id: 3,
     iconName: 'assignment',
     menuLabel: 'My Admin Tasks',
     trigger: dispatch => dispatch(replace('/my/admintasks')),
-    subMenus: [],
+    subMenus : []
   },
   {
     id: 4,
     iconName: 'insert_invitation',
     menuLabel: 'Invite Friends',
-    subMenus: [],
+    subMenus : []
   },
   {
     id: 5,
     iconName: 'perm_identity',
     menuLabel: 'Friend Suggestions',
-    subMenus: [],
+    subMenus : []
   },
   {
     id: 6,
     iconName: 'settings',
     menuLabel: 'Settings',
-    subMenus: [],
+    subMenus : []
   },
   {
     id: 7,
     iconName: 'feedback',
     menuLabel: 'Suggestions and Feedback',
-    subMenus: [],
+    subMenus : []
   },
   {
     id: 8,
     iconName: 'help',
     menuLabel: 'Help',
-    subMenus: [],
+    subMenus : []
   },
   {
     id: 9,
     iconName: 'person',
     menuLabel: 'Log Out',
     trigger: dispatch => dispatch(logOut()),
-    subMenus: [],
+    subMenus : []
   },
 ];
 
@@ -94,16 +94,22 @@ export const adminDrawerMenus = [
   },
   {
     id: 7,
+    iconName: 'assessment',
+    menuLabel: 'Tasks',
+    trigger: dispatch => dispatch(replace('/tasks')),
+  },
+  {
+    id: 8,
     iconName: 'feedback',
     menuLabel: 'Suggestions and Feedback',
   },
   {
-    id: 8,
+    id: 9,
     iconName: 'help',
     menuLabel: 'Help',
   },
   {
-    id: 9,
+    id: 10,
     iconName: 'person',
     menuLabel: 'Log Out',
     trigger: dispatch => dispatch(logOut()),

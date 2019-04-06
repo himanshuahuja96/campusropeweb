@@ -46,7 +46,7 @@ import HeaderTabs from '../../components/HeaderTabs/Loadable';
 import { GuestHomeMenus } from './menus';
 import HomeButtons from './HomeButtons';
 import { changeRoute, routeToUserProfile, homeMounted } from './actions';
-import { makeSelectLoggedUserMenus, isLoggedIn } from '../../store/loggeduser/selectors';
+import { makeSelectLoggedUserMenus, isLoggedIn, makeSelectLoggedUser } from '../../store/loggeduser/selectors';
 
 const CenterPanel = styled.div`
   background: #fff;
@@ -93,6 +93,7 @@ export class HomePage extends React.PureComponent {
           toggleDrawer={this.toggleDrawer}
           dispatch={this.props.dispatch}
           menuItems={this.props.drawerMenus}
+          loggedUserInfo={this.props.loggedUserInfo}
         />
         <HeaderTabs />
         <CenterPanel>
@@ -160,7 +161,8 @@ HomePage.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   home: makeSelectHome(),
-  drawerMenus: makeSelectLoggedUserMenus()
+  drawerMenus: makeSelectLoggedUserMenus(),
+  loggedUserInfo: makeSelectLoggedUser(),
 });
 
 function mapDispatchToProps(dispatch) {
