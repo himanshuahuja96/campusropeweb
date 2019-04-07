@@ -4,7 +4,9 @@ import { createSelector } from 'reselect';
  * Direct selector to the adminTask state domain
  */
 
-export const selectAdminTaskDomain = state => state.adminTask;
+export const selectAdminTaskDomain = state => {
+  return state.adminTask
+};
 
 /**
  * Other specific selectors
@@ -15,7 +17,9 @@ export const selectAdminTaskDomain = state => state.adminTask;
  */
 
 const makeSelectAdminTask = () =>
-  createSelector(selectAdminTaskDomain, substate => substate.tasks);
+  createSelector(selectAdminTaskDomain, substate => {
+    return substate.tasks
+  });
 
 const makeSelectSelectedAdminTask = () =>
   createSelector(selectAdminTaskDomain, state =>

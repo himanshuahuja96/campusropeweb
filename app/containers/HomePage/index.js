@@ -33,6 +33,7 @@ import MyNgos from 'containers/MyNgos/Loadable';
 import NgoView from 'containers/NgoView/Loadable';
 import NgoEdit from 'containers/NgoEdit/Loadable';
 import NgoVerificationList from 'containers/NgoVerificationList/Loadable';
+import AssignAdminTask from 'containers/AssignAdminTask/Loadable';
 import NgoUserList from 'containers/NgoUserList/Loadable';
 
 import injectSaga from 'utils/injectSaga';
@@ -146,6 +147,10 @@ export class HomePage extends React.PureComponent {
                 component={NgoVerificationList}
               />
               <Route exact path="/ngos" component={NgoUserList} />
+              <PrivateRoute
+                path="/admin/tasks"
+                component={AssignAdminTask}
+              />
             </Switch>
           </CenterMenuWrapper>
         </CenterPanel>

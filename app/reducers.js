@@ -10,6 +10,7 @@ import loggedUserReducer from './store/loggeduser/reducer';
 import constantsReducer from './store/constants/reducer';
 import helplineReducer from './store/helpline/reducer';
 import ngoReducer from './store/ngo/reducer';
+import AdminTaskReducer from './containers/AssignAdminTask/reducer';
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
  */
@@ -20,6 +21,7 @@ export default function createReducer(injectedReducers = {}) {
     constants: constantsReducer,
     helpline: helplineReducer,
     ngo: ngoReducer,
+    adminTask: AdminTaskReducer,
     ...injectedReducers,
   });
 

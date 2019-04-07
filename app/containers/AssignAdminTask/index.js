@@ -80,8 +80,8 @@ export class AdminTask extends React.PureComponent {
     this.props.clearTasks();
   }
 
-  renderAdminTasks() {
-    const { classes, adminTasks } = this.props;
+  renderAdminTasks(adminTasks) {
+    const { classes } = this.props;
     const renderedTasks = adminTasks.map(task => {
       const taskItemClassName = classNames({
         [classes.taskListItems]: true,
@@ -116,6 +116,7 @@ export class AdminTask extends React.PureComponent {
       selectedAdminTasks,
       onSelectUser,
       saveAdminTasksDispatch,
+      adminTasks
     } = this.props;
     return (
       <div className={classes.rootContainer}>
@@ -130,7 +131,7 @@ export class AdminTask extends React.PureComponent {
             <Grid container>
               <Grid item xs={12} sm={7} md={9}>
                 <div className={classes.taskListRoot}>
-                  {this.renderAdminTasks()}
+                  {this.renderAdminTasks(adminTasks)}
                 </div>
               </Grid>
 

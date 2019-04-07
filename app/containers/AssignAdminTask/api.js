@@ -8,7 +8,9 @@ export function getAdminTasksForUser(userId) {
           userId: userId,
         },
       })
-      .then(res => res.data.tasks); // this is called on auto complete . the above if condition is to avoid unwanted network requests
+      .then(res => {
+        return res[0]
+      }); // this is called on auto complete . the above if condition is to avoid unwanted network requests
   }
   return [];
 }

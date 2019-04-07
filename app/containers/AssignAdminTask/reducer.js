@@ -25,7 +25,7 @@ function adminTaskReducer(state = initialState, action) {
     case SET_ADMIN_TASKS: {
       return {
         ...state,
-        tasks: action.tasks,
+        tasks: action.adminTaskInfo.tasks,
       };
     }
     case CLEAR_TASKS: {

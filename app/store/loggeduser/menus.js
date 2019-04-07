@@ -96,7 +96,7 @@ export const adminDrawerMenus = [
     id: 7,
     iconName: 'assessment',
     menuLabel: 'Tasks',
-    trigger: dispatch => dispatch(replace('/tasks')),
+    trigger: dispatch => dispatch(replace('/admin/tasks')),
   },
   {
     id: 8,
