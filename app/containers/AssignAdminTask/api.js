@@ -16,5 +16,7 @@ export function getAdminTasksForUser(userId) {
 }
 
 export function saveAdminTasksApi({ tasks, selectedUser }) {
-  return adminTasksService.patch();
+  return adminTasksService.patch(null,{tasks},{query: {
+    userId: selectedUser
+  }});
 }

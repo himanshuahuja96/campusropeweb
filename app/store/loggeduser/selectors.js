@@ -51,6 +51,7 @@ const isLoggedIn = () => ls.get(USER_TOKEN);
 const setSubMenusForUserMenus = loggedUserState => {
   USER_DRAWER_MENU.forEach(menu => {
     if (menu.id === ADMIN_TASK_MENU_ID) {
+      // eslint-disable-next-line no-param-reassign
       menu.subMenus = loggedUserState.user.admintasks.tasks.filter(
         s => s.selected,
       );

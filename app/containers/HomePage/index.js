@@ -44,10 +44,14 @@ import saga from './saga';
 
 import PrivateRoute from '../../components/PrivateRoute/Loadable';
 import HeaderTabs from '../../components/HeaderTabs/Loadable';
-import { GuestHomeMenus } from './menus';
 import HomeButtons from './HomeButtons';
 import { changeRoute, routeToUserProfile, homeMounted } from './actions';
-import { makeSelectLoggedUserMenus, isLoggedIn, makeSelectLoggedUser } from '../../store/loggeduser/selectors';
+import {
+  makeSelectLoggedUserMenus,
+  isLoggedIn,
+  makeSelectLoggedUser,
+  makeSelectLoggedUserHomeMenus,
+} from '../../store/loggeduser/selectors';
 
 const CenterPanel = styled.div`
   background: #fff;
@@ -70,6 +74,7 @@ export class HomePage extends React.PureComponent {
 
   toggleDrawer = opened => {
     this.setState({
+      // eslint-disable-next-line react/no-access-state-in-setstate
       drawerOpen: opened || !this.state.drawerOpen,
     });
   };
@@ -104,7 +109,7 @@ export class HomePage extends React.PureComponent {
                 exact
                 path="/"
                 component={routerProps => (
-                  <HomeButtons menus={GuestHomeMenus} {...routerProps} />
+                  <HomeButtons menus={this.props.homeMenus} {...routerProps} />
                 )}
               />
               <PrivateRoute
@@ -148,7 +153,7 @@ export class HomePage extends React.PureComponent {
               />
               <Route exact path="/ngos" component={NgoUserList} />
               <PrivateRoute
-                path="/admin/tasks"
+                path="/admin/task/assignment"
                 component={AssignAdminTask}
               />
             </Switch>
@@ -168,6 +173,7 @@ const mapStateToProps = createStructuredSelector({
   home: makeSelectHome(),
   drawerMenus: makeSelectLoggedUserMenus(),
   loggedUserInfo: makeSelectLoggedUser(),
+  homeMenus: makeSelectLoggedUserHomeMenus(),
 });
 
 function mapDispatchToProps(dispatch) {
