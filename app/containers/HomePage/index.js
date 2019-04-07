@@ -95,7 +95,7 @@ export class HomePage extends React.PureComponent {
           toggleDrawer={this.toggleDrawer}
         />
         <Drawer
-          open={this.state.drawerOpen && isLoggedIn()}
+          open={!!(this.state.drawerOpen && isLoggedIn())}
           toggleDrawer={this.toggleDrawer}
           dispatch={this.props.dispatch}
           menuItems={this.props.drawerMenus}

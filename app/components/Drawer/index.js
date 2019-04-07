@@ -23,10 +23,9 @@ import { ADMIN_TASK_MENU_ID } from '../../store/loggeduser/selectors';
 
 const MenuItems = ({ menus, handleClick, open, classes }) =>
   menus.map(menu => (
-    <React.Fragment>
+    <React.Fragment key={menu.id}>
       <ListItem
         button
-        key={menu.id}
         onClick={e => {
           if (menu.id === ADMIN_TASK_MENU_ID) {
             e.stopPropagation();
