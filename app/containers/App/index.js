@@ -12,6 +12,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import HomePage from 'containers/HomePage/Loadable';
 import Login from 'containers/Login/Loadable';
+import Signup from 'containers/Signup/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -22,6 +23,7 @@ export default function App() {
     <Suspense fallback={<CircularProgress />}>
       <Switch>
         <Route exact path="/login" component={Login} />
+        <Route exact path="/signup" component={Signup} />
         <Route path="/" component={HomePage} />
         <Route component={NotFoundPage} />
       </Switch>
