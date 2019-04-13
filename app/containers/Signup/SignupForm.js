@@ -30,11 +30,12 @@ class SignupForm extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, routeToLogin } = this.props;
     return (
       <Formik
         initialValues={{
           name: '',
+          lastName: '',
           email: '',
           gender: '',
           password: '',
@@ -50,7 +51,11 @@ class SignupForm extends React.Component {
             .oneOf([Yup.ref('password')], "Passwords don't match")
             .required('Please confirm your password'),
         })}
-        onSubmit={(values, actions) => this.onSubmit(values, actions)}
+        onSubmit={(values, actions) => {
+          // eslint-disable-next-line no-param-reassign
+          values.name = `${values.name  } ${values.lastName}`;
+          this.onSubmit(values, actions)}
+        }
       >
         {props => {
           const {
@@ -68,7 +73,7 @@ class SignupForm extends React.Component {
               onSubmit={handleSubmit}
             >
               <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="name">Name</InputLabel>
+                <InputLabel htmlFor="name">First Name</InputLabel>
                 <Input
                   id="name"
                   name="name"
@@ -79,10 +84,22 @@ class SignupForm extends React.Component {
                 />{' '}
                 {touched.name &&
                   errors.name && (
-                    <FormHelperText className={classes.error}>
-                      {errors.name}
-                    </FormHelperText>
-                  )}
+                  <FormHelperText className={classes.error}>
+                    {errors.name}
+                  </FormHelperText>
+                )}
+              </FormControl>
+
+              <FormControl margin="normal" fullWidth>
+                <InputLabel htmlFor="name">Last Name</InputLabel>
+                <Input
+                  id="lastName"
+                  name="lastName"
+                  autoComplete="lastName"
+                  value={values.lastName}
+                  onChange={handleChange}
+                  autoFocus
+                />{' '}
               </FormControl>
 
               <FormControl margin="normal" required fullWidth>
@@ -96,10 +113,10 @@ class SignupForm extends React.Component {
                 />{' '}
                 {touched.email &&
                   errors.email && (
-                    <FormHelperText className={classes.error}>
-                      {errors.email}
-                    </FormHelperText>
-                  )}
+                  <FormHelperText className={classes.error}>
+                    {errors.email}
+                  </FormHelperText>
+                )}
                 {errors.exists && (
                   <FormHelperText className={classes.error}>
                     {errors.exists}
@@ -116,14 +133,13 @@ class SignupForm extends React.Component {
                 >
                   <MenuItem value="male">Male</MenuItem>
                   <MenuItem value="female">Female</MenuItem>
-                  <MenuItem value="other">other</MenuItem>
                 </Select>
                 {touched.gender &&
                   errors.gender && (
-                    <FormHelperText className={classes.error}>
-                      {errors.gender}
-                    </FormHelperText>
-                  )}
+                  <FormHelperText className={classes.error}>
+                    {errors.gender}
+                  </FormHelperText>
+                )}
               </FormControl>
 
               <FormControl margin="normal" required fullWidth>
@@ -137,10 +153,10 @@ class SignupForm extends React.Component {
                 />{' '}
                 {touched.password &&
                   errors.password && (
-                    <FormHelperText className={classes.error}>
-                      {errors.password}
-                    </FormHelperText>
-                  )}
+                  <FormHelperText className={classes.error}>
+                    {errors.password}
+                  </FormHelperText>
+                )}
               </FormControl>
 
               <FormControl margin="normal" required fullWidth>
@@ -156,10 +172,10 @@ class SignupForm extends React.Component {
                 />{' '}
                 {touched.passwordConfirm &&
                   errors.passwordConfirm && (
-                    <FormHelperText className={classes.error}>
-                      {errors.passwordConfirm}
-                    </FormHelperText>
-                  )}
+                  <FormHelperText className={classes.error}>
+                    {errors.passwordConfirm}
+                  </FormHelperText>
+                )}
               </FormControl>
               {this.state.recapchaErrorMsg && (
                 <div
@@ -204,6 +220,17 @@ class SignupForm extends React.Component {
                     size={20}
                   />
                 )}
+              </Button>
+              <Button
+                fullWidth
+                type="button"
+                variant="contained"
+                color="secondary"
+                onClick={routeToLogin}
+                className={classes.submit}
+                disabled={isSubmitting}
+              >
+                Back
               </Button>
             </form>
           );

@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { push } from 'react-router-redux';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -28,7 +29,6 @@ import { signUpSubmit } from './actions';
 const styles = theme => ({
   container: {
     backgroundColor: theme.palette.primary.main,
-    height: '100vh',
     display: 'flex',
     alignItems: 'center',
     backgroundPosition: 'center' /* Center the image */,
@@ -36,7 +36,7 @@ const styles = theme => ({
     backgroundSize: 'cover',
   },
   paper: {
-    margin: '0px auto',
+    margin: '20px auto',
     textAlign: 'center',
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
       .spacing.unit * 3}px`,
@@ -84,6 +84,7 @@ export class Signup extends React.Component {
             <SignupForm
               classes={classes}
               handleSignUp={this.props.onSignUpFormSubmit}
+              routeToLogin={this.props.routeToLogin}
             />
           </Paper>
         </div>
@@ -95,6 +96,7 @@ export class Signup extends React.Component {
 Signup.propTypes = {
   classes: PropTypes.object,
   onSignUpFormSubmit: PropTypes.func,
+  routeToLogin: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -106,6 +108,7 @@ function mapDispatchToProps(dispatch) {
     dispatch,
     onSignUpFormSubmit: (values, actions) =>
       dispatch(signUpSubmit(values, actions)),
+    routeToLogin: () => dispatch(push('/login')),
   };
 }
 
