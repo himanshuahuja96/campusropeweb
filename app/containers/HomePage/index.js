@@ -18,6 +18,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import AppBar from 'components/AppBar/Loadable';
+import PublicAppBar from 'components/PublicAppBar/Loadable';
 import Drawer from 'components/Drawer';
 import Profile from 'containers/UserProfile/Loadable';
 import AboutUser from 'containers/AboutUser/Loadable';
@@ -90,10 +91,14 @@ export class HomePage extends React.PureComponent {
           <title>Home</title>
           <meta name="description" content="Homepage of Campusrope" />
         </Helmet>
-        <AppBar
-          gotoUserProfile={this.gotoUserProfile}
-          toggleDrawer={this.toggleDrawer}
-        />
+        {isLoggedIn() ? (
+          <AppBar
+            gotoUserProfile={this.gotoUserProfile}
+            toggleDrawer={this.toggleDrawer}
+          />
+        ) : (
+          <PublicAppBar />
+        )}
         <Drawer
           open={!!(this.state.drawerOpen && isLoggedIn())}
           toggleDrawer={this.toggleDrawer}

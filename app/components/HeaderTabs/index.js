@@ -7,6 +7,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { HomeIcon, RssFeedIcon, LockIcon } from 'components/MaterialIcons';
+import { isLoggedIn } from '../../store/loggeduser/selectors';
 
 const CenterPanel = styled.div`
   position: relative;
@@ -42,8 +43,8 @@ function Headertabs({ dispatch }) {
         <Tabs
           value={value}
           onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
+          indicatorColor={isLoggedIn() ? 'primary' : 'secondary'}
+          textColor={isLoggedIn() ? 'primary' : 'secondary'}
           centered
         >
           <Tab label="Feeds" icon={<RssFeedIcon />} />
