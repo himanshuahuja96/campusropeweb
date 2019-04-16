@@ -13,6 +13,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    fontFamily: 'Arial Rounded MT Bold,Helvetica Rounded,Arial,sans-serif'
   },
 };
 
@@ -25,7 +26,7 @@ class PublicAppBar extends React.PureComponent {
           <Toolbar className={classes.toolbar}>
             <Typography
               className={classes.title}
-              variant="h4"
+              variant="h3"
               color="inherit"
               noWrap
             >
