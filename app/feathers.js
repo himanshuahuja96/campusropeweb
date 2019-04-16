@@ -2,8 +2,8 @@
 import feathers from '@feathersjs/client';
 import findOne from 'feathers-findone';
 const client = feathers();
-const restClient = feathers.rest('http://localhost:3030');
-// const restClient = feathers.rest('https://campusropeapi-ljrhkpiapm.now.sh');
+//const restClient = feathers.rest('http://localhost:3030');
+const restClient = feathers.rest('https://campusrope.herokuapp.com');
 
 client.configure(restClient.fetch(window.fetch));
 client.configure(findOne());
