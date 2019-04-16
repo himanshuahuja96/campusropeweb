@@ -9,9 +9,10 @@ const styles = {
   root: {
     width: '100%',
   },
-  title: {
+  toolbar: {
     display: 'flex',
     justifyContent: 'center',
+    alignItems: 'center',
   },
 };
 
@@ -20,15 +21,15 @@ class PublicAppBar extends React.PureComponent {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="secondary">
-          <Toolbar>
+        <AppBar position="static" color="primary">
+          <Toolbar className={classes.toolbar}>
             <Typography
               className={classes.title}
-              variant="h6"
+              variant="h4"
               color="inherit"
               noWrap
             >
-              Campusrope
+              CampusRope
             </Typography>
           </Toolbar>
         </AppBar>

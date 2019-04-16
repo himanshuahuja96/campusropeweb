@@ -98,7 +98,6 @@ class SignupForm extends React.Component {
                   autoComplete="lastName"
                   value={values.lastName}
                   onChange={handleChange}
-                  autoFocus
                 />{' '}
               </FormControl>
 
@@ -190,7 +189,7 @@ class SignupForm extends React.Component {
               )}
               <div style={{ margin: '15px auto', color: 'red' }}>
                 <Recaptcha
-                  sitekey="6LemFZIUAAAAAFvB9P1NPikUHVusOtcLbwY-TnHO"
+                  sitekey="6Lcba54UAAAAAE4RiyyuCcJzxtcFyAqBLEzYWvLr"
                   render="explicit"
                   onloadCallback={() => {
                     console.log('recapcha onload');

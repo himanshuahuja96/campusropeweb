@@ -1,5 +1,5 @@
 import { takeLatest, call, put, select } from 'redux-saga/effects';
-import { replace } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import ls from 'local-storage';
 import {
   LOGIN_FORM_SUBMIT,
@@ -22,7 +22,7 @@ export function* storeToken(token) {
 export function* logout() {
   ls.remove(USER_TOKEN);
   yield call(feathersClient.logout);
-  yield put(replace('/'));
+  yield put(push('/'));
 }
 
 // Our SUBMIT_LOGIN action passes along the form values as the payload and form actions as

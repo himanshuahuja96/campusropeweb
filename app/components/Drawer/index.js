@@ -21,7 +21,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import { ADMIN_TASK_MENU_ID } from '../../store/loggeduser/selectors';
 
-const MenuItems = ({ menus, handleClick, open, classes }) =>
+const MenuItems = ({ menus, handleClick, open, classes, dispatch }) =>
   menus.map(menu => (
     <React.Fragment key={menu.id}>
       <ListItem
@@ -31,6 +31,8 @@ const MenuItems = ({ menus, handleClick, open, classes }) =>
             e.stopPropagation();
             e.preventDefault();
             handleClick();
+          } else if (menu.trigger) {
+            menu.trigger(dispatch);
           }
         }}
       >
@@ -97,7 +99,7 @@ class TemporaryDrawer extends React.PureComponent {
 
   render() {
     // eslint-disable-next-line react/prop-types
-    const { menuItems, classes, loggedUserInfo } = this.props;
+    const { menuItems, classes, loggedUserInfo, dispatch } = this.props;
     return (
       <SwipeableDrawer
         anchor="right"
@@ -113,6 +115,7 @@ class TemporaryDrawer extends React.PureComponent {
           <List>
             {loggedUserInfo.role == 'user' ? (
               <MenuItems
+                dispatch={dispatch}
                 menus={menuItems}
                 handleClick={this.handleClick}
                 open={this.state.open}
@@ -131,6 +134,7 @@ class TemporaryDrawer extends React.PureComponent {
 TemporaryDrawer.propTypes = {
   open: PropTypes.bool,
   toggleDrawer: PropTypes.func,
+  dispatch: PropTypes.func,
   menuItems: PropTypes.array,
   classes: PropTypes.object,
 };

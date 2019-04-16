@@ -121,7 +121,7 @@ class PrimarySearchAppBar extends React.Component {
               color="inherit"
               noWrap
             >
-              Campusrope
+              CampusRope
             </Typography>
             <div className={classes.backIcon}>
               <ArrowBackIcon />
