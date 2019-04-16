@@ -26,7 +26,7 @@ class PublicAppBar extends React.PureComponent {
           <Toolbar className={classes.toolbar}>
             <Typography
               className={classes.title}
-              variant="h3"
+              variant="h4"
               color="inherit"
               noWrap
             >
