@@ -94,14 +94,12 @@ class FormComponent extends React.Component {
         initialValues={{
           email: '',
           password: '',
-          remember: false,
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string()
             .email('please provide a valid email')
             .required('Please provide email'),
-          password: Yup.string().required('please provide password'),
-          remember: Yup.boolean(),
+          password: Yup.string().required('please provide password')
         })}
         onSubmit={(values, actions) => this.onSubmit(values, actions)}
       >
@@ -139,19 +137,6 @@ class FormComponent extends React.Component {
                 fullWidth
               />
               <div className="rememberMeWrapper">
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      name="remember"
-                      type="checkbox"
-                      id="remember"
-                      checked={values.remember}
-                      onChange={handleChange}
-                      color="primary"
-                    />
-                  }
-                  label="Remember me"
-                />
                 <Button
                   color="primary"
                   className={classes.button}
