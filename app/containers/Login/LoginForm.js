@@ -86,20 +86,8 @@ const styles = theme => ({
 /* eslint react/prop-types: 0 */
 /* eslint prettier/prettier: 0 */
 class FormComponent extends React.Component {
-  state = {
-    isVerified: false,
-    recapchaErrorMsg: null,
-  };
-
   onSubmit = (values, actions) => {
-    if (this.state.isVerified) {
-      this.props.onSubmit(values, actions);
-    } else {
-      this.setState({
-        recapchaErrorMsg: 'Please verify that you are not a robot.',
-      });
-      actions.setSubmitting(false);
-    }
+    this.props.onSubmit(values, actions);
   };
 
   render() {
@@ -109,14 +97,12 @@ class FormComponent extends React.Component {
         initialValues={{
           email: '',
           password: '',
-          remember: false,
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string()
             .email('please provide a valid email')
             .required('Please provide email'),
-          password: Yup.string().required('please provide password'),
-          remember: Yup.boolean(),
+          password: Yup.string().required('please provide password')
         })}
         onSubmit={(values, actions) => this.onSubmit(values, actions)}
       >
@@ -154,19 +140,6 @@ class FormComponent extends React.Component {
                 fullWidth
               />
               <div className="rememberMeWrapper">
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      name="remember"
-                      type="checkbox"
-                      id="remember"
-                      checked={values.remember}
-                      onChange={handleChange}
-                      color="primary"
-                    />
-                  }
-                  label="Remember me"
-                />
                 <Button
                   color="primary"
                   className={classes.button}
@@ -174,34 +147,6 @@ class FormComponent extends React.Component {
                 >
                   Forgot password?
                 </Button>
-              </div>
-              {this.state.recapchaErrorMsg && (
-                <div
-                  style={{
-                    margin: '15px auto',
-                    fontSize: '0.8em',
-                    color: 'red',
-                  }}
-                >
-                  {this.state.recapchaErrorMsg}
-                </div>
-              )}
-              <div style={{ margin: '15px auto', color: 'red' }}>
-                <Recaptcha
-                  sitekey="6LemFZIUAAAAAFvB9P1NPikUHVusOtcLbwY-TnHO"
-                  render="explicit"
-                  onloadCallback={() => {
-                    console.log('recapcha onload');
-                  }}
-                  verifyCallback={res => {
-                    if (res) {
-                      this.setState({
-                        isVerified: true,
-                        recapchaErrorMsg: '',
-                      });
-                    }
-                  }}
-                />
               </div>
               <Button
                 fullWidth
@@ -246,8 +191,8 @@ const FormPaper = ({
       handleClickOpen={handleClickOpen}
     />
     <GoogleLogin
-      clientId="988043376297-la3l4of9h9njusecop8af9a0ddcn8tev.apps.googleusercontent.com"
-      onSuccess={() => {}}
+      clientId="568630519870-7tfbcptdncktm77enij1t8i0q6bpo9hs.apps.googleusercontent.com"
+      onSuccess={(c) => console.log(c)}
       onFailure={() => {}}
       uxMode="popup"
       render={({ onClick }) => (

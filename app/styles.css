@@ -54,3 +54,7 @@ a:visited {
       box-shadow: none;
     background-color: none
 }
+
+body{
+    font-family: "Arial Rounded MT Bold", "Roboto", "Helvetica", "Arial", "sans-serif" !important;
+}
