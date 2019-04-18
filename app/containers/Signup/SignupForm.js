@@ -2,6 +2,7 @@ import React from 'react';
 import Recaptcha from 'react-recaptcha';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -9,6 +10,17 @@ import InputLabel from '@material-ui/core/InputLabel';
 import { Button, CircularProgress } from '@material-ui/core';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+
+
+const styles = () => ({
+  backBtn : {
+    marginTop : 10,
+    '&:hover':{
+      backgroundColor: "#db3236",
+    },
+  },
+});
+
 
 /* eslint react/prop-types: 0 */
 /* eslint prettier/prettier: 0 */
@@ -133,6 +145,7 @@ class SignupForm extends React.Component {
                 >
                   <MenuItem value="male">Male</MenuItem>
                   <MenuItem value="female">Female</MenuItem>
+                  <MenuItem value="transgender">Transgender</MenuItem>
                 </Select>
                 {touched.gender &&
                   errors.gender && (
@@ -227,8 +240,8 @@ class SignupForm extends React.Component {
                 variant="contained"
                 color="secondary"
                 onClick={routeToLogin}
-                className={classes.submit}
-                disabled={isSubmitting}
+                className={classes.backBtn}
+                disabled={isSubmitting} 
               >
                 Back
               </Button>
@@ -240,4 +253,6 @@ class SignupForm extends React.Component {
   }
 }
 
-export default SignupForm;
+const componentWithStyles = withStyles(styles)(SignupForm);
+
+export default componentWithStyles;

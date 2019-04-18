@@ -32,6 +32,9 @@ export const RssFeedIcon = React.lazy(() =>
   import('@material-ui/icons/RssFeed'),
 );
 export const LockIcon = React.lazy(() => import('@material-ui/icons/Lock'));
+export const PersonAdd = React.lazy(() =>
+  import('@material-ui/icons/PersonAdd'),
+);
 export const ArrowBackIcon = React.lazy(() =>
   import('@material-ui/icons/ArrowBack'),
 );

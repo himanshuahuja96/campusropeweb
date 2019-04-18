@@ -77,6 +77,9 @@ const styles = theme => ({
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit * 7,
     color: 'white',
+    '&:hover':{
+      backgroundColor: "#db3236",
+    },
   },
 });
 
@@ -263,7 +266,7 @@ const FormPaper = ({
     />
 
     <Typography variant="body2" gutterBottom>
-      New to Campusrope ?
+      New to CampusRope ?
     </Typography>
     <Button
       type="submit"

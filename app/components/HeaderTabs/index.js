@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { HomeIcon, RssFeedIcon, LockIcon } from 'components/MaterialIcons';
+import { HomeIcon, RssFeedIcon, PersonAdd } from 'components/MaterialIcons';
 import { isLoggedIn } from '../../store/loggeduser/selectors';
 
 const CenterPanel = styled.div`
@@ -49,7 +49,7 @@ function Headertabs({ dispatch }) {
         >
           <Tab label="Feeds" icon={<RssFeedIcon />} />
           <Tab label="Home" icon={<HomeIcon />} />
-          <Tab label="SignUp" icon={<LockIcon />} />
+          <Tab label="SignUp" icon={<PersonAdd />} />
         </Tabs>
       </AppBar>
     </CenterPanel>
