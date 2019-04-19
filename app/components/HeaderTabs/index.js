@@ -47,9 +47,21 @@ function Headertabs({ dispatch }) {
           textColor={isLoggedIn() ? 'primary' : 'secondary'}
           centered
         >
-          <Tab label="Feeds" icon={<RssFeedIcon />} />
-          <Tab label="Home" icon={<HomeIcon />} />
-          <Tab label="SignUp" icon={<PersonAdd />} />
+          <Tab
+            style={{ textTransform: 'lowercase' }}
+            label="Feeds"
+            icon={<RssFeedIcon />}
+          />
+          <Tab
+            style={{ textTransform: 'lowercase' }}
+            label="Home"
+            icon={<HomeIcon />}
+          />
+          <Tab
+            style={{ textTransform: 'lowercase' }}
+            label="SignUp"
+            icon={<PersonAdd />}
+          />
         </Tabs>
       </AppBar>
     </CenterPanel>

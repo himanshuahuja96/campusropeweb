@@ -13,7 +13,13 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    fontFamily: 'Arial Rounded MT Bold,Helvetica Rounded,Arial,sans-serif'
+    fontFamily: 'Arial Rounded MT Bold,Helvetica Rounded,Arial,sans-serif',
+  },
+  appbar: {
+    backgroundColor: '#00235b',
+  },
+  title: {
+    fontFamily: 'Paytone One',
   },
 };
 
@@ -22,7 +28,7 @@ class PublicAppBar extends React.PureComponent {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="primary">
+        <AppBar position="static" color="primary" className={classes.appbar}>
           <Toolbar className={classes.toolbar}>
             <Typography
               className={classes.title}
