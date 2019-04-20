@@ -19,7 +19,7 @@ const styles = {
     backgroundColor: '#00235b',
   },
   title: {
-    fontFamily: 'Paytone One',
+    fontFamily: 'Berkshire Swash',
   },
 };
 
