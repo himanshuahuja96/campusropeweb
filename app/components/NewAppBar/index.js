@@ -2,14 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
 import {
   MenuIcon,
   AccountCircle,
-  MailIcon,
+  HomeIcon,
+  RssFeedIcon,
   NotificationsIcon,
+  MoreIcon,
 } from 'components/MaterialIcons';
 
 import { fade } from '@material-ui/core/styles/colorManipulator';
@@ -27,8 +31,13 @@ const styles = theme => ({
   },
   title: {
     display: 'none',
+    fontFamily: 'Berkshire Swash',
     [theme.breakpoints.up('sm')]: {
-      display: 'block',
+      display: 'flex',
+      alignItems: 'center',
+      marginLeft: 20,
+      marginRight: 20,
+      fontSize: 25,
     },
   },
   backIcon: {
@@ -85,15 +94,24 @@ const styles = theme => ({
   },
   sectionMobile: {
     display: 'flex',
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
+  },
+  appbarRoot: {
+    display: 'flex',
+    justifyContent: 'center',
+    width: '100%',
+    [theme.breakpoints.down('sm')]: {
       display: 'none',
     },
   },
 });
 
-class PrimarySearchAppBar extends React.Component {
+class NewAppBar extends React.Component {
   state = {
     anchorEl: null,
+    mobileMoreAnchorEl: null,
   };
 
   handleProfileMenuOpen = event => {
@@ -101,35 +119,77 @@ class PrimarySearchAppBar extends React.Component {
     this.setState({ anchorEl: event.currentTarget });
   };
 
-  handleMenuClose = () => {
-    this.setState({ anchorEl: null });
-    this.handleMobileMenuClose();
+  handleMobileMenuOpen = event => {
+    this.setState({ mobileMoreAnchorEl: event.currentTarget });
   };
 
   render() {
-    const { anchorEl } = this.state;
+    const { anchorEl, mobileMoreAnchorEl } = this.state;
     const { classes, toggleDrawer } = this.props;
     const isMenuOpen = Boolean(anchorEl);
+    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+    const renderMobileMenu = (
+      <Menu
+        anchorEl={mobileMoreAnchorEl}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={isMobileMenuOpen}
+        onClose={this.handleMenuClose}
+      >
+        <MenuItem onClick={this.handleMobileMenuClose}>
+          <IconButton color="inherit">
+            <Badge badgeContent={4} color="secondary">
+              <RssFeedIcon />
+            </Badge>
+          </IconButton>
+          <p>Feeds</p>
+        </MenuItem>
+        <MenuItem onClick={this.handleMobileMenuClose}>
+          <IconButton color="inherit">
+            <Badge badgeContent={11} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <p>Notifications</p>
+        </MenuItem>
+        <MenuItem onClick={this.handleProfileMenuOpen}>
+          <IconButton color="inherit">
+            <AccountCircle />
+          </IconButton>
+          <p>Profile</p>
+        </MenuItem>
+      </Menu>
+    );
     return (
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-            <Typography
-              className={classes.title}
-              variant="h6"
-              color="inherit"
-              noWrap
-            >
-              CampusRope
-            </Typography>
-            <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
-              <IconButton color="inherit">
-                <Badge badgeContent={4} color="secondary">
-                  <MailIcon />
-                </Badge>
+            <div className={classes.appbarRoot}>
+              <IconButton
+                color="inherit"
+                style={{ marginRight: 20, marginLeft: 20 }}
+              >
+                <RssFeedIcon />
               </IconButton>
-              <IconButton color="inherit">
+              <IconButton
+                color="inherit"
+                onClick={this.props.gotoHome}
+                style={{ marginRight: 20, marginLeft: 20 }}
+              >
+                <HomeIcon />
+              </IconButton>
+              <Typography
+                className={classes.title}
+                variant="h6"
+                color="inherit"
+                noWrap
+              >
+                CampusRope
+              </Typography>
+              <IconButton
+                color="inherit"
+                style={{ marginRight: 20, marginLeft: 20 }}
+              >
                 <Badge badgeContent={17} color="secondary">
                   <NotificationsIcon />
                 </Badge>
@@ -137,11 +197,23 @@ class PrimarySearchAppBar extends React.Component {
               <IconButton
                 aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                 aria-haspopup="true"
+                style={{ marginRight: 20, marginLeft: 20 }}
                 onClick={this.handleProfileMenuOpen}
                 color="inherit"
               >
                 <AccountCircle />
               </IconButton>
+            </div>
+            <div className={classes.sectionMobile}>
+              <IconButton
+                aria-haspopup="true"
+                onClick={this.handleMobileMenuOpen}
+                color="inherit"
+              >
+                <MoreIcon />
+              </IconButton>
+            </div>
+            <div className={classes.sectionDesktop}>
               <IconButton
                 onClick={toggleDrawer}
                 className={classes.menuButton}
@@ -153,15 +225,17 @@ class PrimarySearchAppBar extends React.Component {
             </div>
           </Toolbar>
         </AppBar>
+        {renderMobileMenu}
       </div>
     );
   }
 }
 
-PrimarySearchAppBar.propTypes = {
+NewAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
   gotoUserProfile: PropTypes.func.isRequired,
   toggleDrawer: PropTypes.func.isRequired,
+  gotoHome: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(PrimarySearchAppBar);
+export default withStyles(styles)(NewAppBar);

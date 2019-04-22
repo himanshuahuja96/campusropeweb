@@ -16,8 +16,9 @@ import styled from 'styled-components';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import { Switch, Route } from 'react-router-dom';
-import AppBar from 'components/AppBar/Loadable';
+import NewAppBar from 'components/NewAppBar/Loadable';
 import PublicAppBar from 'components/PublicAppBar/Loadable';
 import Drawer from 'components/Drawer';
 import Profile from 'containers/UserProfile/Loadable';
@@ -84,6 +85,10 @@ export class HomePage extends React.PureComponent {
     this.props.dispatch(changeRoute(routeToUserProfile));
   };
 
+  gotoHome = () => {
+    this.props.dispatch(push('/'));
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -92,8 +97,9 @@ export class HomePage extends React.PureComponent {
           <meta name="description" content="Homepage of Campusrope" />
         </Helmet>
         {isLoggedIn() ? (
-          <AppBar
+          <NewAppBar
             gotoUserProfile={this.gotoUserProfile}
+            gotoHome={this.gotoHome}
             toggleDrawer={this.toggleDrawer}
           />
         ) : (

@@ -48,17 +48,17 @@ function Headertabs({ dispatch }) {
           centered
         >
           <Tab
-            style={{ textTransform: 'lowercase' }}
+            style={{ textTransform: 'capitalize' }}
             label="Feeds"
             icon={<RssFeedIcon />}
           />
           <Tab
-            style={{ textTransform: 'lowercase' }}
+            style={{ textTransform: 'capitalize' }}
             label="Home"
             icon={<HomeIcon />}
           />
           <Tab
-            style={{ textTransform: 'lowercase' }}
+            style={{ textTransform: 'capitalize' }}
             label="SignUp"
             icon={<PersonAdd />}
           />
