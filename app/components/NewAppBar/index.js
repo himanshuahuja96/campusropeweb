@@ -37,7 +37,6 @@ const styles = theme => ({
       alignItems: 'center',
       marginLeft: 20,
       marginRight: 20,
-      fontSize: 25,
     },
   },
   backIcon: {
@@ -98,12 +97,20 @@ const styles = theme => ({
       display: 'none',
     },
   },
+  appbar: {
+    backgroundColor: '#00235b',
+  },
   appbarRoot: {
     display: 'flex',
     justifyContent: 'center',
     width: '100%',
     [theme.breakpoints.down('sm')]: {
       display: 'none',
+    },
+  },
+  iconBtn: {
+    '& span': {
+      flexDirection: 'column',
     },
   },
 });
@@ -162,25 +169,30 @@ class NewAppBar extends React.Component {
     );
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="static" color="primary" className={classes.appbar}>
           <Toolbar>
             <div className={classes.appbarRoot}>
               <IconButton
                 color="inherit"
+                className={classes.iconBtn}
+                onClick={() => this.props.gotoSelectedRoute('/feeds')}
                 style={{ marginRight: 20, marginLeft: 20 }}
               >
                 <RssFeedIcon />
+                <span style={{ fontSize: 18 }}>Feeds</span>
               </IconButton>
               <IconButton
                 color="inherit"
-                onClick={this.props.gotoHome}
+                className={classes.iconBtn}
+                onClick={() => this.props.gotoSelectedRoute('/')}
                 style={{ marginRight: 20, marginLeft: 20 }}
               >
                 <HomeIcon />
+                <span style={{ fontSize: 18 }}>Home</span>
               </IconButton>
               <Typography
                 className={classes.title}
-                variant="h6"
+                variant="h4"
                 color="inherit"
                 noWrap
               >
@@ -188,20 +200,24 @@ class NewAppBar extends React.Component {
               </Typography>
               <IconButton
                 color="inherit"
+                className={classes.iconBtn}
                 style={{ marginRight: 20, marginLeft: 20 }}
               >
                 <Badge badgeContent={17} color="secondary">
                   <NotificationsIcon />
                 </Badge>
+                <span style={{ fontSize: 18 }}>Notifications</span>
               </IconButton>
               <IconButton
                 aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                 aria-haspopup="true"
+                className={classes.iconBtn}
                 style={{ marginRight: 20, marginLeft: 20 }}
                 onClick={this.handleProfileMenuOpen}
                 color="inherit"
               >
                 <AccountCircle />
+                <span style={{ fontSize: 18 }}>Profile</span>
               </IconButton>
             </div>
             <div className={classes.sectionMobile}>
@@ -235,7 +251,7 @@ NewAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
   gotoUserProfile: PropTypes.func.isRequired,
   toggleDrawer: PropTypes.func.isRequired,
-  gotoHome: PropTypes.func.isRequired,
+  gotoSelectedRoute: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(NewAppBar);

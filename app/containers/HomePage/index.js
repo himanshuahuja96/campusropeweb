@@ -85,8 +85,8 @@ export class HomePage extends React.PureComponent {
     this.props.dispatch(changeRoute(routeToUserProfile));
   };
 
-  gotoHome = () => {
-    this.props.dispatch(push('/'));
+  gotoSelectedRoute = toRoute => {
+    this.props.dispatch(push(toRoute));
   };
 
   render() {
@@ -99,7 +99,7 @@ export class HomePage extends React.PureComponent {
         {isLoggedIn() ? (
           <NewAppBar
             gotoUserProfile={this.gotoUserProfile}
-            gotoHome={this.gotoHome}
+            gotoSelectedRoute={this.gotoSelectedRoute}
             toggleDrawer={this.toggleDrawer}
           />
         ) : (
