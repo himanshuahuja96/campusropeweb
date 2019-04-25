@@ -38,5 +38,4 @@ export const PersonAdd = React.lazy(() =>
 export const ArrowBackIcon = React.lazy(() =>
   import('@material-ui/icons/ArrowBack'),
 );
-
 export default AccountBalance;

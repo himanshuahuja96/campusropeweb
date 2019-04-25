@@ -14,6 +14,7 @@ import {
   RssFeedIcon,
   NotificationsIcon,
   MoreIcon,
+  ArrowBackIcon,
 } from 'components/MaterialIcons';
 
 import { fade } from '@material-ui/core/styles/colorManipulator';
@@ -103,15 +104,16 @@ const styles = theme => ({
   appbarRoot: {
     display: 'flex',
     justifyContent: 'center',
-    width: '100%',
+    width: '92%',
+    marginLeft: 85,
     [theme.breakpoints.down('sm')]: {
       display: 'none',
     },
   },
-  iconBtn: {
-    '& span': {
-      flexDirection: 'column',
-    },
+  iconLabel: {
+    fontSize: 14,
+    marginLeft: 5,
+    fontWeight: 'bold',
   },
 });
 
@@ -171,24 +173,28 @@ class NewAppBar extends React.Component {
       <div className={classes.root}>
         <AppBar position="static" color="primary" className={classes.appbar}>
           <Toolbar>
+            <IconButton
+              color="inherit"
+              onClick={() => this.props.gotoSelectedRoute('/')}
+            >
+              <ArrowBackIcon />
+            </IconButton>
             <div className={classes.appbarRoot}>
               <IconButton
                 color="inherit"
-                className={classes.iconBtn}
                 onClick={() => this.props.gotoSelectedRoute('/feeds')}
                 style={{ marginRight: 20, marginLeft: 20 }}
               >
                 <RssFeedIcon />
-                <span style={{ fontSize: 18 }}>Feeds</span>
+                <span className={classes.iconLabel}>Feeds</span>
               </IconButton>
               <IconButton
                 color="inherit"
-                className={classes.iconBtn}
                 onClick={() => this.props.gotoSelectedRoute('/')}
                 style={{ marginRight: 20, marginLeft: 20 }}
               >
                 <HomeIcon />
-                <span style={{ fontSize: 18 }}>Home</span>
+                <span className={classes.iconLabel}>Home</span>
               </IconButton>
               <Typography
                 className={classes.title}
@@ -200,24 +206,22 @@ class NewAppBar extends React.Component {
               </Typography>
               <IconButton
                 color="inherit"
-                className={classes.iconBtn}
                 style={{ marginRight: 20, marginLeft: 20 }}
               >
                 <Badge badgeContent={17} color="secondary">
                   <NotificationsIcon />
                 </Badge>
-                <span style={{ fontSize: 18 }}>Notifications</span>
+                <span className={classes.iconLabel}>Notifications</span>
               </IconButton>
               <IconButton
                 aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                 aria-haspopup="true"
-                className={classes.iconBtn}
                 style={{ marginRight: 20, marginLeft: 20 }}
                 onClick={this.handleProfileMenuOpen}
                 color="inherit"
               >
                 <AccountCircle />
-                <span style={{ fontSize: 18 }}>Profile</span>
+                <span className={classes.iconLabel}>Profile</span>
               </IconButton>
             </div>
             <div className={classes.sectionMobile}>

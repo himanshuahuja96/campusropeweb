@@ -45,7 +45,6 @@ import reducer from './reducer';
 import saga from './saga';
 
 import PrivateRoute from '../../components/PrivateRoute/Loadable';
-import HeaderTabs from '../../components/HeaderTabs/Loadable';
 import HomeButtons from './HomeButtons';
 import { changeRoute, routeToUserProfile, homeMounted } from './actions';
 import {
@@ -106,13 +105,12 @@ export class HomePage extends React.PureComponent {
           <PublicAppBar />
         )}
         <Drawer
-          open={!!(this.state.drawerOpen && isLoggedIn())}
+          open={!!this.state.drawerOpen}
           toggleDrawer={this.toggleDrawer}
           dispatch={this.props.dispatch}
           menuItems={this.props.drawerMenus}
           loggedUserInfo={this.props.loggedUserInfo}
         />
-        <HeaderTabs />
         <CenterPanel>
           <CenterMenuWrapper>
             <Switch>
