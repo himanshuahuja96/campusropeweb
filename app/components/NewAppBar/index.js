@@ -17,7 +17,6 @@ import {
   ArrowBackIcon,
 } from 'components/MaterialIcons';
 
-import { fade } from '@material-ui/core/styles/colorManipulator';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
@@ -36,8 +35,8 @@ const styles = theme => ({
     [theme.breakpoints.up('sm')]: {
       display: 'flex',
       alignItems: 'center',
-      marginLeft: 20,
-      marginRight: 20,
+      justifyContent: 'center',
+      fontFamily: 'Berkshire Swash',
     },
   },
   backIcon: {
@@ -45,45 +44,6 @@ const styles = theme => ({
     marginRight: '12px',
     [theme.breakpoints.up('sm')]: {
       display: 'none',
-    },
-  },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing.unit * 2,
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing.unit * 3,
-      width: '74%',
-    },
-  },
-  searchIcon: {
-    width: theme.spacing.unit * 9,
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputRoot: {
-    color: 'inherit',
-    width: '100%',
-  },
-  inputInput: {
-    paddingTop: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit * 10,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: 200,
     },
   },
   sectionDesktop: {
@@ -94,7 +54,9 @@ const styles = theme => ({
   },
   sectionMobile: {
     display: 'flex',
-    [theme.breakpoints.up('sm')]: {
+    width: '100%',
+    justifyContent: 'center',
+    [theme.breakpoints.up('md')]: {
       display: 'none',
     },
   },
@@ -105,8 +67,8 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     width: '92%',
-    marginLeft: 85,
-    [theme.breakpoints.down('sm')]: {
+    marginLeft: 65,
+    [theme.breakpoints.between('xs', 'sm')]: {
       display: 'none',
     },
   },
@@ -225,13 +187,23 @@ class NewAppBar extends React.Component {
               </IconButton>
             </div>
             <div className={classes.sectionMobile}>
-              <IconButton
-                aria-haspopup="true"
-                onClick={this.handleMobileMenuOpen}
+              <Typography
+                className={classes.title}
+                variant="h4"
                 color="inherit"
+                noWrap
               >
-                <MoreIcon />
-              </IconButton>
+                CampusRope
+              </Typography>
+              <div>
+                <IconButton
+                  aria-haspopup="true"
+                  onClick={this.handleMobileMenuOpen}
+                  color="inherit"
+                >
+                  <MoreIcon />
+                </IconButton>
+              </div>
             </div>
             <div className={classes.sectionDesktop}>
               <IconButton
