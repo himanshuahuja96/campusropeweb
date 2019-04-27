@@ -30,13 +30,12 @@ const styles = theme => ({
     display: 'inline-block',
   },
   title: {
-    display: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     fontFamily: 'Berkshire Swash',
-    [theme.breakpoints.up('sm')]: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontFamily: 'Berkshire Swash',
+    [theme.breakpoints.down('md')]: {
+      flexGrow: 9,
     },
   },
   backIcon: {
@@ -56,6 +55,7 @@ const styles = theme => ({
     display: 'flex',
     width: '100%',
     justifyContent: 'center',
+    marginLeft: theme.spacing.unit * 8,
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
@@ -76,6 +76,11 @@ const styles = theme => ({
     fontSize: 14,
     marginLeft: 5,
     fontWeight: 'bold',
+  },
+  sectionMobileMoreIcon: {
+    display: 'flex',
+    flexGrow: 1,
+    justifyContent: 'flex-end',
   },
 });
 
@@ -195,7 +200,7 @@ class NewAppBar extends React.Component {
               >
                 CampusRope
               </Typography>
-              <div>
+              <div className={classes.sectionMobileMoreIcon}>
                 <IconButton
                   aria-haspopup="true"
                   onClick={this.handleMobileMenuOpen}
