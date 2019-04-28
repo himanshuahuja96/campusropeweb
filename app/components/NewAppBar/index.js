@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
@@ -13,7 +11,6 @@ import {
   HomeIcon,
   RssFeedIcon,
   NotificationsIcon,
-  MoreIcon,
   ArrowBackIcon,
 } from 'components/MaterialIcons';
 
@@ -34,9 +31,6 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'center',
     fontFamily: 'Berkshire Swash',
-    [theme.breakpoints.down('md')]: {
-      flexGrow: 9,
-    },
   },
   backIcon: {
     display: 'block',
@@ -47,15 +41,15 @@ const styles = theme => ({
   },
   sectionDesktop: {
     display: 'flex',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
+    [theme.breakpoints.between('xs', 'sm')]: {
+      display: 'none',
     },
   },
   sectionMobile: {
     display: 'flex',
     width: '100%',
     justifyContent: 'center',
-    marginLeft: theme.spacing.unit * 8,
+    flexDirection: 'column',
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
@@ -77,17 +71,15 @@ const styles = theme => ({
     marginLeft: 5,
     fontWeight: 'bold',
   },
-  sectionMobileMoreIcon: {
+  sectionMobileIconWrapper: {
     display: 'flex',
-    flexGrow: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
   },
 });
 
 class NewAppBar extends React.Component {
   state = {
     anchorEl: null,
-    mobileMoreAnchorEl: null,
   };
 
   handleProfileMenuOpen = event => {
@@ -95,53 +87,17 @@ class NewAppBar extends React.Component {
     this.setState({ anchorEl: event.currentTarget });
   };
 
-  handleMobileMenuOpen = event => {
-    this.setState({ mobileMoreAnchorEl: event.currentTarget });
-  };
-
   render() {
-    const { anchorEl, mobileMoreAnchorEl } = this.state;
+    const { anchorEl } = this.state;
     const { classes, toggleDrawer } = this.props;
     const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-    const renderMobileMenu = (
-      <Menu
-        anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMobileMenuOpen}
-        onClose={this.handleMenuClose}
-      >
-        <MenuItem onClick={this.handleMobileMenuClose}>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <RssFeedIcon />
-            </Badge>
-          </IconButton>
-          <p>Feeds</p>
-        </MenuItem>
-        <MenuItem onClick={this.handleMobileMenuClose}>
-          <IconButton color="inherit">
-            <Badge badgeContent={11} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <p>Notifications</p>
-        </MenuItem>
-        <MenuItem onClick={this.handleProfileMenuOpen}>
-          <IconButton color="inherit">
-            <AccountCircle />
-          </IconButton>
-          <p>Profile</p>
-        </MenuItem>
-      </Menu>
-    );
     return (
       <div className={classes.root}>
         <AppBar position="static" color="primary" className={classes.appbar}>
           <Toolbar>
             <IconButton
               color="inherit"
+              className={classes.sectionDesktop}
               onClick={() => this.props.gotoSelectedRoute('/')}
             >
               <ArrowBackIcon />
@@ -192,21 +148,61 @@ class NewAppBar extends React.Component {
               </IconButton>
             </div>
             <div className={classes.sectionMobile}>
-              <Typography
-                className={classes.title}
-                variant="h4"
-                color="inherit"
-                noWrap
-              >
-                CampusRope
-              </Typography>
-              <div className={classes.sectionMobileMoreIcon}>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <IconButton
+                  color="inherit"
+                  onClick={() => this.props.gotoSelectedRoute('/')}
+                >
+                  <ArrowBackIcon />
+                </IconButton>
+                <Typography
+                  className={classes.title}
+                  variant="h4"
+                  color="inherit"
+                  noWrap
+                >
+                  CampusRope
+                </Typography>
+                <IconButton
+                  onClick={toggleDrawer}
+                  className={classes.menuButton}
+                  color="inherit"
+                  aria-label="Open drawer"
+                >
+                  <MenuIcon />
+                </IconButton>
+              </div>
+              <div className={classes.sectionMobileIconWrapper}>
+                <IconButton
+                  color="inherit"
+                  onClick={() => this.props.gotoSelectedRoute('/')}
+                  style={{ marginRight: 20 }}
+                >
+                  <HomeIcon />
+                </IconButton>
+                <IconButton
+                  color="inherit"
+                  onClick={() => this.props.gotoSelectedRoute('/feeds')}
+                  style={{ marginRight: 20, marginLeft: 20 }}
+                >
+                  <RssFeedIcon />
+                </IconButton>
+                <IconButton
+                  color="inherit"
+                  style={{ marginRight: 20, marginLeft: 20 }}
+                >
+                  <Badge badgeContent={17} color="secondary">
+                    <NotificationsIcon />
+                  </Badge>
+                </IconButton>
+                <IconButton
+                  aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                   aria-haspopup="true"
-                  onClick={this.handleMobileMenuOpen}
+                  style={{ marginLeft: 20 }}
+                  onClick={this.handleProfileMenuOpen}
                   color="inherit"
                 >
-                  <MoreIcon />
+                  <AccountCircle />
                 </IconButton>
               </div>
             </div>
@@ -222,7 +218,6 @@ class NewAppBar extends React.Component {
             </div>
           </Toolbar>
         </AppBar>
-        {renderMobileMenu}
       </div>
     );
   }
