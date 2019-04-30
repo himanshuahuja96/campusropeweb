@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
+import { Link } from 'react-router-dom';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { PersonAdd } from 'components/MaterialIcons';
 
 const styles = {
   root: {
@@ -20,6 +23,15 @@ const styles = {
   },
   title: {
     fontFamily: 'Berkshire Swash',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    flexGrow: 1,
+    marginLeft: 40,
+  },
+  wrapper: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    flexGrow: 1,
   },
 };
 
@@ -38,6 +50,13 @@ class PublicAppBar extends React.PureComponent {
             >
               CampusRope
             </Typography>
+            <div className={classes.wrapper}>
+              <Link to="/login">
+                <IconButton color="inherit">
+                  <PersonAdd />
+                </IconButton>
+              </Link>
+            </div>
           </Toolbar>
         </AppBar>
       </div>
