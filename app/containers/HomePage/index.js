@@ -22,6 +22,7 @@ import NewAppBar from 'components/NewAppBar/Loadable';
 import PublicAppBar from 'components/PublicAppBar/Loadable';
 import Drawer from 'components/Drawer';
 import Profile from 'containers/UserProfile/Loadable';
+import HeaderTabs from 'components/HeaderTabs/Loadable';
 import AboutUser from 'containers/AboutUser/Loadable';
 import HelplineUserList from 'containers/HelplineUserList/Loadable';
 import HelplineAdminList from 'containers/HelplineAdminList/Loadable';
@@ -112,6 +113,7 @@ export class HomePage extends React.PureComponent {
           loggedUserInfo={this.props.loggedUserInfo}
         />
         <CenterPanel>
+          {!isLoggedIn() && <HeaderTabs />}
           <CenterMenuWrapper>
             <Switch>
               <Route
