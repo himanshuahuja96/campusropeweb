@@ -4,6 +4,8 @@ Frontend React/Redux app for campusrope
 
 ## Introduction
 
+### "Social network has eroded all the barriers between an artist and a consumer through which consumers can themselves be the artist and this relationship is interchangeable."
+
 This project is licenced under GNU GPL V3 which gurantees the four freedoms that every user should have:
 -   the freedom to use the software for any purpose,
 -   the freedom to change the software to suit your needs,
@@ -58,18 +60,3 @@ Through collaborative work of the open source community we aim to -
 
 #
 >A small difference now can make a huge difference later.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
